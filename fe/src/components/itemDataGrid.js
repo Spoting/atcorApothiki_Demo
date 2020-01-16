@@ -17,7 +17,7 @@ const {
 
 
 const notEditable = ["atcorId", "totalStock"];
-const isEditable = ["name", "nsn", "category", "material", "unit", "location", "dexion", "dexion2"];
+const isEditable = ["name", "nsn", "category", "characteristic_1", "characteristic_2", "PN", "atcorPN","unit", "location", "dexion", "dexion2"];
 const filterNormal = ["nsn", "atcorNo", "name"];
 const filterNumeric = ["totalStock"];
 const filterAutoComplete = [];
@@ -262,14 +262,17 @@ export default class ItemsDataGrid extends React.Component {
             // atcorId: newDbItem.atcorId,
             totalStock: 0,
             name: "",
-            category: "",
-            material: "",
-            unit: "",
+            category: "-",
+            characteristic_1: "-",
+            characteristic_2: "-",
+            unit: "-",
             location: "",
             dexion: "",
             dexion2: "",
             // nsn: nsnTempValue, //+""+random.toString(),
-            atcorNo: ""
+            // atcorPn: ....
+            atcorNo: "",
+            PN: "",
         };
         ApiItems.createItem(newRow)
             .then((newDbItem) => {

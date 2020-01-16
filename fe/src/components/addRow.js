@@ -11,23 +11,24 @@ export const addRow = async (mode, data) => {
     // //     + currentdate.getHours() + ":"
     // //     + currentdate.getMinutes() + ":"
     // //     + currentdate.getSeconds() + "Z";
-    let dt = new Date().getTime();
-    let random = Math.floor(Math.random() * 10);
+    // let dt = new Date().getTime();
+    // let random = Math.floor(Math.random() * 10);
 
-    let tmpDate = new Date(0, 0, 0, 0, 0, 0, 0);
-    console.log(random);
+    // let tmpDate = new Date(0, 0, 0, 0, 0, 0, 0);
+    // console.log(random);
     let newRow = {};
     let response;
     if (mode === "Invoices") {
         newRow = {
             // id: 0,
-            invoice:  random + "_" + dt,
+            // invoice:  random + "_" + dt,
+            invoice: "",
             // invoiceDate: 1999-12-12,
             remark: "",
-            matInDate: dt,
+            characteristic_1: "-",
+            characteristic_2: "-",
+            // matInDate: dt,
             supplier: "",
-            atcorPN: "",
-            PN: ""
         };
         response = await ApiInvoice.createInvoice(newRow);
         console.log("CREATEDROW INVOICE", response);
