@@ -13,6 +13,11 @@ const Item = require("../models").Item;
 const Invoice = require("../models").Invoice;
 const InvoiceItems = require("../models").InvoiceItems;
 
+
+let leftFillNum = (num, targetLength)  => {
+    return num.toString().padStart(6, 0);
+}
+
 // const sequelize = require("../models").sequelize;
 /**
  * 
@@ -95,8 +100,11 @@ const _insertInvoiceItems = async (data) => {
             let [item, created] = await Item.findOrCreate(param);
             results.item.created = created;
             results.item.name = item.name; //log
+            console.log("Etsi", item);
             if (created) {
                 item.totalStock = r.matInQnt;
+                let no = leftFillNum(item.atcorId);
+                item.atcorNo = leftFillNum(no);
             } else {
                 console.log("Prin TotalStock", item.totalStock)
                 item.totalStock = item.totalStock + r.matInQnt;
