@@ -58,6 +58,9 @@ export default class Invoices extends React.Component {
             if (i.nsn === "" || i.nsn === " "){
                 delete i.nsn;
             }
+            if (i.atcorPN === "" || i.atcorPN === " "){
+                delete i.atcorPN;
+            }
             // console.log("TYPOS", typeof(i.matInQnt))
             if (typeof(i.matInQnt) === "string"){
                 // console.log("edw");
@@ -111,11 +114,13 @@ export default class Invoices extends React.Component {
             row.atcorId = 0;
             row.atcorNo = "";
             row.task_related = "";
-            row.name = " ";
+            row.name = " "; //des giati ston poutso to exw valei auto me keno
             row.nsn = "";
             row.unit = "";
             row.PN = "";
             row.atcorPN = "";
+            row.characteristic_1 = "";
+            row.characteristic_2 = "";
             row.rfm_related = "";
             row.matInQnt = 0;
             row.availability = 0;
@@ -134,6 +139,8 @@ export default class Invoices extends React.Component {
                 row.name = r.name;
                 row.nsn = r.nsn;
                 row.unit = r.unit;
+                row.characteristic_1 = r.characteristic_1;
+                row.characteristic_2 = r.characteristic_2;
                 row.PN = r.PN;
                 row.atcorPN = r.atcorPN;
                 row.rfm_related = r.invoiceItem.rfm_related;

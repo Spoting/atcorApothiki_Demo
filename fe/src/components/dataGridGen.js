@@ -85,7 +85,7 @@ export default class dataGridGen extends React.Component {
         }
     }
     _setColumns = () => {
-        console.log("GIATI???", this.props.data)
+        // console.log("GIATI???", this.props.data)
         let data = this.props.data;
         if (data.length > 0) {
             let ca = {};
@@ -263,19 +263,28 @@ export default class dataGridGen extends React.Component {
                     }
                     if (response.found && response.foundItems) {
                         // if (response.foundItems.items.length === 1) {
+                            let foundItems = response.foundItems.items[0];
                         if (response.foundBy === "name") {
-                            tmpRows[fromRow].atcorId = response.foundItems.items[0].atcorId;
-                            tmpRows[fromRow].atcorNo = response.foundItems.items[0].atcorNo;
+                            tmpRows[fromRow].atcorId = foundItems.atcorId;
+                            tmpRows[fromRow].atcorNo = foundItems.atcorNo;
                             // tmpRows[fromRow].name = response.foundItems.items[0].name;
-                            tmpRows[fromRow].nsn = response.foundItems.items[0].nsn;
-                            tmpRows[fromRow].unit = response.foundItems.items[0].unit;
+                            tmpRows[fromRow].nsn = foundItems.nsn;
+                            tmpRows[fromRow].unit = foundItems.unit;
+                            tmpRows[fromRow].atcorPN = foundItems.atcorPN;
+                            tmpRows[fromRow].PN = foundItems.PN;
+                            tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
+                            tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
                         }
                         if (response.foundBy === "nsn") {
-                            tmpRows[fromRow].atcorId = response.foundItems.items[0].atcorId;
-                            tmpRows[fromRow].atcorNo = response.foundItems.items[0].atcorNo;
-                            tmpRows[fromRow].name = response.foundItems.items[0].name;
+                            tmpRows[fromRow].atcorId = foundItems.atcorId;
+                            tmpRows[fromRow].atcorNo = foundItems.atcorNo;
+                            tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
+                            tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
+                            tmpRows[fromRow].name = foundItems.name;
                             // tmpRows[fromRow].nsn = response.foundItems.items[0].nsn;
-                            tmpRows[fromRow].unit = response.foundItems.items[0].unit;
+                            tmpRows[fromRow].unit = foundItems.unit;
+                            tmpRows[fromRow].atcorPN = foundItems.atcorPN;
+                            tmpRows[fromRow].PN = foundItems.PN;
                         }
                         this.props.setSelectedRow(tmpRows[fromRow].id, tmpRows[fromRow].atcorId)
                         // }
