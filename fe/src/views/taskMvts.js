@@ -76,7 +76,7 @@ export default class TaskMvts extends React.Component {
             let row = {};
             row.id = r.taskItems.id;
             row.atcorId = r.atcorId;
-            row.atcorNo = r.atcorNo;
+            row.atcorNo = r.atcorNo;    
             row.name = r.name;
             row.totalStock = r.totalStock;
             row.totalMatOut = r.taskItems.totalMatOut;
@@ -96,11 +96,14 @@ export default class TaskMvts extends React.Component {
         if (results.err) {
             return;
         }
+        // console.log("gamw to mouni", this.state.taskItems[this.state.selectedAtcorId]);
 
+        let x = this.leftFillNum(this.state.selectedAtcorId)
         console.log("results", results);
         this.setState({
             itemMovements: results,
-            // of: columns
+            // of: this.state.selectedAtcorId
+            of: x
         });
     }
     _getImages = async () => {
@@ -117,6 +120,11 @@ export default class TaskMvts extends React.Component {
         // console.log("Srcs", sources);
         this.setState({ images: sources })
     }
+
+    leftFillNum = (num, targetLength)  => {
+        return num.toString().padStart(6, 0);
+    }
+
     render() {
         return (
             <div className=""style={{height:"500px" ,paddingLeft:"280px",minWidth:"1300px",paddingTop:"30px"}}>
@@ -139,6 +147,7 @@ export default class TaskMvts extends React.Component {
                                 // setSelectedRow={this.setSelectedTaskItem}
                                 enableCellSelect={false}
                                 taskId={this.state.taskId}
+                                of={this.state.of}
                             />
                         </div>
                     </div>

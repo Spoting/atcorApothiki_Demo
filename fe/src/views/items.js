@@ -78,6 +78,7 @@ export default class Items extends React.Component {
             return;
         }
         let atcorId = results.items[0].atcorId;
+        let atcorNo = results.items[0].atcorNo;
         let name = results.items[0].name;
         let rows = results.items[0].invoices.map((r) => {
             let row = {};
@@ -94,7 +95,7 @@ export default class Items extends React.Component {
         })
         this.setState({
             itemInvoices: rows,
-            of: atcorId
+            of: atcorNo
             // columns: columns
         });
 

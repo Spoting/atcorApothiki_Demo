@@ -11,9 +11,10 @@ export default class TaskCheckout extends React.Component {
         super(props);
         this.state = {
             mode: "TaskItems",
-            modeSubTable: "ItemMovements",
+            modeSubTable: "ItemInvoices",
             taskItems: [],
             itemMovements: [],
+            itemInvoices: [],
             images: [],
             selectedTaskItem: -1,
             selectedAtcorId: -1,
@@ -52,8 +53,8 @@ export default class TaskCheckout extends React.Component {
 
     setSelectedTaskItem = async (selectedTaskItem, selectedAtcorId, force) => {
         if (force) {
-            this._getTaskItems();
-            this._getTaskItemMovements();
+            await this._getTaskItems();
+            // this._getTaskItemMovements();
         } else {
             this.setState({ selectedTaskItem: selectedTaskItem, selectedAtcorId: selectedAtcorId }, () =>
                 console.log("Selected ", this.state.selectedAtcorId)
@@ -63,7 +64,7 @@ export default class TaskCheckout extends React.Component {
 
     _getTaskItems = async () => {
         let results = await ApiTasks.getTaskItems(this.state.taskId);
-        console.log("Mexxxxxxxx", results);
+        console.log("Get TaskItems in taskCheckout", results);
         if (results.err) {
             return;
         }
@@ -78,8 +79,8 @@ export default class TaskCheckout extends React.Component {
             row.totalStock = r.totalStock;
             row.totalMatOut = r.taskItems.totalMatOut;
             row.totalMatRet = r.taskItems.totalMatRet;
-            row.matOut = 0;
-            row.matRet = 0;
+            // row.matOut = 0;
+            // row.matRet = 0;
             return row;
         })
         this.setState({
@@ -95,6 +96,7 @@ export default class TaskCheckout extends React.Component {
             return;
         }
         let atcorId = results.items[0].atcorId;
+        let atcorNo = results.items[0].atcorNo;
         let name = results.items[0].name;
         let rows = results.items[0].invoices.map((r) => {
             let row = {};
@@ -111,7 +113,7 @@ export default class TaskCheckout extends React.Component {
         })
         this.setState({
             itemInvoices: rows,
-            of: atcorId
+            of: atcorNo
             // columns: columns
         });
 

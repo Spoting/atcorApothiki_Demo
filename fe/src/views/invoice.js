@@ -53,6 +53,7 @@ export default class Invoices extends React.Component {
         let items = data;
         
         items.map(i => {
+            // console.log("AtcorNo ", i.atcorNo)
             delete i.id;
             if (i.nsn === "" || i.nsn === " "){
                 delete i.nsn;

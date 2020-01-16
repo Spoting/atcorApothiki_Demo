@@ -85,6 +85,7 @@ export default class dataGridGen extends React.Component {
         }
     }
     _setColumns = () => {
+        console.log("GIATI???", this.props.data)
         let data = this.props.data;
         if (data.length > 0) {
             let ca = {};
@@ -241,6 +242,7 @@ export default class dataGridGen extends React.Component {
 
         updateRow(this.props.mode, tmpRows[fromRow], updated)
             .then((response) => {
+                if (!response) {return} 
                 if (response.err) {
                     alert(response.msg);
                     return;
