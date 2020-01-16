@@ -10,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     matInQnt: DataTypes.INTEGER,
     priceIn: DataTypes.DECIMAL(7,2),
     availability: DataTypes.INTEGER,
-    PN: DataTypes.STRING,
-    atcorPN: DataTypes.STRING,
     task_related: DataTypes.STRING,
     rfm_related: DataTypes.STRING
   }, {

@@ -14,12 +14,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING,
     totalStock: DataTypes.INTEGER,
+    PN: DataTypes.STRING,
+    atcorPN: {
+      type: DataTypes.STRING,
+      // allowNull: false,
+      unique: 'uniqueAtcorPN'
+    },
     nsn: {
       type: DataTypes.STRING,
       unique: 'uniqueNSN'
     },
     category: DataTypes.STRING,
-    material: DataTypes.STRING,
+    characteristic_1: DataTypes.STRING,
+    characteristic_2: DataTypes.STRING,
     unit: DataTypes.STRING,
     location: DataTypes.STRING,
     dexion: DataTypes.STRING,

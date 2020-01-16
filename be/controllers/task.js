@@ -19,7 +19,7 @@ const create = async (req, res) => {
         return res.status(201).send(result);
     } catch (e) {
         console.log(e);
-        result.msg = e.original.sqlMessage;
+        result.err = e.original.sqlMessage;
         return res.status(400).send(result);
     }
 }

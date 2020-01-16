@@ -22,13 +22,15 @@ GRANT USAGE ON *.* TO 'atcorUser'@'localhost' IDENTIFIED BY 'atcor802';
 GRANT ALL PRIVILEGES ON `atcorapothiki`.* TO 'atcorUser'@'localhost';  
 
 
+INSERT INTO atcorapothiki.Items() VALUES ()
 ###Queries
 #Entities
 SELECT * FROM atcorapothiki.Items;
 SELECT * FROM atcorapothiki.Tasks;
 SELECT * FROM atcorapothiki.Invoices;	
 SELECT * FROM atcorapothiki.InvoiceItems;
-SELECT * FROM atcorapothiki.RFMs;
+
+#SELECT * FROM atcorapothiki.RFMs;
 #SELECT * FROM atcorapothiki.RFMItems;
 
 SELECT * FROM atcorapothiki.TaskItems;
