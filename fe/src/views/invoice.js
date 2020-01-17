@@ -53,6 +53,8 @@ export default class Invoices extends React.Component {
         let items = data;
         
         items.map(i => {
+/** KENO NAME NA AGNOEI TIN GRAMMI */
+
             // console.log("AtcorNo ", i.atcorNo)
             delete i.id;
             if (i.nsn === "" || i.nsn === " "){
@@ -67,6 +69,7 @@ export default class Invoices extends React.Component {
                i.matInQnt = parseInt(i.matInQnt);
             //    console.log(i.matInQnt);
             }
+            
         })
        
         console.log("XRISTEMOU", invoiceId, items)
@@ -114,7 +117,7 @@ export default class Invoices extends React.Component {
             row.atcorId = 0;
             row.atcorNo = "";
             row.task_related = "";
-            row.name = " "; //des giati ston poutso to exw valei auto me keno
+            row.name = " "; //des giati ston poutso to exw valei auto me keno, mou vrwmaei
             row.nsn = "";
             row.unit = "";
             row.PN = "";
@@ -174,7 +177,6 @@ export default class Invoices extends React.Component {
         if (results.err) {
             return;
         }
-        //TSIMPA kai to ATCORID & NSN
         let names = results.items.map(i => { return { id: i.atcorId, title: i.name } });
         this.setState({
             itemNames: names,

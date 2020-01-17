@@ -67,7 +67,7 @@ export const addRow = async (mode, data) => {
     if (mode === "Tasks") {
         newRow = {
             sysName: "",
-            taskName: "katiakti",
+            taskName: "",
             endItem: "",
             completed: false,
             // dateCompleted: "",

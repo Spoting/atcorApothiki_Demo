@@ -3,7 +3,7 @@ export const columnsActions = {
     //PN , ATCOR_PN, Ergo_Related, RFM_Related
     InvoiceItems: {
         notEditable: ["id", "atcorId", "availability", "task_related"],
-        isEditable: ["priceIn", "matInQnt", "nsn", "name", "measurement", "PN", "atcorPN", "unit",  "rfm_related"], //"priceIn","matInQnt"
+        isEditable: ["priceIn", "matInQnt", "nsn", "name", "measurement", "PN", "characteristic_1", "characteristic_2","atcorPN", "unit",  "rfm_related"], //"priceIn","matInQnt"
         filterNormal: ["atcorId"],
         filterNumeric: ["matInQnt"],
         filterAutoComplete: [],

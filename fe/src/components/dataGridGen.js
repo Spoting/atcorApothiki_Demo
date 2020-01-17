@@ -325,9 +325,9 @@ export default class dataGridGen extends React.Component {
 
     handleAddRow = () => {
         let data = {};
-        let tempId = 3;
+        let tempId = this.state.rows.length + 2;
         if ((this.props.mode === "InvoiceItems") && (this.state.rows.length > 0)) {
-            tempId = -this.state.rows.length;
+            tempId = -tempId;
         }
         data.tempId = tempId;
         console.log("HandleAddRowInvoiceItemId", data.tempId)
@@ -346,7 +346,10 @@ export default class dataGridGen extends React.Component {
                     let rows = this.state.rows.slice();
                     rows = update(rows, { $unshift: [newRow] });
 
-                    let selectedKeys = [...this.state.selectedKeys];
+                    /** For keeping previous selected */
+                    // let selectedKeys = [...this.state.selectedKeys];
+                    // selectedKeys.push(newRow.id);
+                    let selectedKeys = [];
                     selectedKeys.push(newRow.id);
 
                     this.setState({ rows, selectedKeys }, () => console.log(this.state.rows, this.state.selectedKeys));
@@ -402,7 +405,7 @@ export default class dataGridGen extends React.Component {
             let row = this.state.rows.find((r) => { return r.id === k });
             return row.atcorId;
         })
-        //TODO: KAI NA TSEKAREI TO id na min einai -
+        //TODO: KAI NA TSEKAREI TO id na min einai -  : I kai oxi
         if (x.includes(0)) {
             alert("Please Save InvoiceItems Before Assigning To Task\n\n\n")
             return;

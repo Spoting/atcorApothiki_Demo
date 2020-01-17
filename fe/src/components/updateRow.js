@@ -43,6 +43,21 @@ export const updateRow = async (mode, data, updated) => {
         console.log(data);
         let x = Object.keys(updated);
         let items = [];
+        // if (x[0] === "matInQnt") {
+        //     var regex = /^[0-9]+$/;
+        //     if (updated.matInQnt.match(regex)) {
+        //         response.err = 1;
+        //         response.msg = "matInQnt must be a Number";
+        //     }
+        // }
+        // if (x[0] === "priceIn") {
+        //     // let regex = /^\d+\.?\d*$/;
+        //     if (updated.priceIn.match(regex)) {
+        //         response.err = 1;
+        //         response.msg = "PriceIn must be a Decimal or Number";
+        //     }
+
+        // }
         if (x[0] === "matInQnt") {
             console.log("WRAIA gia TO matInqnt", updated.matInQnt);
             response.newAvailability = true;
