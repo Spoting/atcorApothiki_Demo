@@ -65,9 +65,10 @@ export const addRow = async (mode, data) => {
         return newRow;
     }
     if (mode === "Tasks") {
+        let x = Math.floor(Math.random() * 100);
         newRow = {
             sysName: "",
-            taskName: "",
+            taskName: "PleaseChangeName/" + x,
             endItem: "",
             completed: false,
             // dateCompleted: "",
@@ -75,6 +76,7 @@ export const addRow = async (mode, data) => {
             PO: ""
         }
         response = await ApiTasks.createTask(newRow);
+        console.log("TaskCreate", response);
     }
     // if (mode === "ItemInvoices") {
     //     newRow = {
