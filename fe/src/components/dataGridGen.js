@@ -161,8 +161,7 @@ export default class dataGridGen extends React.Component {
                     if (y.key === "unit") {
                         y.editor = <DropDownEditor options={unitOptions} />;
                     }
-                    // y.editor = EditorDropDown;
-                    
+                    // y.editor = EditorDropDown;  
                 }
                 // if (ca.isFormattable.find((i) => { return i === x })) {
                 //     y.formatter = NameFormatter;

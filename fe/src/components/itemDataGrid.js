@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 import update from 'immutability-helper';
-import { Toolbar, Data, Filters } from "react-data-grid-addons";
+import { Toolbar, Data, Filters, Editors } from "react-data-grid-addons";
+
+const {
+    DropDownEditor
+} = Editors;
 
 const Selectors = Data.Selectors;
 
@@ -23,7 +27,14 @@ const filterNumeric = ["totalStock"];
 const filterAutoComplete = [];
 const filterSingleSelect = ["unit", "category"];
 const filterMultiSelect = [];
+const editorDropDown = ["unit"];
 // const isFormattable = ["nsn"];
+
+const unitOptions = [
+    {id: "KG" , value: "KG"},
+    {id: "TEM", value: "TEM"},
+    {id: "LT", value: "LT"}
+]
 
 
 /**
@@ -127,6 +138,12 @@ export default class ItemsDataGrid extends React.Component {
                     y.filterable = true;
                     y.sortable = true;
 
+                }
+                if (editorDropDown.find((i) => { return i === x })) {
+                    if (y.key === "unit") {
+                        y.editor = <DropDownEditor options={unitOptions} />;
+                    }
+                    // y.editor = EditorDropDown;  
                 }
                 // if (isFormattable.find((i) => { return i === x })) {
                 //     y.formatter = NsnFormatter;
