@@ -212,7 +212,8 @@ export default class dataGridGen extends React.Component {
     };
 
     handleFilterChange = (filter) => {
-        const newFilters = { ...this.state.filters };
+        setTimeout(function () {
+            const newFilters = { ...this.state.filters };
         // console.log("FF", newFilters)
         if (filter.filterTerm) {
             newFilters[filter.column.key] = filter;
@@ -223,6 +224,7 @@ export default class dataGridGen extends React.Component {
         this.setState({ filters: newFilters, selectedKeys: [] }, () => {
             // console.log("AfterHandleFilter RowsSelect", this.state.selectedKeys)
         });
+        }, 1000)
     };
 
     onClearFilters = () => {
@@ -359,7 +361,6 @@ export default class dataGridGen extends React.Component {
 
 
     getValidFilterValues(rows, columnId) {
-        // console.log("COLUMNID", columnId);
         return rows.map(r => r[columnId])
             .filter((item, i, a) => {
                 return i === a.indexOf(item);
