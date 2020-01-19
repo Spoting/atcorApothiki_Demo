@@ -9,7 +9,7 @@ export const columnsActions = {
         filterAutoComplete: [],
         filterSingleSelect: ["name"],
         // isFormattable: ["nsn"],
-        editorDropDown: [],
+        editorDropDown: ["unit"],
         editorAutoComplete: ["name"],
         isSortable: ["matInQnt", "atcorId", "name", "availability", "priceIn"]
     },

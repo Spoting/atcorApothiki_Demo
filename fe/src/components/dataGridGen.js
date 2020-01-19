@@ -16,8 +16,14 @@ const {
 } = Filters;
 const {
     AutoComplete: AutoCompleteEditor,
-    // DropDownEditor
+    DropDownEditor
 } = Editors;
+
+const unitOptions = [
+    {id: "KG" , value: "KG"},
+    {id: "TEM", value: "TEM"},
+    {id: "LT", value: "LT"}
+]
 
 export default class dataGridGen extends React.Component {
     constructor(props) {
@@ -151,10 +157,13 @@ export default class dataGridGen extends React.Component {
                     // y.editor = EditorAutoComplete;
                     y.editor = <AutoCompleteEditor options={this._itemNames} />;
                 }
-                // if (ca.editorDropDown.find((i) => { return i === x })) {
-                //     // y.editor = EditorDropDown;
-                //     // y.editor = <DropDownEditor options={} />;
-                // }
+                if (ca.editorDropDown.find((i) => { return i === x })) {
+                    if (y.key === "unit") {
+                        y.editor = <DropDownEditor options={unitOptions} />;
+                    }
+                    // y.editor = EditorDropDown;
+                    
+                }
                 // if (ca.isFormattable.find((i) => { return i === x })) {
                 //     y.formatter = NameFormatter;
                 // }
