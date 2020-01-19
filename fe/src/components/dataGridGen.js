@@ -220,7 +220,7 @@ export default class dataGridGen extends React.Component {
     };
 
     handleFilterChange = (filter) => {
-        setTimeout(function () {
+        setTimeout( () => {
             const newFilters = { ...this.state.filters };
         // console.log("FF", newFilters)
         if (filter.filterTerm) {

@@ -46,6 +46,7 @@ export default class Invoices extends React.Component {
 
     createInvoiceItems = async (data) => {
         let invoiceId = this.state.selectedInvoice;
+        console.log("INVOICEITEMS DATA: ", this.state.invoiceItems);
         if (invoiceId === -1) {
             alert("Please Select an Invoice to Add Items for")
             return;
@@ -110,26 +111,26 @@ export default class Invoices extends React.Component {
         // let matInDate = results.invoices[0].matInDate;
         let rows = [];
         if (results.invoices[0].items.length === 0){
-            let row = {};
-            row.id = -2;
-            // row.invoice = invoice;
-            // row.remark = remark;
-            row.atcorId = 0;
-            row.atcorNo = "";
-            row.task_related = "";
-            row.name = " "; //des giati ston poutso to exw valei auto me keno, mou vrwmaei
-            row.nsn = "";
-            row.unit = "";
-            row.PN = "";
-            row.atcorPN = "";
-            row.characteristic_1 = "";
-            row.characteristic_2 = "";
-            row.rfm_related = "";
-            row.matInQnt = 0;
-            row.availability = 0;
-            row.priceIn = 0.00;
+            // let row = {};
+            // row.id = -2;
+            // // row.invoice = invoice;
+            // // row.remark = remark;
+            // row.atcorId = 0;
+            // row.atcorNo = "";
+            // row.task_related = "";
+            // row.name = " "; //des giati ston poutso to exw valei auto me keno, mou vrwmaei
+            // row.nsn = "";
+            // row.PN = "";
+            // row.atcorPN = "";
+            // row.rfm_related = "";
+            // row.characteristic_1 = "";
+            // row.characteristic_2 = "";
+            // row.unit = "";
+            // row.matInQnt = 0;
+            // row.availability = 0;
+            // row.priceIn = 0.00;
 
-            rows.push(row)
+            // rows.push(row)
         } else {
             rows = results.invoices[0].items.map((r) => {
                 let row = {};
@@ -141,12 +142,12 @@ export default class Invoices extends React.Component {
                 row.task_related = r.invoiceItem.task_related;
                 row.name = r.name;
                 row.nsn = r.nsn;
-                row.unit = r.unit;
-                row.characteristic_1 = r.characteristic_1;
-                row.characteristic_2 = r.characteristic_2;
                 row.PN = r.PN;
                 row.atcorPN = r.atcorPN;
                 row.rfm_related = r.invoiceItem.rfm_related;
+                row.characteristic_1 = r.characteristic_1;
+                row.characteristic_2 = r.characteristic_2;
+                row.unit = r.unit;
                 row.matInQnt = r.invoiceItem.matInQnt;
                 row.availability = r.invoiceItem.availability;
                 row.priceIn = r.invoiceItem.priceIn;
