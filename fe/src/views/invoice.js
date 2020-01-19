@@ -52,11 +52,14 @@ export default class Invoices extends React.Component {
             return;
         }
         let items = data;
-        
+        let foundEmptyName = items.find(i => {
+            return (i.name === "" || i.name === " ")
+        })
+        if (foundEmptyName) {
+            alert("You got a row with empty Name")
+            return;
+        }
         items.map(i => {
-/** KENO NAME NA AGNOEI TIN GRAMMI */
-
-            // console.log("AtcorNo ", i.atcorNo)
             delete i.id;
             if (i.nsn === "" || i.nsn === " "){
                 delete i.nsn;
@@ -64,11 +67,8 @@ export default class Invoices extends React.Component {
             if (i.atcorPN === "" || i.atcorPN === " "){
                 delete i.atcorPN;
             }
-            // console.log("TYPOS", typeof(i.matInQnt))
             if (typeof(i.matInQnt) === "string"){
-                // console.log("edw");
                i.matInQnt = parseInt(i.matInQnt);
-            //    console.log(i.matInQnt);
             }
             
         })
