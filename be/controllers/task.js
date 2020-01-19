@@ -14,8 +14,9 @@ const create = async (req, res) => {
     console.log(data.data.taskName);
     try {
         let task = await Task.create(data.data);
+        result = task;
         result.msg = "Inserted Successfully";
-        result.id = task.id;
+
         return res.status(201).send(result);
     } catch (e) {
         console.log(e);
