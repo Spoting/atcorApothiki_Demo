@@ -7,8 +7,8 @@ import Loader from 'react-loader';
 import GalleryWrapper from '../components/galleryWrapper';
 import DataGridGen from '../components/dataGridGen';
 
-const ApiTasks = require("../util/api").ApiTasks;
-const ApiItems = require("../util/api").ApiItems;
+const ApiTasks = require("../util/api").default.ApiTasks;
+const ApiItems = require("../util/api").default.ApiItems;
 
 export default class TaskMvts extends React.Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import DataGridGen from '../components/dataGridGen';
 
-const ApiTasks = require("../util/api").ApiTasks;
+const ApiTasks = require("../util/api").default.ApiTasks;
 
 export default class Tasks extends React.Component {
     constructor(props) {

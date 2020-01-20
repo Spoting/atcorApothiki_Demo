@@ -137,13 +137,13 @@ const ApiItems = {
             console.log(e);
         }
     },
-    getItemInvoices: async function (id) {
+    getItemInvoices: async function (id, checkout) {
         let call;
-        // if (id) {
-        //     call = url + "item/find/" + id;
-        // }
         if (id) {
             call = url + "item/findInvoices/" + id;
+        }
+        if (checkout) {
+            call = url + "item/findInvoices/" + id + "/" + checkout;
         }
         
         try {

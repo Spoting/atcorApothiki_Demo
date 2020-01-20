@@ -68,7 +68,7 @@ export const addRow = async (mode, data) => {
         let x = Math.floor(Math.random() * 100);
         newRow = {
             sysName: "",
-            taskName: "PleaseChangeName/" + x,
+            taskName: "Change/" + x,
             endItem: "",
             completed: false,
             // dateCompleted: "",

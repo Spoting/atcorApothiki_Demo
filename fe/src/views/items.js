@@ -119,7 +119,7 @@ export default class Items extends React.Component {
         });
     }
     _getItemInvoices = async () => {
-        let results = await ApiItems.getItemInvoices(this.state.selectedAtcorId, 1);
+        let results = await ApiItems.getItemInvoices(this.state.selectedAtcorId, 0);
         console.log("NANAN", results)
         if (results.err) {
             return;
@@ -133,6 +133,9 @@ export default class Items extends React.Component {
             row.invoice = r.invoice;
             row.remark = r.remark;
             row.matInDate = r.matInDate;
+            row.supplier = r.supplier;
+            row.rfm_related = r.invoiceItems.rfm_related;
+            row.task_related = r.invoiceItems.task_related;
             // row.atcorId = atcorId;
             // row.name = name;
             row.matInQnt = r.invoiceItems.matInQnt;

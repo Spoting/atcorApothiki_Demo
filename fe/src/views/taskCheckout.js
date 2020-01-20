@@ -18,7 +18,7 @@ export default class TaskCheckout extends React.Component {
             images: [],
             selectedTaskItem: -1,
             selectedAtcorId: -1,
-            // selectedMovement: -1,
+            selectedItemInvoice: -1,
             of: "",
             ofTask: "",
             isLoading: false,
@@ -60,6 +60,10 @@ export default class TaskCheckout extends React.Component {
                 console.log("Selected ", this.state.selectedAtcorId)
             )
         }
+    }
+
+    setSelectedItemInvoice = async (selectedItemInvoice) => {
+        this.setState({ selectedItemInvoice: selectedItemInvoice }, () => console.log("Selected", this.state.selectedItemInvoice))
     }
 
     _getTaskItems = async () => {
@@ -153,7 +157,7 @@ export default class TaskCheckout extends React.Component {
                                 selectedRow={this.state.selectedItemInvoice}
                                 setSelectedRow={this.setSelectedItemInvoice}
                                 of={this.state.of}
-                                enableCellSelect={false}
+                                enableCellSelect={true}
                             />
                         </div>
                     </div>

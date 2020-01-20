@@ -364,7 +364,7 @@ export default class dataGridGen extends React.Component {
         let tempId = this.state.rows.length + 2;
         if ((this.props.mode === "InvoiceItems") && (this.state.rows.length > 0)) {
             tempId = -tempId;
-        }
+        } 
         data.tempId = tempId;
         console.log("HandleAddRowInvoiceItemId", data.tempId)
         console.log("LEEENGHT", this.state.rows.length)

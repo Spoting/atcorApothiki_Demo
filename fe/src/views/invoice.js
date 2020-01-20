@@ -98,14 +98,13 @@ export default class Invoices extends React.Component {
             return;
         }
         let items = data;
-        let foundEmptyName = items.find(i => {
-            return (i.name === "" || i.name === " ")
+        console.log("Prin to filter", items)
+        let x = items.filter( i => {
+            return !(i.name === "" || i.name === " ");
         })
-        if (foundEmptyName) {
-            alert("You got a row with empty Name")
-            return;
-        }
-        items.map(i => {
+        console.log("Meta to filter", x)
+
+        x.map(i => {
             delete i.id;
             if (i.nsn === "" || i.nsn === " ") {
                 delete i.nsn;
@@ -119,8 +118,12 @@ export default class Invoices extends React.Component {
 
         })
 
-        console.log("XRISTEMOU", invoiceId, items)
-        let result = await ApiInvoices.createInvoiceItems(invoiceId, items);
+        if (x.length === 0 ) {
+            alert("Please Add Items to Invoice");
+            return;
+        }
+        console.log("XRISTEMOU", invoiceId, x)
+        let result = await ApiInvoices.createInvoiceItems(invoiceId, x);
         console.log("META TON STRAVO MOU", result);
         let output2 = result.msg2 + '\n';
         if (result.err2) {
@@ -174,26 +177,26 @@ export default class Invoices extends React.Component {
         // let matInDate = results.invoices[0].matInDate;
         let rows = [];
         if (results.invoices[0].items.length === 0) {
-            // let row = {};
-            // row.id = -2;
+            let row = {};
+            row.id = -2;
             // // row.invoice = invoice;
             // // row.remark = remark;
-            // row.atcorId = 0;
-            // row.atcorNo = "";
-            // row.task_related = "";
-            // row.name = " "; //des giati ston poutso to exw valei auto me keno, mou vrwmaei
-            // row.nsn = "";
-            // row.PN = "";
-            // row.atcorPN = "";
-            // row.rfm_related = "";
-            // row.characteristic_1 = "";
-            // row.characteristic_2 = "";
-            // row.unit = "";
-            // row.matInQnt = 0;
-            // row.availability = 0;
-            // row.priceIn = 0.00;
+            row.atcorId = null;
+            row.atcorNo = null;
+            row.task_related = "";
+            row.name = "";
+            row.PN = null;
+            row.nsn = null;
+            row.atcorPN = null;
+            row.characteristic_1 = null;
+            row.characteristic_2 = null;
+            row.rfm_related = null;
+            row.unit = null;
+            row.matInQnt = null;
+            row.availability = null;
+            row.priceIn = null;
 
-            // rows.push(row)
+            rows.push(row)
         } else {
             rows = results.invoices[0].items.map((r) => {
                 let row = {};
@@ -308,3 +311,58 @@ export default class Invoices extends React.Component {
     }
 }
 
+
+// createInvoiceItems = async (data) => {
+//     let invoiceId = this.state.selectedInvoice;
+//     console.log("INVOICEITEMS DATA: ", this.state.invoiceItems);
+//     if (invoiceId === -1) {
+//         alert("Please Select an Invoice to Add Items for")
+//         return;
+//     }
+//     let items = data;
+//     let foundEmptyName = items.find(i => {
+//         return (i.name === "" || i.name === " ")
+//     })
+//     if (foundEmptyName) {
+//         alert("You got a row with empty Name")
+//         return;
+//     }
+//     items.map(i => {
+//         delete i.id;
+//         if (i.nsn === "" || i.nsn === " ") {
+//             delete i.nsn;
+//         }
+//         if (i.atcorPN === "" || i.atcorPN === " ") {
+//             delete i.atcorPN;
+//         }
+//         if (typeof (i.matInQnt) === "string") {
+//             i.matInQnt = parseInt(i.matInQnt);
+//         }
+
+//     })
+
+//     console.log("XRISTEMOU", invoiceId, items)
+//     let result = await ApiInvoices.createInvoiceItems(invoiceId, items);
+//     console.log("META TON STRAVO MOU", result);
+//     let output2 = result.msg2 + '\n';
+//     if (result.err2) {
+//         result.newItems.map(ni => { output2 = output2 + '\n' + ni.item.name + " " + ni.item.atcorNo })
+//     }
+//     output2 = output2 + "\n\n";
+//     alert(output2);
+
+//     let output1 = result.msg1 + '\n';
+//     if (result.err1) {
+//         result.notAssigned.map(ni => { output1 = output1 + '\n' + ni.item.name + " " + ni.item.atcorNo })
+//     }
+//     output1 = output1 + "\n\n";
+//     alert(output1);
+//     // let output = result.msg + '\n';
+//     // if (result.err) {
+//     //     result.data.map(e => { output = output + '\n' + e.item.name })
+//     // }
+//     // output = output + "\n\n"
+//     // alert(output);
+//     await this.setSelectedInvoiceItem(-1, -1, true);
+//     // this.setState({ isLoading: false })
+// }
