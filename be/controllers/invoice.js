@@ -301,7 +301,7 @@ const deleteInvoice = async (req, res) => {
             await Invoice.destroy(
                 { where: { id: data.invoiceId } }
             )
-            response.msg = "Deleted Invoice and it's Items. Stock is Updated. \n If you created a new Warehouse Item by a mistake, please delete it."
+            response.msg = "Deleted Invoice and it's Items. Stock is Updated. \n If you created a new Warehouse Item by a mistake, please delete it.\n\n"
             return res.status(201).send(response);
         } catch (e) {
             response.msg = e.original.sqlMessage;
