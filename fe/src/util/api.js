@@ -57,17 +57,22 @@ const ApiItems = {
             console.log(e);
         }
     },
-    getItemByName: async function (i) {
+    getItemByName: async function (i, PN) {
         console.log("API ")
         let call = url + "item/findByName";
         if (i) {
             call = url + "item/findByName/" + i;
+            if (PN) {
+                call = url + "item/findByName/" + i + "/" + PN;
+            }
         }
+        
         try {
             let response = await fetch(call)
             if (response.ok) {
                 let jsonResp = await response.json();
                 // console.log(jsonResp);
+                console.log("Find By Name", jsonResp);
                 return jsonResp;
             }
         } catch (e) {

@@ -20,9 +20,9 @@ const {
 } = Editors;
 
 const unitOptions = [
-    {id: "KG" , value: "KG"},
-    {id: "TEM", value: "TEM"},
-    {id: "LT", value: "LT"}
+    { id: "KG", value: "KG" },
+    { id: "TEM", value: "TEM" },
+    { id: "LT", value: "LT" }
 ]
 
 export default class dataGridGen extends React.Component {
@@ -91,7 +91,6 @@ export default class dataGridGen extends React.Component {
         }
     }
     _setColumns = () => {
-        // console.log("GIATI???", this.props.data)
         let data = this.props.data;
         if (data.length > 0) {
             let ca = {};
@@ -220,18 +219,18 @@ export default class dataGridGen extends React.Component {
     };
 
     handleFilterChange = (filter) => {
-        setTimeout( () => {
+        setTimeout(() => {
             const newFilters = { ...this.state.filters };
-        // console.log("FF", newFilters)
-        if (filter.filterTerm) {
-            newFilters[filter.column.key] = filter;
-            // console.log("newFilters", newFilters)
-        } else {
-            delete newFilters[filter.column.key];
-        }
-        this.setState({ filters: newFilters, selectedKeys: [] }, () => {
-            // console.log("AfterHandleFilter RowsSelect", this.state.selectedKeys)
-        });
+            // console.log("FF", newFilters)
+            if (filter.filterTerm) {
+                newFilters[filter.column.key] = filter;
+                // console.log("newFilters", newFilters)
+            } else {
+                delete newFilters[filter.column.key];
+            }
+            this.setState({ filters: newFilters, selectedKeys: [] }, () => {
+                // console.log("AfterHandleFilter RowsSelect", this.state.selectedKeys)
+            });
         }, 1000)
     };
 
@@ -252,7 +251,7 @@ export default class dataGridGen extends React.Component {
 
         updateRow(this.props.mode, tmpRows[fromRow], updated)
             .then((response) => {
-                if (!response) {return} 
+                if (!response) { return }
                 if (response.err) {
                     alert(response.msg);
                     return;
@@ -273,7 +272,7 @@ export default class dataGridGen extends React.Component {
                     }
                     if (response.found && response.foundItems) {
                         // if (response.foundItems.items.length === 1) {
-                            let foundItems = response.foundItems.items[0];
+                        let foundItems = response.foundItems.items[0];
                         if (response.foundBy === "name") {
                             tmpRows[fromRow].atcorId = foundItems.atcorId;
                             tmpRows[fromRow].atcorNo = foundItems.atcorNo;
@@ -296,15 +295,31 @@ export default class dataGridGen extends React.Component {
                             tmpRows[fromRow].atcorPN = foundItems.atcorPN;
                             tmpRows[fromRow].PN = foundItems.PN;
                         }
+                        if (response.foundBy === "PN") {
+                            tmpRows[fromRow].atcorId = foundItems.atcorId;
+                            tmpRows[fromRow].atcorNo = foundItems.atcorNo;
+                            tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
+                            tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
+                            // tmpRows[fromRow].name = foundItems.name;
+                            // tmpRows[fromRow].nsn = response.foundItems.items[0].nsn;
+                            tmpRows[fromRow].unit = foundItems.unit;
+                            tmpRows[fromRow].atcorPN = foundItems.atcorPN;
+                            // tmpRows[fromRow].PN = foundItems.PN;
+                        }
                         this.props.setSelectedRow(tmpRows[fromRow].id, tmpRows[fromRow].atcorId)
                         // }
                     }
                 } else {
                     if (response.foundBy === "name") {
                         tmpRows[fromRow].atcorId = 0;
+                        tmpRows[fromRow].atcorNo = "";
                         // tmpRows[fromRow].name = response.foundItems.items[0].name;
                         tmpRows[fromRow].nsn = "";
                         tmpRows[fromRow].unit = "";
+                        tmpRows[fromRow].PN = "";
+                        tmpRows[fromRow].atcorPN = "";
+                        tmpRows[fromRow].characteristic_1 = "";
+                        tmpRows[fromRow].characteristic_2 = "";
                     }
                     this.props.setSelectedRow(tmpRows[fromRow].id, tmpRows[fromRow].atcorId)
                 }
@@ -352,7 +367,6 @@ export default class dataGridGen extends React.Component {
                 }
                 if (newDbItem) {
                     let newRow = newDbItem;
-
                     let rows = this.state.rows.slice();
                     rows = update(rows, { $unshift: [newRow] });
 
@@ -435,7 +449,7 @@ export default class dataGridGen extends React.Component {
             //     }
             //     return false;
             // })
-            let filtered = this.state.rows.map( r => {
+            let filtered = this.state.rows.map(r => {
                 if (r.id < 0) {
                     return true;
                 }

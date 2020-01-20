@@ -80,15 +80,42 @@ export const updateRow = async (mode, data, updated) => {
             console.log("WRAIA gia TO NAME", updated.name);
             console.log(updated);
             items = await ApiItems.getItemByName(updated.name);
-            if (items.items.length > 0 && items.items.length < 2) {
-                console.log("kati vrike", items);
-                response.foundItems = items;
-                response.foundBy = "name"
-                response.found = true;
-            } else {
+            if (items.items.length > 1) {
+                alert("Found item with name <" + updated.name + "> more than 1 time.\nFill out NSN or AtcorPN.\n Otherwise update this item name (FIXTHISSETENCE).")
                 response.foundBy = "name"
                 response.found = false;
+            } else {
+                if (items.items.length > 0 && items.items.length < 2) {
+                    console.log("kati vrike", items);
+                    response.foundItems = items;
+                    response.foundBy = "name"
+                    response.found = true;
+                } else {
+                    response.foundBy = "name"
+                    response.found = false;
+                }
             }
+        }
+        if (x[0] === "PN") {
+            console.log("WRAIA gia TO PN", updated.PN);
+            console.log(data);
+            items = await ApiItems.getItemByName(data.name, updated.PN);
+            // if (items.items.length > 1) {
+            //     alert("Found item with name <" + updated.name + "> more than 1 time.\nFill out NSN or AtcorPN.\n Otherwise update this item name (FIXTHISSETENCE).")
+            //     response.foundBy = "name"
+            //     response.found = false;
+            // } else {
+                if (items.items.length > 0 && items.items.length < 2) {
+                    console.log("kati vrike", items);
+                    response.foundItems = items;
+                    response.foundBy = "PN"
+                    response.found = true;
+                }
+                // else {
+                //     response.foundBy = "PN"
+                //     response.found = false;
+                // }
+            // }
         }
     }
     if (mode === "Tasks") {
