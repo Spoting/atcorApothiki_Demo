@@ -52,28 +52,46 @@ const createInvoiceItems = async (req, res) => {
     console.log("Assign Item(s) to Invoice");
     let response = {};
     let data = req.body.data;
-    // console.log("Data", data);
+    console.log("Data", data);
     let results = await _insertInvoiceItems(data);
-    // console.log("Output after Insert", results);
-    let output = results.filter(r => {
-        console.log(r);
-        if (r.item.assigned === false) {
-            if (r.item.name === "") {
-                console.log("gamw");
-                r.item.name = "Υπάρχει Κενό Όνομα";
-            }
+    console.log("Output after Insert", results);
+    
+    let newItems = results.filter(r => {
+        if (r.item.created) {
             return r.item.name;
         }
     })
-    console.log(output);
-    if (output.length === 0) {
-        response.err = 0;
-        response.msg = "Successfully Updated/Created all Items";
-    } else {
-        response.err = 1;
-        response.msg = "Invoice Items were not created. The rest are created successfully";
-        response.data = output;
-    }
+    console.log("New Items In Database", newItems);
+   
+
+    let duplicateAtcorPN = results.map( r => {
+        if (r.duplicate) {
+            console.log(r.duplicate);
+        }
+    })
+    console.log("Duplicate AtcorPN", duplicateAtcorPN);
+
+    let notAssigned = results.filter(r => {
+        console.log(r);
+        if (r.item.assigned === false) {
+            return r.item.name;
+        }
+    })
+    
+    results.map( r => {
+        if (r.msg) {
+            console.log(r.msg);
+        }
+    })
+    console.log("Were Not Linked", notAssigned);
+    // if (output.length === 0) {
+    //     response.err = 0;
+    //     response.msg = "Successfully Updated/Created all Items";
+    // } else {
+    //     response.err = 1;
+    //     response.msg = "Invoice Items were not created. The rest are created successfully";
+    //     response.data = results;
+    // }
     return await res.status(201).send(response);
 }
 
@@ -85,31 +103,57 @@ const _insertInvoiceItems = async (data) => {
         let results = { item: { name: r.name, assigned: false, created: false } };
         try {
             let param = {};
-            if (r.nsn) {
-                param.where = {
-                    name: r.name,
-                    nsn: r.nsn,
-                    unit: r.unit
-                }
-            }
             param.where = {
                 name: r.name,
-                unit: r.unit
+                unit: r.unit,
+                // nsn: r.nsn,
+                // atcorPN: r.atcorPN,
+                PN: r.PN,
+                characteristic_1: r.characteristic_1,
+                characteristic_2: r.characteristic_2,
+                nsn: null,
+                atcorPN: null
+            }
+            if (r.nsn) {
+                // param.where = {
+                    // name: r.name,
+                    param.where.nsn = r.nsn
+                    console.log("NSN GAMW TON 8eo MOU", r.nsn)
+                    // unit: r.unit,
+                    // atcorPN: r.atcorPN,
+                    // PN: r.PN,
+                    // characteristic_1: r.characteristic_1,
+                    // characteristic_2: r.characteristic_2
+                // }
+            }
+            if (r.atcorPN) {
+                param.where.atcorPN = r.atcorPN
+                console.log("GAMW TON 8EO MOU", r.atcorPN)
             }
 
+           /**
+            * PROVLIMA ME TO ATCORPN
+            */
+
             let [item, created] = await Item.findOrCreate(param);
+
             results.item.created = created;
             results.item.name = item.name; //log
-            console.log("Etsi", item);
-            if (created) {
-                item.totalStock = r.matInQnt;
-                let no = leftFillNum(item.atcorId);
-                item.atcorNo = leftFillNum(no);
+            // console.log("Etsi", item);
+            if (item) {
+                if (created) {
+                    item.totalStock = r.matInQnt;
+                    let no = leftFillNum(item.atcorId);
+                    item.atcorNo = leftFillNum(no);
+                } else {
+                    console.log("Prin TotalStock", item.totalStock)
+                    item.totalStock = item.totalStock + r.matInQnt;
+                    console.log("Meta TotalStock", item.totalStock)
+                }
             } else {
-                console.log("Prin TotalStock", item.totalStock)
-                item.totalStock = item.totalStock + r.matInQnt;
-                console.log("Meta TotalStock", item.totalStock)
+                results.item.duplicate = "Duplicate AtcorPN: "+ r.atcorPN +" for " + r.name;
             }
+          
 
             param = r;
             param.itemId = item.atcorId;
@@ -123,8 +167,13 @@ const _insertInvoiceItems = async (data) => {
             await item.save();
             results.item.assigned = true; //log
         } catch (err) {
-            console.log(err.original.sqlMessage)
+            
             console.log("ERRORRR")
+            if (err.original.sqlMessage.includes("uniqueAtcorPN")){
+                console.log("Duplicate Atcor PN SQL ERROR", err.original.sqlMessage)
+                results.item.duplicateAtcorPN = err.original.sqlMessage;
+            }
+            results.err = err.original.sqlMessage;
         } finally {
             return results;
         }
@@ -147,11 +196,11 @@ const find = async (req, res) => {
         param.include = [{
             model: Item,
             as: 'items',
-            attributes: ['atcorId', 'atcorNo', 'name', 'nsn', 'unit'],
+            attributes: ['atcorId', 'atcorNo', 'name', 'nsn', 'unit', 'PN', 'atcorPN', 'characteristic_1', 'characteristic_2'],
             through: {
                 model: InvoiceItems,
                 as: 'invoiceItem',
-                attributes: ['id', 'matInQnt', 'availability', 'priceIn', 'task_related', 'rfm_related', "PN", "atcorPN"]
+                attributes: ['id', 'matInQnt', 'availability', 'priceIn', 'task_related', 'rfm_related']
             }
         }]
         console.log('Find InvoiceItems');

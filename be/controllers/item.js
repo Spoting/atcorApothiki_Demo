@@ -37,7 +37,7 @@ const find = async (req, res) => {
     console.log('Find Item(s)');
     let result = {};
     let data = req.params;
-    console.log(data);
+    console.log("Find Items params", data);
     let param = {};
     // param.limit = 20;
     if (data.id) {
@@ -55,11 +55,29 @@ const find = async (req, res) => {
             // name: { [op.like]:  data.name + '%' }
         }
     }
+    if (data.name && data.PN) {
+        console.log("MESA STO PN")
+        param.where = {
+            name: data.name,
+            PN: data.PN
+        }
+    }
 
     try {
         let items = await Item.findAll(param);
-        
-        result.items = items;
+        if (data.name && items.length > 1) {
+            items.map(i => console.log("Otan ginei Find By name/ ", i.name, i.nsn, i.atcorPN));
+            let x = items.filter( i => {
+                if (i.nsn === null && i.atcorPN === null) {
+                    return i;
+                }
+            })
+            x.map( x => console.log("Mono ", x.name , x.atcorNo));
+            result.items = x;
+        } else {
+            result.items = items;
+        }
+        console.log(result.items[0].name + result.items[0].PN);
         return res.status(201).send(result);
     } catch (e){
         result.err = e;
