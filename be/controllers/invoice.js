@@ -56,34 +56,38 @@ const createInvoiceItems = async (req, res) => {
     let results = await _insertInvoiceItems(data);
     // console.log("Output after Insert", results);
     results.map(r=> console.log(r));
-    // let newItems = results.filter(r => {
-    //     if (r.item.created) {
-    //         return r.item.name;
-    //     }
-    // })
-    // console.log("New Items In Database", newItems);
-   
 
-    // let duplicateAtcorPN = results.map( r => {
-    //     if (r.duplicate) {
-    //         console.log(r.duplicate);
-    //     }
-    // })
-    // console.log("Duplicate AtcorPN", duplicateAtcorPN);
+    let newItems = results.filter(r => {
+        if (r.item.created) {
+            return r.item;
+        }
+    })
+    console.log("New Items In Database.", newItems);
 
-    // let notAssigned = results.filter(r => {
-    //     console.log(r);
-    //     if (r.item.assigned === false) {
-    //         return r.item.name;
-    //     }
-    // })
-    
-    // results.map( r => {
-    //     if (r.msg) {
-    //         console.log(r.msg);
-    //     }
-    // })
-    // console.log("Were Not Linked", notAssigned);
+    let notAssigned = results.filter(r => {
+        // console.log(r);
+        if (r.item.assigned === false) {
+            return r.item;
+        }
+    })
+    console.log("Not Assigned", notAssigned);
+    if (notAssigned.length === 0) {
+        response.err1 = 0;
+        response.msg1 = "Successfully Updated Stock of All Items in Invoice.";
+    } else {
+        response.err1 = 1;
+        response.msg1 = "Already Updated/Assigned stock for these Items. The rest are Updated/Assigned Successfully.";
+        response.notAssigned = notAssigned;
+    }
+    if (newItems.length === 0) {
+        response.err2 = 0;
+        response.msg2 = "No new Items created in Warehouse."
+    } else {
+        response.err2 = 1;
+        response.msg2 = "New Items in Warehouse.";
+        response.newItems = newItems;
+    }
+
     // if (output.length === 0) {
     //     response.err = 0;
     //     response.msg = "Successfully Updated/Created all Items";
@@ -100,7 +104,7 @@ const _insertInvoiceItems = async (data) => {
 
     let log = await Promise.all(data.items.map(async (r) => {
         // console.log("InvoiceItem", r);
-        let results = { item: { name: r.name, assigned: false, created: false } };
+        let results = { item: { name: r.name, assigned: false, created: false, atcorNo: "" } };
         try {
             let param = {};
             param.where = {
@@ -139,18 +143,22 @@ const _insertInvoiceItems = async (data) => {
 
             results.item.created = created;
             results.item.name = item.name; //log
+            
             // console.log("Etsi", item);
             if (item) {
                 if (created) {
                     item.totalStock = r.matInQnt;
                     let no = leftFillNum(item.atcorId);
                     item.atcorNo = leftFillNum(no);
+
                 } else {
                     console.log("Prin TotalStock", item.totalStock)
                     item.totalStock = item.totalStock + r.matInQnt;
                     console.log("Meta TotalStock", item.totalStock)
                 }
+                results.item.atcorNo = item.atcorNo;
             } 
+
             // else {
             //     results.item.duplicate = "Duplicate AtcorPN: "+ r.atcorPN +" for " + r.name;
             // }
@@ -167,14 +175,14 @@ const _insertInvoiceItems = async (data) => {
             }
             await item.save();
             results.item.assigned = true; //log
-        } catch (err) {
-            
+        } catch (err) {     
             console.log("ERRORRR")
-            if (err.original.sqlMessage.includes("uniqueAtcorPN")){
-                console.log("Duplicate Atcor PN SQL ERROR", err.original.sqlMessage)
-                results.item.duplicateAtcorPN = err.original.sqlMessage;
-            }
+            // if (err.original.sqlMessage.includes("uniqueAtcorPN")){
+            //     console.log("Duplicate Atcor PN SQL ERROR", err.original.sqlMessage)
+            //     results.item.duplicateAtcorPN = err.original.sqlMessage;
+            // }
             results.err = err.original.sqlMessage;
+            console.log("sql Message")
         } finally {
             return results;
         }
