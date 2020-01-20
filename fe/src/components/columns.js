@@ -17,9 +17,9 @@ export const columnsActions = {
     Invoices: {
         notEditable: ["matInDate", "id"],
         isEditable: ["invoice", "remark", "supplier", "invoiceDate"],
-        filterNormal: ["remark", "matInDate", "invoiceDate"],
+        filterNormal: ["remark", "matInDate", "invoiceDate", "invoice"],
         filterNumeric: [],
-        filterAutoComplete: ["invoice", "supplier"],
+        filterAutoComplete: ["supplier"],
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],

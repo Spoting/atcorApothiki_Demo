@@ -157,6 +157,18 @@ const ApiItems = {
         } catch (e) {
             console.log(e);
         }
+    },
+    deleteItem: async function (atcorId) {
+        console.log(url + "item/delete/" + atcorId)
+        try {
+            let response = await fetch(url + "item/delete/" + atcorId);
+            if (response.ok) {
+                let jsonResp = await response.json();
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 
@@ -446,6 +458,18 @@ const ApiInvoices = {
             console.log(e);
         }
     },
+    deleteInvoice: async function (invoiceId) {
+        console.log(url + "invoice/delete/" + invoiceId)
+        try {
+            let response = await fetch(url + "invoice/delete/" + invoiceId);
+            if (response.ok) {
+                let jsonResp = await response.json();
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
 
 module.exports = {

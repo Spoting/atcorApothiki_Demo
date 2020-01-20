@@ -43,7 +43,21 @@ export default class Invoices extends React.Component {
             await this._getImages();
         }
     }
-
+    deleteInvoice = async (selected) => {
+        console.log("Arxi sto deleteInvoice Data", selected)
+        // let invoiceId = this.state.selectedInvoice;
+        if ( selected.length === 0) {
+            alert("Please Select 1 Invoice")
+        }
+        if ( selected.length > 1) {
+            alert("Please Select only 1 Invoice to Delete");
+            return;
+        }
+        /** KAPOU EDW ERWTISI GIA KWDIKO */
+        // let result = await ApiInvoices.deleteInvoice(selected[0].id);
+        console.log("mesa sto delete invoice", selected[0]);
+        // alert(result.msg);
+    }
     createInvoiceItems = async (data) => {
         let invoiceId = this.state.selectedInvoice;
         console.log("INVOICEITEMS DATA: ", this.state.invoiceItems);
@@ -224,6 +238,7 @@ export default class Invoices extends React.Component {
                             selectedRow={this.state.selectedInvoice}
                             setSelectedRow={this.setSelectedInvoice}
                             enableCellSelect={true}
+                            deleteInvoice={this.deleteInvoice}
                         />
                         <div style={{ marginTop: '15px' }}>
                             <DataGridGen
@@ -237,6 +252,7 @@ export default class Invoices extends React.Component {
                                 // getItemNames={this.getItemNames}
                                 selectedInvoiceId={this.state.selectedInvoice}
                                 createInvoiceItems={this.createInvoiceItems}
+                          
                             />
                         </div>
                         {/* <button

@@ -531,7 +531,7 @@ export default class dataGridGen extends React.Component {
                             selectTask={this.selectTask}
                             enableFilter
                             onAddRow={this.handleAddRow}
-
+                            deleteInvoice={() => this.props.deleteInvoice(this.state.selectedKeys)}
                             createInvoiceItems={() => this.props.createInvoiceItems(this.state.rows)}
                         />
                     }
@@ -580,7 +580,11 @@ class MyToolbar extends Toolbar {
             this.props.createInvoiceItems(e);
         }
     }
-
+    deleteInvoice(e) {
+        if (this.props.deleteInvoice !== null && this.props.deleteInvoice instanceof Function) {
+            this.props.deleteInvoice(e);
+        }
+    }
     renderSelectTask() {
         if (this.props.selectTask) {
             return (
@@ -604,13 +608,22 @@ class MyToolbar extends Toolbar {
     }
 
     renderCreateInvoiceItems() {
-
         if (this.props.createInvoiceItems) {
             return (
                 <button
                     className="btn btn-success"
                     style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: "green", color: "white" }}
                     onClick={this.props.createInvoiceItems}> Save Invoice Items </button>
+            );
+        }
+    }
+    renderDeleteInvoice() {
+        if (this.props.deleteInvoice) {
+            return (
+                <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: "red", color: "white" }}
+                    onClick={this.props.deleteInvoice}> Delete Invoice </button>
             );
         }
     }
@@ -627,7 +640,7 @@ class MyToolbar extends Toolbar {
                         <span style={{ marginRight: '5px', color: '#e6e6e6' }}>{this.props.mode}</span>
                         <span style={{ marginRight: '5px' }} >{this.renderToggleFilterButton()} </span>
                         {this.renderAddRowButton()}
-
+                        <span style={{ marginRight: '5px' }} >{this.renderDeleteInvoice()} </span>
                     </div>
                 </div>
             );
