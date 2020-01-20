@@ -22,10 +22,10 @@ const {
 
 const notEditable = ["atcorId", "totalStock"];
 const isEditable = ["name", "nsn", "category", "characteristic_1", "characteristic_2", "PN", "atcorPN","unit", "location", "dexion", "dexion2"];
-const filterNormal = ["nsn", "atcorNo", "name"];
+const filterNormal = ["nsn", "atcorNo", "name", "PN", "atcorPN", "category", "characteristic_1", "characteristic_2"];
 const filterNumeric = ["totalStock"];
 const filterAutoComplete = [];
-const filterSingleSelect = ["unit", "category"];
+const filterSingleSelect = ["unit"];
 const filterMultiSelect = [];
 const editorDropDown = ["unit"];
 // const isFormattable = ["nsn"];

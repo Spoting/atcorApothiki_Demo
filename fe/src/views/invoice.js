@@ -75,13 +75,26 @@ export default class Invoices extends React.Component {
        
         console.log("XRISTEMOU", invoiceId, items)
         let result = await ApiInvoices.createInvoiceItems(invoiceId, items);
-        console.log(result);
-        let output = result.msg + '\n';
-        if (result.err) {
-            result.data.map(e => { output = output + '\n' + e.item.name })
+        console.log("META TON STRAVO MOU", result);
+        let output2 = result.msg2 + '\n';
+        if (result.err2) {
+            result.newItems.map(ni => { output2 = output2 + '\n' + ni.item.name +  " " + ni.item.atcorNo})
         }
-        output = output + "\n\n"
-        alert(output);
+        output2 = output2 + "\n\n";
+        alert (output2);
+
+        let output1 = result.msg1 + '\n';
+        if (result.err1) {
+            result.notAssigned.map(ni => { output1 = output1 + '\n' + ni.item.name +  " " + ni.item.atcorNo})
+        }
+        output1 = output1 + "\n\n";
+        alert (output1);
+        // let output = result.msg + '\n';
+        // if (result.err) {
+        //     result.data.map(e => { output = output + '\n' + e.item.name })
+        // }
+        // output = output + "\n\n"
+        // alert(output);
         await this.setSelectedInvoiceItem(-1, -1, true);
         // this.setState({ isLoading: false })
     }
