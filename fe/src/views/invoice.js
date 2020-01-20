@@ -50,7 +50,7 @@ export default class Invoices extends React.Component {
     }
 
     handleChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({
             kwdikos: e.target.value
         })

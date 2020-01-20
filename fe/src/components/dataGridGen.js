@@ -655,7 +655,7 @@ class MyToolbar extends Toolbar {
                             : ""}
                         <span style={{ marginRight: '5px' }} >{this.renderSelectTask()}</span>
                         <span style={{ marginRight: '5px' }} >{this.renderAssignItemsToTask()}</span>
-                        <span style={{ marginRight: '5px' }} >{this.renderToggleFilterButton()} </span>
+                        {/* <span style={{ marginRight: '5px' }} >{this.renderToggleFilterButton()} </span> */}
                         {this.renderAddRowButton()}
                         {this.renderCreateInvoiceItems()}
                     </div>

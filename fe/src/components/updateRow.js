@@ -7,6 +7,23 @@ export const updateRow = async (mode, data, updated) => {
 
     console.log("updateRow data", data);
     if (mode === "Invoices") {
+        let x = Object.keys(updated);
+        let value = "";
+        if (x[0] === "invoiceDate") {
+            value = updated.invoiceDate;
+            console.log("Before", value);
+            let year = value.slice(0,4);
+            let month = value.slice(4,6);
+            let day = value.slice(6,8);
+            let date = [];
+            date.push(year);
+            date.push(month);
+            date.push(day);
+
+            let lop = date.join("-");
+            console.log("After", lop);
+            updated.invoiceDate = lop;
+        }
         response = await ApiInvoice.updateInvoice(data.id, updated);
     }
 
