@@ -295,13 +295,24 @@ export default class dataGridGen extends React.Component {
                             tmpRows[fromRow].atcorPN = foundItems.atcorPN;
                             tmpRows[fromRow].PN = foundItems.PN;
                         }
+                        if (response.foundBy === "atcorPN") {
+                            tmpRows[fromRow].atcorId = foundItems.atcorId;
+                            tmpRows[fromRow].atcorNo = foundItems.atcorNo;
+                            tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
+                            tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
+                            tmpRows[fromRow].name = foundItems.name;
+                            tmpRows[fromRow].nsn = foundItems.nsn;
+                            tmpRows[fromRow].unit = foundItems.unit;
+                            // tmpRows[fromRow].atcorPN = foundItems.atcorPN;
+                            tmpRows[fromRow].PN = foundItems.PN;
+                        }
                         if (response.foundBy === "PN") {
                             tmpRows[fromRow].atcorId = foundItems.atcorId;
                             tmpRows[fromRow].atcorNo = foundItems.atcorNo;
                             tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
                             tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
                             // tmpRows[fromRow].name = foundItems.name;
-                            // tmpRows[fromRow].nsn = response.foundItems.items[0].nsn;
+                            tmpRows[fromRow].nsn = foundItems.nsn;
                             tmpRows[fromRow].unit = foundItems.unit;
                             tmpRows[fromRow].atcorPN = foundItems.atcorPN;
                             // tmpRows[fromRow].PN = foundItems.PN;

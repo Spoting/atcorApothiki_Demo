@@ -41,6 +41,22 @@ const ApiItems = {
             console.log(e);
         }
     },
+    getItemByAtcorPN: async function (i) {
+        let call = url + "item/findByAtcorPN/";
+        if (i) {
+            call = url + "item/findByAtcorPN/" + i;
+        }
+        try {
+            let response = await fetch(call)
+            if (response.ok) {
+                let jsonResp = await response.json();
+                // console.log(jsonResp);
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    },
     getItemByNsn: async function (i) {
         let call = url + "item/findByNSN";
         if (i) {

@@ -76,6 +76,20 @@ export const updateRow = async (mode, data, updated) => {
                 response.found = false;
             }
         }
+        if (x[0] === "atcorPN") {
+            console.log("WRAIA gia TO atcorPN", updated.atcorPN);
+            items = await ApiItems.getItemByAtcorPN(updated.atcorPN);
+            console.log(items);
+            if (items.items.length > 0 && items.items.length < 2) {
+                response.foundItems = items;
+                response.foundBy = "atcorPN";
+                response.found = true;
+            }
+            if (updated.atcorPN === "") {
+                response.found = false;
+            }
+        }
+        
         if (x[0] === "name") {
             console.log("WRAIA gia TO NAME", updated.name);
             console.log(updated);
