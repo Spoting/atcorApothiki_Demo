@@ -173,16 +173,18 @@ const update = async (req, res) => {
             console.log(x);
             if (x[0] === "atcorPN") {
                 if (data.updateColumn.atcorPN === '' || data.updateColumn.atcorPN === ' ') {
-                    response.msg = "AtcorPN cannot be empty"
-                    response.err = true;
-                    throw new Error;
+                    // response.msg = "AtcorPN cannot be empty"
+                    // response.err = true;
+                    // throw new Error;
+                    data.updateColumn.atcorPN = null;
                 }
             }
             if (x[0] === "nsn") {
                 if (data.updateColumn.nsn === '' || data.updateColumn.nsn === ' ') {
-                    response.msg = "NSN cannot be empty"
-                    response.err = true;
-                    throw new Error;
+                    // response.msg = "NSN cannot be empty"
+                    // response.err = true;
+                    // throw new Error;
+                    data.updateColumn.nsn = null;
                 }
             }
             console.log(data.updateColumn);
