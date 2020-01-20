@@ -207,10 +207,30 @@ const update = async (req, res) => {
     return res.status(400).send(response);
 }
 
+const deleteItem = async (req, res) => {
+    console.log('Delete Item');
+    let result = {};
+    let data = req.params;
+    console.log("data", data)
+    if (data.id) {
+        try {
+            await Item.delete({where: { atcorId: data.id}});
+            result.msg = "Deleted Successfully";
+            return res.status(201).send(result);
+        } catch (e) {
+            console.log("ERROR ITEM Delete", e);
+            result.err = e.original.sqlMessage;
+            return res.status(299).send(result);
+        }
+    }
+    console.log("giganteo la8os")
+}
+
 module.exports = {
     create,
     find,
     getItemImages,
     update,
-    findItemInvoices
+    findItemInvoices,
+    deleteItem
 }

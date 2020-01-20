@@ -84,5 +84,8 @@ module.exports = (app) => {
         }),
         app.post("/api/invoice/item/update", (req, res) => {
             invoiceController.updateInvoiceItem(req, res);
+        }),
+        app.get("/api/invoice/delete/:invoiceId?", (req, res) => {
+            invoiceController.deleteInvoice(req, res);
         })
 }

@@ -14,7 +14,7 @@ const Invoice = require("../models").Invoice;
 const InvoiceItems = require("../models").InvoiceItems;
 
 
-let leftFillNum = (num, targetLength)  => {
+let leftFillNum = (num, targetLength) => {
     return num.toString().padStart(6, 0);
 }
 
@@ -55,7 +55,7 @@ const createInvoiceItems = async (req, res) => {
     console.log("Data", data);
     let results = await _insertInvoiceItems(data);
     // console.log("Output after Insert", results);
-    results.map(r=> console.log(r));
+    results.map(r => console.log(r));
 
     let newItems = results.filter(r => {
         if (r.item.created) {
@@ -120,14 +120,14 @@ const _insertInvoiceItems = async (data) => {
             }
             if (r.nsn) {
                 // param.where = {
-                    // name: r.name,
-                    param.where.nsn = r.nsn
-                    console.log("NSN GAMW TON 8eo MOU", r.nsn)
-                    // unit: r.unit,
-                    // atcorPN: r.atcorPN,
-                    // PN: r.PN,
-                    // characteristic_1: r.characteristic_1,
-                    // characteristic_2: r.characteristic_2
+                // name: r.name,
+                param.where.nsn = r.nsn
+                console.log("NSN GAMW TON 8eo MOU", r.nsn)
+                // unit: r.unit,
+                // atcorPN: r.atcorPN,
+                // PN: r.PN,
+                // characteristic_1: r.characteristic_1,
+                // characteristic_2: r.characteristic_2
                 // }
             }
             if (r.atcorPN) {
@@ -135,15 +135,15 @@ const _insertInvoiceItems = async (data) => {
                 console.log("GAMW TON 8EO MOU", r.atcorPN)
             }
 
-           /**
-            * PROVLIMA ME TO ATCORPN
-            */
+            /**
+             * PROVLIMA ME TO ATCORPN
+             */
 
             let [item, created] = await Item.findOrCreate(param);
 
             results.item.created = created;
             results.item.name = item.name; //log
-            
+
             // console.log("Etsi", item);
             if (item) {
                 if (created) {
@@ -157,12 +157,12 @@ const _insertInvoiceItems = async (data) => {
                     console.log("Meta TotalStock", item.totalStock)
                 }
                 results.item.atcorNo = item.atcorNo;
-            } 
+            }
 
             // else {
             //     results.item.duplicate = "Duplicate AtcorPN: "+ r.atcorPN +" for " + r.name;
             // }
-          
+
 
             param = r;
             param.itemId = item.atcorId;
@@ -175,7 +175,7 @@ const _insertInvoiceItems = async (data) => {
             }
             await item.save();
             results.item.assigned = true; //log
-        } catch (err) {     
+        } catch (err) {
             console.log("ERRORRR")
             // if (err.original.sqlMessage.includes("uniqueAtcorPN")){
             //     console.log("Duplicate Atcor PN SQL ERROR", err.original.sqlMessage)
@@ -275,12 +275,52 @@ const updateInvoiceItem = async (req, res) => {
     return res.status(400).send(response);
 }
 
+const deleteInvoice = async (req, res) => {
+    console.log("DELETE INVOICE")
+    let response = {};
+    let data = req.params;
+    if (data.invoiceId) {
+        console.log(data.invoiceId);
+        try {
+            console.log('Find InvoiceItems Before Deleting to Update Stock');
+            let invoiceItems = await InvoiceItems.findAll({where: { invoiceId: data.invoiceId}});
+            
+            // console.log(invoiceItems);
+            let item = {};
+            for (let i = 0; i< invoiceItems.length; i++) {
+                console.log("AtcorId", invoiceItems[i].itemId);
+                console.log("MatInQnt", invoiceItems[i].matInQnt);
+                item = await Item.findOne({where : { atcorId: invoiceItems[i].itemId }});
+                console.log("Name", item.name);
+                console.log("Before totalStock", item.totalStock);
+                item.totalStock = item.totalStock - invoiceItems[i].matInQnt;
+                await item.save();
+                console.log("After totalStock", item.totalStock);
+            }
+            
+            await Invoice.destroy(
+                { where: { id: data.invoiceId } }
+            )
+            response.msg = "Deleted Invoice and it's Items. Stock is Updated. \n If you created a new Warehouse Item by a mistake, please delete it."
+            return res.status(201).send(response);
+        } catch (e) {
+            response.msg = e.original.sqlMessage;
+            response.err = true;
+            console.log(response.msg);
+            return res.status(299).send(response);
+        }
+    }
+    response.msg = "Pws Sto Diaolo Egine Auto";
+    return res.status(400).send(response);
+}
+
 module.exports = {
     create,
     createInvoiceItems,
     find,
     update,
-    updateInvoiceItem
+    updateInvoiceItem,
+    deleteInvoice
 }
 
 
