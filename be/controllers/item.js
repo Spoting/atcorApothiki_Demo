@@ -100,8 +100,8 @@ const findItemInvoices = async (req, res) => {
     let param = {};
 
     if (data.id) {
-        param.attributes = ['atcorId', 'atcorNo', 'name'],
-            param.where = { atcorId: data.id }
+        param.attributes = ['atcorId', 'atcorNo', 'name'];
+        param.where = { atcorId: data.id };
         param.include = [{
             model: Invoice,
             as: 'invoices',
@@ -109,9 +109,12 @@ const findItemInvoices = async (req, res) => {
             through: {
                 model: InvoiceItems,
                 as: 'invoiceItems',
-                attributes: ['id', 'matInQnt', 'availability', 'priceIn']
+                attributes: ['id', 'matInQnt', 'availability', 'priceIn', 'rfm_related', 'task_related']
             }
         }]
+    }
+    if (data.checkout){
+        console.log("Kalo Pragma");
     }
 
     try {
@@ -214,7 +217,7 @@ const deleteItem = async (req, res) => {
     console.log("data", data)
     if (data.id) {
         try {
-            await Item.destroy({where: { atcorId: data.id}});
+            await Item.destroy({ where: { atcorId: data.id } });
             result.msg = "Deleted Successfully";
             return res.status(201).send(result);
         } catch (e) {

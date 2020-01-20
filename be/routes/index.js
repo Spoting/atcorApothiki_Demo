@@ -59,7 +59,7 @@ module.exports = (app) => {
         app.get("/api/item/findByAtcorPN/:atcorPN?", (req, res) => {
             itemController.find(req, res);
         }),
-        app.get("/api/item/findInvoices/:id?", (req, res) => {
+        app.get("/api/item/findInvoices/:id?/:checkout?", (req, res) => {
             itemController.findItemInvoices(req, res);
         }),
         app.post("/api/item/update", (req, res) => {

@@ -63,12 +63,6 @@ const _insertTaskItems = async (data) => {
             });
             results.item.name = item.name;
             if (item) {
-                let taskItem = await TaskItems.create({
-                    taskId: taskId,
-                    itemId: r,
-                    totalMatOut: 0,
-                    totalMatRet: 0
-                });
                 if (data.invoiceId > 0) {
                     console.log("Update TaskRelated of InvoiceItem", data.invoiceId, data.taskName);
                     await InvoiceItems.update(
@@ -77,6 +71,13 @@ const _insertTaskItems = async (data) => {
                     )
                 }
 
+                let taskItem = await TaskItems.create({
+                    taskId: taskId,
+                    itemId: r,
+                    totalMatOut: 0,
+                    totalMatRet: 0
+                });
+               
             }
             
             results.item.assigned = true;
