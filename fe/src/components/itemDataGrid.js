@@ -100,6 +100,10 @@ export default class ItemsDataGrid extends React.Component {
                     visible: true
                     // editable: true
                 };
+                // if (y.key === 'name') {
+                //     y.name = 'Description';
+                //     y.width = 200;
+                // }
                 if (y.key === 'atcorId') {
                     y.visible = false;
                 }
