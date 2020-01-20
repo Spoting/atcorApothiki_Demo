@@ -54,36 +54,36 @@ const createInvoiceItems = async (req, res) => {
     let data = req.body.data;
     console.log("Data", data);
     let results = await _insertInvoiceItems(data);
-    console.log("Output after Insert", results);
-    
-    let newItems = results.filter(r => {
-        if (r.item.created) {
-            return r.item.name;
-        }
-    })
-    console.log("New Items In Database", newItems);
+    // console.log("Output after Insert", results);
+    results.map(r=> console.log(r));
+    // let newItems = results.filter(r => {
+    //     if (r.item.created) {
+    //         return r.item.name;
+    //     }
+    // })
+    // console.log("New Items In Database", newItems);
    
 
-    let duplicateAtcorPN = results.map( r => {
-        if (r.duplicate) {
-            console.log(r.duplicate);
-        }
-    })
-    console.log("Duplicate AtcorPN", duplicateAtcorPN);
+    // let duplicateAtcorPN = results.map( r => {
+    //     if (r.duplicate) {
+    //         console.log(r.duplicate);
+    //     }
+    // })
+    // console.log("Duplicate AtcorPN", duplicateAtcorPN);
 
-    let notAssigned = results.filter(r => {
-        console.log(r);
-        if (r.item.assigned === false) {
-            return r.item.name;
-        }
-    })
+    // let notAssigned = results.filter(r => {
+    //     console.log(r);
+    //     if (r.item.assigned === false) {
+    //         return r.item.name;
+    //     }
+    // })
     
-    results.map( r => {
-        if (r.msg) {
-            console.log(r.msg);
-        }
-    })
-    console.log("Were Not Linked", notAssigned);
+    // results.map( r => {
+    //     if (r.msg) {
+    //         console.log(r.msg);
+    //     }
+    // })
+    // console.log("Were Not Linked", notAssigned);
     // if (output.length === 0) {
     //     response.err = 0;
     //     response.msg = "Successfully Updated/Created all Items";
@@ -150,9 +150,10 @@ const _insertInvoiceItems = async (data) => {
                     item.totalStock = item.totalStock + r.matInQnt;
                     console.log("Meta TotalStock", item.totalStock)
                 }
-            } else {
-                results.item.duplicate = "Duplicate AtcorPN: "+ r.atcorPN +" for " + r.name;
-            }
+            } 
+            // else {
+            //     results.item.duplicate = "Duplicate AtcorPN: "+ r.atcorPN +" for " + r.name;
+            // }
           
 
             param = r;

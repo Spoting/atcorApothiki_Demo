@@ -6,7 +6,7 @@ const Item = require("../models").Item;
 const Invoice = require("../models").Invoice;
 const InvoiceItems = require("../models").InvoiceItems;
 
-let leftFillNum = (num, targetLength)  => {
+let leftFillNum = (num, targetLength) => {
     return num.toString().padStart(6, 0);
 }
 
@@ -50,8 +50,8 @@ const find = async (req, res) => {
     }
     if (data.name) {
         console.log("MESA STON name")
-        param.where = { 
-            name: data.name 
+        param.where = {
+            name: data.name
             // name: { [op.like]:  data.name + '%' }
         }
     }
@@ -74,22 +74,22 @@ const find = async (req, res) => {
         let items = await Item.findAll(param);
         if (data.name && items.length > 1) {
             items.map(i => console.log("Otan ginei Find By name/ ", i.name, i.nsn, i.atcorPN));
-            let x = items.filter( i => {
+            let x = items.filter(i => {
                 if (i.nsn === null && i.atcorPN === null) {
                     return i;
                 }
             })
-            x.map( x => console.log("Mono ", x.name , x.atcorNo));
+            x.map(x => console.log("Mono ", x.name, x.atcorNo));
             result.items = x;
         } else {
             result.items = items;
         }
         console.log(result.items[0].name + result.items[0].PN);
         return res.status(201).send(result);
-    } catch (e){
+    } catch (e) {
         result.err = e;
         return res.status(299).send(result);
-    } 
+    }
 }
 
 const findItemInvoices = async (req, res) => {
@@ -101,22 +101,22 @@ const findItemInvoices = async (req, res) => {
 
     if (data.id) {
         param.attributes = ['atcorId', 'atcorNo', 'name'],
-        param.where = { atcorId: data.id }
+            param.where = { atcorId: data.id }
         param.include = [{
             model: Invoice,
             as: 'invoices',
-            attributes: [ 'invoice', 'remark', 'matInDate', 'supplier'],
+            attributes: ['invoice', 'remark', 'matInDate', 'supplier'],
             through: {
                 model: InvoiceItems,
                 as: 'invoiceItems',
-                attributes: ['id', 'matInQnt', 'availability', 'priceIn']            
+                attributes: ['id', 'matInQnt', 'availability', 'priceIn']
             }
         }]
     }
 
     try {
         let items = await Item.findAll(param);
-        
+
         // await items.map((i) => {
         //     console.log(i.atcorId);
         //     x = leftFillNum(i.atcorId, 6);
@@ -129,7 +129,7 @@ const findItemInvoices = async (req, res) => {
     } catch (e) {
         result.err = e;
         return res.status(299).send(result);
-    } 
+    }
 }
 
 
@@ -169,6 +169,22 @@ const update = async (req, res) => {
     console.log(data)
     if (data.atcorId) {
         try {
+            let x = Object.keys(data.updateColumn);
+            console.log(x);
+            if (x[0] === "atcorPN") {
+                if (data.updateColumn.atcorPN === '' || data.updateColumn.atcorPN === ' ') {
+                    response.msg = "AtcorPN cannot be empty"
+                    response.err = true;
+                    throw new Error;
+                }
+            }
+            if (x[0] === "nsn") {
+                if (data.updateColumn.nsn === '' || data.updateColumn.nsn === ' ') {
+                    response.msg = "NSN cannot be empty"
+                    response.err = true;
+                    throw new Error;
+                }
+            }
             console.log(data.updateColumn);
             await Item.update(
                 data.updateColumn,
@@ -177,8 +193,10 @@ const update = async (req, res) => {
             response.msg = "Updated"
             return res.status(201).send(response);
         } catch (e) {
-            response.msg = e.original.sqlMessage;
-            response.err = true;
+            if (e.original) {
+                response.msg = e.original.sqlMessage;
+                response.err = true;
+            }
             console.log(response.msg);
             return res.status(299).send(response);
         }
