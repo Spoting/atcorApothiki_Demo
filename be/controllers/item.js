@@ -214,7 +214,7 @@ const deleteItem = async (req, res) => {
     console.log("data", data)
     if (data.id) {
         try {
-            await Item.delete({where: { atcorId: data.id}});
+            await Item.destroy({where: { atcorId: data.id}});
             result.msg = "Deleted Successfully";
             return res.status(201).send(result);
         } catch (e) {

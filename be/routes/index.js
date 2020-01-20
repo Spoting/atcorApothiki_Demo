@@ -44,6 +44,9 @@ module.exports = (app) => {
         app.post("/api/item/create", (req, res) => {
             itemController.create(req, res);
         }),
+        app.get("/api/item/delete/:id?", (req, res) => {
+            itemController.deleteItem(req, res);
+        }),
         app.get("/api/item/find/:id?", (req, res) => {
             itemController.find(req, res);
         }),
