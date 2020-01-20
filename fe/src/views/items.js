@@ -6,11 +6,12 @@ import GalleryWrapper from '../components/galleryWrapper';
 
 const ApiItems = require("../util/api").ApiItems;
 
-
+const kwdikos = "atcor%123";
 export default class Items extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            kwdikos: "",
             mode: "Items",
             modeSubTable: "ItemInvoices",
             items: [],
@@ -38,7 +39,53 @@ export default class Items extends React.Component {
         }
     }
 
-    setSelectedItem = async (selectedAtcorId) => {
+
+    handleChange = (e) => {
+        console.log(e.target.value);
+        this.setState({
+            kwdikos: e.target.value
+        })
+    }
+    activateDelete = (e) => {
+        e.preventDefault();
+        if (this.state.kwdikos === kwdikos) {
+            this.setState({ activateDelete: true, kwdikos: "" });
+            alert("Delete Activated");
+            return;
+        } else {
+            this.setState({ activateDelete: false, kwdikos: "" });
+            alert("Wrong Pass")
+            return;
+        }
+
+    }
+    deleteItem = async (selected) => {
+        console.log("Arxi sto deleteItem Data", selected)
+        // let invoiceId = this.state.selectedInvoice;
+        if (selected.length === 0) {
+            alert("Please Select 1 Item")
+            return;
+        }
+        if (selected.length > 1) {
+            alert("Please Select only 1 Item to Delete");
+            return;
+        }
+        if (!this.state.activateDelete) {
+            alert("Please Enter Delete Code")
+            return;
+        }
+
+        /** KAPOU EDW ERWTISI GIA KWDIKO */
+        let result = await ApiItems.deleteItem(selected[0]);
+        console.log("mesa sto delete item", selected[0]);
+        alert(result.msg);
+        await this.setSelectedItem(-1, true);
+    }
+
+    setSelectedItem = async (selectedAtcorId, force) => {
+        if (force) {
+            this._getItems();
+        }
         this.setState({ selectedAtcorId: selectedAtcorId }, () => console.log("Selected", this.state.selectedAtcorId))
     }
     setSelectedItemInvoice = async (selectedItemInvoice) => {
@@ -104,7 +151,12 @@ export default class Items extends React.Component {
     render() {
         return (
 
-            <div className=""style={{height:"500px" ,paddingLeft:"280px",minWidth:"1300px",paddingTop:"30px"}}>
+            <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
+                <form>
+                    <label>Enter Code for Delete: </label>
+                    <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />
+                    <button onClick={(e) => this.activateDelete(e)}>Check</button>
+                </form>
                 <div className="row">
                     <div className="col-lg-9" >
                         <div>
@@ -114,9 +166,10 @@ export default class Items extends React.Component {
                                 setSelectedRow={this.setSelectedItem}
                                 selectedRow={this.state.selectedAtcorId}
                                 of={""}
+                                deleteItem={this.deleteItem}
                             />
                         </div>
-                        <div style={{ marginTop: '15px'}}>
+                        <div style={{ marginTop: '15px' }}>
                             <DataGridGen
                                 mode={this.state.modeSubTable}
                                 data={this.state.itemInvoices}

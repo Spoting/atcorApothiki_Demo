@@ -640,7 +640,7 @@ class MyToolbar extends Toolbar {
                         <span style={{ marginRight: '5px', color: '#e6e6e6' }}>{this.props.mode}</span>
                         <span style={{ marginRight: '5px' }} >{this.renderToggleFilterButton()} </span>
                         {this.renderAddRowButton()}
-                        <span style={{ marginRight: '5px' }} >{this.renderDeleteInvoice()} </span>
+                        <span >{this.renderDeleteInvoice()} </span>
                     </div>
                 </div>
             );

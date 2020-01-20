@@ -4,15 +4,19 @@ import Excel from '../components/excelReader';
 import Loader from 'react-loader';
 import GalleryWrapper from '../components/galleryWrapper';
 import DataGridGen from '../components/dataGridGen';
+// import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // const Api = require("./api").Api;
 const ApiInvoices = require("../util/api").ApiInvoices;
 const ApiItems = require("../util/api").ApiItems;
 
+const kwdikos = "atcor%123";
 export default class Invoices extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            kwdikos: "",
+            activateDelete: false,
             mode: "Invoices",
             modeSubTable: "InvoiceItems",
             invoices: [],
@@ -26,6 +30,7 @@ export default class Invoices extends React.Component {
             itemNames: []
         }
     }
+
     async componentDidMount() {
         //Remember to Promise.All
         await this._getInvoices();
@@ -43,20 +48,47 @@ export default class Invoices extends React.Component {
             await this._getImages();
         }
     }
+
+    handleChange = (e) => {
+        console.log(e.target.value);
+        this.setState({
+            kwdikos: e.target.value
+        })
+    }
+    activateDelete = (e) => {
+        e.preventDefault();
+        if ( this.state.kwdikos === kwdikos ) {
+            this.setState({activateDelete : true, kwdikos: ""});
+            alert("Delete Activated");
+            return;
+        } else {
+            this.setState({activateDelete : false, kwdikos: ""});
+            alert("Wrong Pass")
+            return;
+        }
+       
+    }
     deleteInvoice = async (selected) => {
         console.log("Arxi sto deleteInvoice Data", selected)
         // let invoiceId = this.state.selectedInvoice;
-        if ( selected.length === 0) {
+        if (selected.length === 0) {
             alert("Please Select 1 Invoice")
+            return;
         }
-        if ( selected.length > 1) {
+        if (selected.length > 1) {
             alert("Please Select only 1 Invoice to Delete");
             return;
         }
+        if (!this.state.activateDelete) {
+            alert("Please Enter Delete Code")
+            return;
+        }
+
         /** KAPOU EDW ERWTISI GIA KWDIKO */
-        // let result = await ApiInvoices.deleteInvoice(selected[0].id);
+        let result = await ApiInvoices.deleteInvoice(selected[0]);
         console.log("mesa sto delete invoice", selected[0]);
-        // alert(result.msg);
+        alert(result.msg);
+        await this.setSelectedInvoice(-1, true);
     }
     createInvoiceItems = async (data) => {
         let invoiceId = this.state.selectedInvoice;
@@ -75,34 +107,34 @@ export default class Invoices extends React.Component {
         }
         items.map(i => {
             delete i.id;
-            if (i.nsn === "" || i.nsn === " "){
+            if (i.nsn === "" || i.nsn === " ") {
                 delete i.nsn;
             }
-            if (i.atcorPN === "" || i.atcorPN === " "){
+            if (i.atcorPN === "" || i.atcorPN === " ") {
                 delete i.atcorPN;
             }
-            if (typeof(i.matInQnt) === "string"){
-               i.matInQnt = parseInt(i.matInQnt);
+            if (typeof (i.matInQnt) === "string") {
+                i.matInQnt = parseInt(i.matInQnt);
             }
-            
+
         })
-       
+
         console.log("XRISTEMOU", invoiceId, items)
         let result = await ApiInvoices.createInvoiceItems(invoiceId, items);
         console.log("META TON STRAVO MOU", result);
         let output2 = result.msg2 + '\n';
         if (result.err2) {
-            result.newItems.map(ni => { output2 = output2 + '\n' + ni.item.name +  " " + ni.item.atcorNo})
+            result.newItems.map(ni => { output2 = output2 + '\n' + ni.item.name + " " + ni.item.atcorNo })
         }
         output2 = output2 + "\n\n";
-        alert (output2);
+        alert(output2);
 
         let output1 = result.msg1 + '\n';
         if (result.err1) {
-            result.notAssigned.map(ni => { output1 = output1 + '\n' + ni.item.name +  " " + ni.item.atcorNo})
+            result.notAssigned.map(ni => { output1 = output1 + '\n' + ni.item.name + " " + ni.item.atcorNo })
         }
         output1 = output1 + "\n\n";
-        alert (output1);
+        alert(output1);
         // let output = result.msg + '\n';
         // if (result.err) {
         //     result.data.map(e => { output = output + '\n' + e.item.name })
@@ -113,7 +145,11 @@ export default class Invoices extends React.Component {
         // this.setState({ isLoading: false })
     }
 
-    setSelectedInvoice = async (selectedInvoice) => {
+    setSelectedInvoice = async (selectedInvoice, force) => {
+        if (force) {
+            console.log("FOrcare")
+            this._getInvoices();
+        }
         this.setState({ selectedInvoice: selectedInvoice }, () => console.log("Selected", this.state.selectedInvoice))
     }
     setSelectedInvoiceItem = async (selectedInvoiceItem, selectedAtcorId, force) => {
@@ -129,7 +165,7 @@ export default class Invoices extends React.Component {
     }
     _getInvoicesItems = async () => {
         let results = await ApiInvoices.getInvoiceItems(this.state.selectedInvoice);
-        console.log("InvoiceItems",results)
+        console.log("InvoiceItems", results)
         if (results.err) {
             return;
         }
@@ -137,7 +173,7 @@ export default class Invoices extends React.Component {
         let remark = results.invoices[0].remark;
         // let matInDate = results.invoices[0].matInDate;
         let rows = [];
-        if (results.invoices[0].items.length === 0){
+        if (results.invoices[0].items.length === 0) {
             // let row = {};
             // row.id = -2;
             // // row.invoice = invoice;
@@ -178,7 +214,7 @@ export default class Invoices extends React.Component {
                 row.matInQnt = r.invoiceItem.matInQnt;
                 row.availability = r.invoiceItem.availability;
                 row.priceIn = r.invoiceItem.priceIn;
-    
+
                 return row;
             })
         }
@@ -226,10 +262,15 @@ export default class Invoices extends React.Component {
         // console.log("Srcs", sources);
         this.setState({ images: sources })
     }
-    
+
     render() {
         return (
             <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
+                <form>
+                    <label>Enter Code for Delete: </label>
+                    <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)}/>
+                    <button onClick={(e) => this.activateDelete(e)}>Check</button>
+                </form>
                 <div className="row">
                     <div className="col-lg-9" >
                         <DataGridGen
@@ -252,15 +293,11 @@ export default class Invoices extends React.Component {
                                 // getItemNames={this.getItemNames}
                                 selectedInvoiceId={this.state.selectedInvoice}
                                 createInvoiceItems={this.createInvoiceItems}
-                          
+
                             />
                         </div>
-                        {/* <button
-                            className="btn btn-success"
-                            style={{ marginLeft: '15px', marginRight: '15px' }}
-                            onClick={this.createInvoiceItems}> Save Invoice Items
-                         </button> */}
-                        {this.state.isLoading ? <Loader className="spinner" /> : <Excel cb={this.createInvoiceItems} invoice={this.state.of} />}
+
+                        {/* {this.state.isLoading ? <Loader className="spinner" /> : <Excel cb={this.createInvoiceItems} invoice={this.state.of} />} */}
                     </div>
                     <div className="col-lg-3">
                         <GalleryWrapper images={this.state.images} />

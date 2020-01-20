@@ -423,6 +423,7 @@ export default class ItemsDataGrid extends React.Component {
                         onAddRow={this.handleAddRow}
                         mode={this.props.mode}
                         of={this.props.of}
+                        deleteItem={() => this.props.deleteItem(this.state.selectedKeys)}
                     />}
                     // onBeforeEdit
                     // onCheckCellIsEditable
@@ -464,6 +465,21 @@ class ItemToolbar extends Toolbar {
             this.props.assignItemsToTask(e);
         }
     }
+    deleteItem(e) {
+        if (this.props.deleteItem !== null && this.props.deleteItem instanceof Function) {
+            this.props.deleteItem(e);
+        }
+    }
+    renderDeleteItem() {
+        if (this.props.deleteItem) {
+            return (
+                <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: "red", color: "white" }}
+                    onClick={this.props.deleteItem}> Delete Item </button>
+            );
+        }
+    }
     renderSelectTask() {
         if (this.props.selectTask) {
             return (
@@ -495,7 +511,8 @@ class ItemToolbar extends Toolbar {
                     <span style={{ marginRight: '5px' }} >{this.renderSelectTask()}</span>
                     <span style={{ marginRight: '5px' }} >{this.renderAssignItemsToTask()}</span>
                     <span style={{ marginRight: '5px' }} >{this.renderToggleFilterButton()} </span>
-                    {this.renderAddRowButton()}
+                    {this.renderAddRowButton()} 
+                    <span style={{ marginRight: '5px' }} >{this.renderDeleteItem()} </span>
                 </div>
             </div>
         );

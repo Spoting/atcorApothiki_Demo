@@ -107,7 +107,7 @@ export const updateRow = async (mode, data, updated) => {
             console.log(updated);
             items = await ApiItems.getItemByName(updated.name);
             if (items.items.length > 1) {
-                alert("Found item with name <" + updated.name + "> more than 1 time.\nFill out NSN or AtcorPN.\n Otherwise update this item name (FIXTHISSETENCE).")
+                alert("Found item with name <" + updated.name + "> more than 1 time.\nFill out PN or AtcorPN or NSN .\n\n")
                 response.foundBy = "name"
                 response.found = false;
             } else {
