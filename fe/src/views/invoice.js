@@ -141,12 +141,12 @@ export default class Invoices extends React.Component {
                 row.atcorNo = r.atcorNo;
                 row.task_related = r.invoiceItem.task_related;
                 row.name = r.name;
-                row.nsn = r.nsn;
                 row.PN = r.PN;
+                row.nsn = r.nsn;
                 row.atcorPN = r.atcorPN;
-                row.rfm_related = r.invoiceItem.rfm_related;
                 row.characteristic_1 = r.characteristic_1;
                 row.characteristic_2 = r.characteristic_2;
+                row.rfm_related = r.invoiceItem.rfm_related;
                 row.unit = r.unit;
                 row.matInQnt = r.invoiceItem.matInQnt;
                 row.availability = r.invoiceItem.availability;
