@@ -16,6 +16,11 @@ export const updateRow = async (mode, data, updated) => {
         let isOut = false;
         let value;
         if (x[0] === "matOut") {
+            let isnum = /^\d+$/.test(updated.matOut);
+            if (!isnum) {
+                alert("Please Insert Numbers");
+                return;
+            }
             value = parseInt(updated.matOut);
             if ((value < 0) || (data.totalStock < value)) {
                 alert("Must be: ( matOut > 0 )AND ( matout < totalStock )");
@@ -24,6 +29,11 @@ export const updateRow = async (mode, data, updated) => {
             isOut = true;
         }
         if (x[0] === "matRet") {
+            let isnum = /^\d+$/.test(updated.matRet);
+            if (!isnum) {
+                alert("Please Insert Numbers");
+                return;
+            }
             value = parseInt(updated.matRet);
             if ((value < 0) || (data.totalMatOut - data.totalMatRet < value)) {
                 alert("Must be: ( matRet > 0 ) AND ( matRet <= totalMatOut - totalMatRet )");
@@ -43,21 +53,23 @@ export const updateRow = async (mode, data, updated) => {
         console.log(data);
         let x = Object.keys(updated);
         let items = [];
-        // if (x[0] === "matInQnt") {
-        //     var regex = /^[0-9]+$/;
-        //     if (updated.matInQnt.match(regex)) {
-        //         response.err = 1;
-        //         response.msg = "matInQnt must be a Number";
-        //     }
-        // }
-        // if (x[0] === "priceIn") {
-        //     // let regex = /^\d+\.?\d*$/;
-        //     if (updated.priceIn.match(regex)) {
-        //         response.err = 1;
-        //         response.msg = "PriceIn must be a Decimal or Number";
-        //     }
-
-        // }
+        if (x[0] === "matInQnt") {
+            let isnum = /^\d+$/.test(updated.matInQnt);
+            if (!isnum) {
+                alert("Please Insert Numbers");
+                return;
+            }
+        }
+        if (x[0] === "priceIn") {
+            console.log("PriceIn Prin", updated.priceIn);
+            updated.priceIn = updated.priceIn.replace("\,", "\.");
+            console.log("priceIn Meta", updated.priceIn);
+            let isdec =  /^\d+\.\d{0,2}$/.test(updated.priceIn);
+            if (!isdec) {
+                alert("Please Insert Decimal");
+                return;
+            }
+        }
         if (x[0] === "matInQnt") {
             console.log("WRAIA gia TO matInqnt", updated.matInQnt);
             response.newAvailability = true;

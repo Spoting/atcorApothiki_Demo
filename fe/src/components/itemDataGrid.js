@@ -21,7 +21,7 @@ const {
 
 
 const notEditable = ["atcorId", "totalStock"];
-const isEditable = ["name", "nsn", "category", "characteristic_1", "characteristic_2", "PN", "atcorPN","unit", "location", "dexion", "dexion2"];
+const isEditable = ["name", "nsn", "category", "characteristic_1", "characteristic_2", "PN", "atcorPN", "unit", "location", "dexion", "dexion2"];
 const filterNormal = ["nsn", "atcorNo", "name", "PN", "atcorPN", "category", "characteristic_1", "characteristic_2"];
 const filterNumeric = ["totalStock"];
 const filterAutoComplete = [];
@@ -31,9 +31,9 @@ const editorDropDown = ["unit"];
 // const isFormattable = ["nsn"];
 
 const unitOptions = [
-    {id: "KG" , value: "KG"},
-    {id: "TEM", value: "TEM"},
-    {id: "LT", value: "LT"}
+    { id: "KG", value: "KG" },
+    { id: "TEM", value: "TEM" },
+    { id: "LT", value: "LT" }
 ]
 
 
@@ -110,7 +110,7 @@ export default class ItemsDataGrid extends React.Component {
                 if (isEditable.find((i) => { return i === x })) {
                     y.editable = this.isRowEditable;
                 }
-                
+
                 if (notEditable.find((i) => { return i === x })) {
                     y.sortable = false;
                     y.editable = false;
@@ -319,15 +319,15 @@ export default class ItemsDataGrid extends React.Component {
 
     //TODO: LOUSIMO STO FILTER TOU ATCORID
     getValidFilterValues(rows, columnId) {
-            // console.log(columnId)
-            if ( columnId === 'atcorId'){
-                return rows.map((i) => { return i[columnId].toString() })
-            }
-           return rows
-                .map(r => r[columnId])
-                .filter((item, i, a) => {
-                    return i === a.indexOf(item);
-                });
+        // console.log(columnId)
+        if (columnId === 'atcorId') {
+            return rows.map((i) => { return i[columnId].toString() })
+        }
+        return rows
+            .map(r => r[columnId])
+            .filter((item, i, a) => {
+                return i === a.indexOf(item);
+            });
     }
     onRowsSelected = (rows) => {
         // console.log("Select:Rows", rows);
@@ -398,7 +398,7 @@ export default class ItemsDataGrid extends React.Component {
 
     render() {
         return (
-            
+
             <div>
                 <ReactDataGrid
                     ref={node => this.grid = node}
@@ -503,6 +503,33 @@ class ItemToolbar extends Toolbar {
 }
 
 
+
+// class IntegerEditor extends React.Component {
+//     constructor(props) {
+//       super(props);
+//       this.state = { value: props.value };
+//     }
+
+//     getValue() {
+//       return { value: this.state.value };
+//     }
+
+//     getInputNode() {
+//       return ReactDOM.findDOMNode(this).getElementsByTagName("input")[0];
+//     }
+
+//     handleChangeComplete = color => {
+//       this.setState({ color: color.hex }, () => this.props.onCommit());
+//     };
+//     render() {
+//       return (
+//         <Interger
+//           color={this.state.color}
+//           onChange={this.handleChangeComplete}
+//         />
+//       );
+//     }
+//   }
 
 class NsnFormatter extends React.Component {
 
