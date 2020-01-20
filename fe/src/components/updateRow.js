@@ -1,6 +1,6 @@
-const ApiInvoice = require("../util/api").ApiInvoices;
-const ApiItems = require("../util/api").ApiItems;
-const ApiTasks = require("../util/api").ApiTasks;
+const ApiInvoice = require("../util/api").default.ApiInvoices;
+const ApiItems = require("../util/api").default.ApiItems;
+const ApiTasks = require("../util/api").default.ApiTasks;
 
 export const updateRow = async (mode, data, updated) => {
     let response = {};

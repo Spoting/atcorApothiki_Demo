@@ -4,7 +4,7 @@ import ItemsDataGrid from '../components/itemDataGrid';
 import DataGridGen from '../components/dataGridGen';
 import GalleryWrapper from '../components/galleryWrapper';
 
-const ApiItems = require("../util/api").ApiItems;
+const ApiItems = require("../util/api").default.ApiItems;
 
 const kwdikos = "atcor%123";
 export default class Items extends React.Component {

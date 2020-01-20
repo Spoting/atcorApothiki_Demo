@@ -6,7 +6,7 @@ import { addRow } from './addRow';
 import { updateRow } from './updateRow';
 import { columnsActions } from './columns';
 
-const ApiTasks = require("../util/api").ApiTasks;
+const ApiTasks = require("../util/api").default.ApiTasks;
 
 const Selectors = Data.Selectors;
 const {

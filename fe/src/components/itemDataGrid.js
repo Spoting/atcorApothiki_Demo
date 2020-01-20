@@ -9,8 +9,8 @@ const {
 
 const Selectors = Data.Selectors;
 
-const ApiItems = require("../util/api").ApiItems;
-const ApiTasks = require("../util/api").ApiTasks;
+const ApiItems = require("../util/api").default.ApiItems;
+const ApiTasks = require("../util/api").default.ApiTasks;
 
 const {
     NumericFilter,

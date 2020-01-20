@@ -472,7 +472,7 @@ const ApiInvoices = {
     }
 }
 
-module.exports = {
+export default {
     ApiItems,
     ApiTasks,
     ApiInvoices

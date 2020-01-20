@@ -7,8 +7,8 @@ import DataGridGen from '../components/dataGridGen';
 // import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // const Api = require("./api").Api;
-const ApiInvoices = require("../util/api").ApiInvoices;
-const ApiItems = require("../util/api").ApiItems;
+const ApiInvoices = require("../util/api").default.ApiInvoices;
+const ApiItems = require("../util/api").default.ApiItems;
 
 const kwdikos = "atcor%123";
 export default class Invoices extends React.Component {
