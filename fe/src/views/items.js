@@ -95,10 +95,10 @@ export default class Items extends React.Component {
         console.log(this.state.selectedAtcorId)
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
-            let img = {};
-            img.src = 'http://localhost:8000/static/' + i;
-            img.width = 100;
-            img.height = 100;
+            let img = '';
+            img = 'http://localhost:8000/static/' + i;
+            // img.width = 100;
+            // img.height = 100;
 
             return img;
         });
@@ -122,6 +122,9 @@ export default class Items extends React.Component {
         let results = await ApiItems.getItemInvoices(this.state.selectedAtcorId, 0);
         console.log("NANAN", results)
         if (results.err) {
+            return;
+        }
+        if (results.items.length === 0) {
             return;
         }
         let atcorId = results.items[0].atcorId;
