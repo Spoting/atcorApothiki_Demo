@@ -164,21 +164,34 @@ const getItemImages = (req, res) => {
             return;
         }
         let counter = 0;
-        let productImgs = items.filter(i => {
+        let productImgs = [];
+        for (let i=0; i<items.length; i++) {
             if (counter===3) {
-                return;
+                break;
             }
-            // i = i.slice(0, -6);
-            // i = i.slice(0, 13);
-            let x = i.substring(14, 20);
-            console.log("Telika to x", x);
-            // let found = i.contains((x) => atcor_apou_no == x);
+            let x = items[i].substring(14, 20);
             if ( x === atcor_apou_no ) {
                 console.log("Found Image", i);
-                counter++
-                return i;
+                counter++;
+                // return i;
+                productImgs.push(items[i]);
             }
-        })
+        }
+        // let productImgs = items.filter(i => {
+        //     if (counter===3) {
+        //         return;
+        //     }
+        //     // i = i.slice(0, -6);
+        //     // i = i.slice(0, 13);
+        //     let x = i.substring(14, 20);
+        //     // console.log("Telika to x", x);
+        //     // let found = i.contains((x) => atcor_apou_no == x);
+        //     if ( x === atcor_apou_no ) {
+        //         console.log("Found Image", i);
+        //         counter++;
+        //         return i;
+        //     }
+        // })
         // return
         // let productImgs = items.filter(i => {
         //     i = i.slice(0, -4);
@@ -270,3 +283,22 @@ module.exports = {
     findItemInvoices,
     deleteItem
 }
+
+
+/**
+ *         // let productImgs = items.filter(i => {
+        //     if (counter===3) {
+        //         return;
+        //     }
+        //     // i = i.slice(0, -6);
+        //     // i = i.slice(0, 13);
+        //     let x = i.substring(14, 20);
+        //     // console.log("Telika to x", x);
+        //     // let found = i.contains((x) => atcor_apou_no == x);
+        //     if ( x === atcor_apou_no ) {
+        //         console.log("Found Image", i);
+        //         counter++;
+        //         return i;
+        //     }
+        // })
+ */

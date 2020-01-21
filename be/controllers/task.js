@@ -108,7 +108,7 @@ const find = async (req, res) => {
             param.include = [{
                 model: Item,
                 as: 'items',
-                attributes: ['atcorId', 'atcorNo', 'name', 'totalStock'],
+                attributes: ['atcorId', 'atcorNo', 'name', 'PN', 'atcorPN', 'nsn', 'totalStock'],
                 through: {
                     model: TaskItems,
                     as: 'taskItems',

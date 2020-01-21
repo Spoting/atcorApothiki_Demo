@@ -255,12 +255,13 @@ const updateInvoiceItem = async (req, res) => {
     console.log("Update for InvoiceItem");
     let response = {};
     let data = req.body.data;
-    if (data.invoice) {
+    console.log(data);
+    if (data.id) {
         try {
-            console.log(data.updateColumn);
+            console.log(data.id);
             await InvoiceItems.update(
                 data.updateColumn,
-                { where: { invoice: data.invoice } }
+                { where: { id: data.id } }
             )
             response.msg = "Updated"
             return res.status(201).send(response);
