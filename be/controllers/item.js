@@ -154,21 +154,41 @@ const findItemInvoices = async (req, res) => {
 const getItemImages = (req, res) => {
     let atcor_apou_no = req.params.id;
     console.log(atcor_apou_no);
+    let no = leftFillNum(atcor_apou_no);
+    atcor_apou_no = leftFillNum(no);
+    console.log("After fill", atcor_apou_no)
     let response = {}
     fs.readdir('./imgs', (err, items) => {
         if (err) {
             console.log("ERROR:", err)
             return;
         }
+        let counter = 0;
         let productImgs = items.filter(i => {
-            i = i.slice(0, -4);
-            let splarr = i.split('\_');
-            let found = splarr.find((x) => atcor_apou_no == x);
-            if (found) {
-                console.log("Found Image", found);
+            if (counter===3) {
+                return;
+            }
+            // i = i.slice(0, -6);
+            // i = i.slice(0, 13);
+            let x = i.substring(14, 20);
+            console.log("Telika to x", x);
+            // let found = i.contains((x) => atcor_apou_no == x);
+            if ( x === atcor_apou_no ) {
+                console.log("Found Image", i);
+                counter++
                 return i;
             }
         })
+        // return
+        // let productImgs = items.filter(i => {
+        //     i = i.slice(0, -4);
+        //     let splarr = i.split('\_');
+        //     let found = splarr.find((x) => atcor_apou_no == x);
+        //     if (found) {
+        //         console.log("Found Image", found);
+        //         return i;
+        //     }
+        // })
         console.log(productImgs);
         response.data = productImgs;
 
