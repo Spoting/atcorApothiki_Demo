@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     unit: DataTypes.STRING,
     location: DataTypes.STRING,
     dexion: DataTypes.STRING,
-    dexion2: DataTypes.STRING
+    dexion2: DataTypes.STRING,
+    oldAtcorNo: DataTypes.STRING
   }, {
     timestamps: false,
     charset: 'utf8',

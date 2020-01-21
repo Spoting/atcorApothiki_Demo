@@ -115,6 +115,19 @@ const findItemInvoices = async (req, res) => {
     }
     if (data.checkout){
         console.log("Kalo Pragma");
+        param.attributes = ['atcorId', 'atcorNo', 'name'];
+        param.where = { atcorId: data.id };
+        param.include = [{
+            model: Invoice,
+            as: 'invoices',
+            attributes: ['invoice', 'remark', 'matInDate', 'supplier'],
+            through: {
+                model: InvoiceItems,
+                as: 'invoiceItems',
+                attributes: ['id', 'matInQnt', 'availability', 'priceIn', 'rfm_related', 'task_related'],
+                where: { availability: {[op.gt] : 0 } }
+            }
+        }]
     }
 
     try {
