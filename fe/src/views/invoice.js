@@ -172,6 +172,9 @@ export default class Invoices extends React.Component {
         if (results.err) {
             return;
         }
+        if (results.invoices.length === 0) {
+            return;
+        }
         let invoice = results.invoices[0].invoice;
         let remark = results.invoices[0].remark;
         // let matInDate = results.invoices[0].matInDate;
@@ -231,6 +234,9 @@ export default class Invoices extends React.Component {
     _getInvoices = async () => {
         let results = await ApiInvoices.getInvoices();
         if (results.err) {
+            return;
+        }
+        if (results.invoices.length === 0) {
             return;
         }
         this.setState({
