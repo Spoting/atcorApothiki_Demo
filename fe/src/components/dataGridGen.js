@@ -112,7 +112,10 @@ export default class dataGridGen extends React.Component {
             if (this.props.mode === "ItemMovements") {
                 ca = columnsActions.TaskItemMovement
             }
+            let titles = ca.titles;
+            console.log("Titles", titles);
             let tempColumns = Object.keys(data[0]);
+            // let keys = Object.keys(titles);
             let columns = tempColumns.map((x) => {
                 let y = {
                     key: x,
@@ -121,13 +124,20 @@ export default class dataGridGen extends React.Component {
                     visible: true
                     // editable: true
                 };
+                titles.find(t => {
+                    let keys = Object.keys(t);
+                    if (keys[0] === y.key) {
+                        console.log("Kati ginete")
+                        console.log("title", t.title)
+                        y.name = t.title;
+                    }
+                })
+                if (y.key === 'name') {
+                    y.width = 150;
+                }
                 if (y.key === 'id' || y.key === 'taskItemId' || y.key === 'atcorId') {
                     y.visible = false;
                 }
-                if (y.key === 'task_related') {
-                    y.name = 'Task_Rel';
-                }
-
                 if (ca.isEditable.find((i) => { return i === x })) {
                     y.editable = this.isRowEditable;
                 }

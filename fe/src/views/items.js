@@ -129,11 +129,11 @@ export default class Items extends React.Component {
         let name = results.items[0].name;
         let rows = results.items[0].invoices.map((r) => {
             let row = {};
+            row.matInDate = r.matInDate;
             row.id = r.invoiceItems.id;
             row.invoice = r.invoice;
-            row.remark = r.remark;
-            row.matInDate = r.matInDate;
             row.supplier = r.supplier;
+            row.remark = r.remark;
             row.rfm_related = r.invoiceItems.rfm_related;
             row.task_related = r.invoiceItems.task_related;
             // row.atcorId = atcorId;
@@ -155,6 +155,7 @@ export default class Items extends React.Component {
         return (
 
             <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
+                <h1>Warehouse</h1>
                 <form>
                     <label>Enter Code for Delete: </label>
                     <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />

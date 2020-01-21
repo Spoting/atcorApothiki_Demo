@@ -105,9 +105,13 @@ export default class TaskCheckout extends React.Component {
         let rows = results.items[0].invoices.map((r) => {
             let row = {};
             row.id = r.invoiceItems.id;
+            row.matInDate = r.matInDate;
             row.invoice = r.invoice;
             row.remark = r.remark;
-            row.matInDate = r.matInDate;
+
+            row.supplier = r.supplier;
+            row.rfm_related = r.invoiceItems.rfm_related;
+            row.task_related = r.invoiceItems.task_related;
             // row.atcorId = atcorId;
             // row.name = name;
             row.matInQnt = r.invoiceItems.matInQnt;
@@ -139,6 +143,7 @@ export default class TaskCheckout extends React.Component {
     render() {
         return (
             <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
+                <h1>Task Checkout</h1>
                 <div className="row">
                     <div className="col-lg-9" >
                         <DataGridGen

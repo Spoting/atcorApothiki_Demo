@@ -21,13 +21,29 @@ const {
 
 
 const notEditable = ["atcorId", "totalStock"];
-const isEditable = ["name", "nsn", "category", "characteristic_1", "characteristic_2", "PN", "atcorPN", "unit", "location", "dexion", "dexion2"];
-const filterNormal = ["nsn", "atcorNo", "name", "PN", "atcorPN", "category", "characteristic_1", "characteristic_2"];
+const isEditable = ["oldAtcorNo", "name", "nsn", "category", "characteristic_1", "characteristic_2", "PN", "atcorPN", "unit", "location", "dexion", "dexion2"];
+const filterNormal = ["nsn", "atcorNo", "name", "PN", "atcorPN", "category", "characteristic_1", "characteristic_2", "oldAtcorNo", "dexion", "dexion2" , "location"];
 const filterNumeric = ["totalStock"];
 const filterAutoComplete = [];
 const filterSingleSelect = ["unit"];
 const filterMultiSelect = [];
 const editorDropDown = ["unit"];
+const titles = [
+    { atcorNo: "", title: "AtcorNo" },
+    { totalStock: "" , title: "TotalStock" },
+    { name: "", title: "Description" },
+    { PN: "", title: "PN" },
+    { atcorPN: "", title: "AtcorPN" },
+    { nsn: "", title: "NSN"},
+    { characteristic_1: "", title: "C1" },
+    { characteristic_2: "", title: "C2" },
+    { category: "", title: "Category" },
+    { unit: "", title: "Unit" },
+    { location: "", title: "Location" },
+    { dexion: "", title: "DEX1" },
+    { dexion2: "", title: "DEX2"},
+    { oldAtcorNo: "", title: "OldAtcorNo" },
+]
 // const isFormattable = ["nsn"];
 
 const unitOptions = [
@@ -100,12 +116,19 @@ export default class ItemsDataGrid extends React.Component {
                     visible: true
                     // editable: true
                 };
-                // if (y.key === 'name') {
-                //     y.name = 'Description';
-                //     y.width = 200;
-                // }
+                titles.find(t => {
+                    let keys = Object.keys(t);
+                    if (keys[0] === y.key) {
+                        console.log("Kati ginete")
+                        console.log("title", t.title)
+                        y.name = t.title;
+                    }
+                })
                 if (y.key === 'atcorId') {
                     y.visible = false;
+                }
+                if (y.key === 'name') {
+                    y.width = 150;
                 }
                 if (isEditable.find((i) => { return i === x })) {
                     y.editable = this.isRowEditable;

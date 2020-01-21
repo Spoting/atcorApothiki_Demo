@@ -11,7 +11,22 @@ export const columnsActions = {
         // isFormattable: ["nsn"],
         editorDropDown: ["unit"],
         editorAutoComplete: ["name"],
-        isSortable: ["matInQnt", "atcorId", "name", "availability", "priceIn"]
+        isSortable: ["atcorNo", "nsn", "atcorPN", "PN", "matInQnt", "atcorId", "name", "availability", "priceIn", "characteristic_1", "characteristic_2", "rfm_related", "task_related", "unit"], 
+        titles: [
+            { atcorNo: "", title: "AtcorNo" },
+            { task_related: "" , title: "Task_Rel" },
+            { name: "", title: "Description" },
+            { PN: "", title: "PN" },
+            { atcorPN: "", title: "AtcorPN" },
+            { nsn: "", title: "NSN"},
+            { characteristic_1: "", title: "C1" },
+            { characteristic_2: "", title: "C2" },
+            { rfm_related: "", title: "RFM_Rel" },
+            { unit: "", title: "Unit" },
+            { matInQnt: "", title: "MatInQnt" },
+            { availability: "", title: "Availability"},
+            { priceIn: "", title: "PriceIn" },
+        ]
     },
     //Inv Date
     Invoices: {
@@ -23,30 +38,58 @@ export const columnsActions = {
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],
-        isSortable: ["remark","matInDate","invoice","supplier"]
-
+        isSortable: ["remark","matInDate","invoice","supplier", "invoiceDate"],
+        titles: [
+            { invoice: "", title: "InvoiceNo" },
+            { invoiceDate: "" , title: "InvoiceDate" },
+            { remark: "", title: "Remark" },
+            { matInDate: "", title: "MatInDate" },
+            { supplier: "", title: "Supplier" },
+        ]
     },
     ItemInvoices: {
         notEditable: ["id", "invoice", "remark", "matInDate", "availability", "priceIn"],
         isEditable: [],
-        filterNormal: [],
-        filterNumeric: ["priceIn"],
-        filterAutoComplete: ["invoice", "remark"],
-        filterSingleSelect: ["measurement", "category"],
+        filterNormal: [ "matInDate", "invoice", "remark", "rfm_related", "task_related"],
+        filterNumeric: ["priceIn", "matInQnt", "availability"],
+        filterAutoComplete: [],
+        filterSingleSelect: ["supplier"],
         editorDropDown: [],
         editorAutoComplete: [],
-        isSortable: ["invoice", "remark", "matInDate", "matInQnt", "availability", "priceIn"]
+        isSortable: ["invoice", "remark", "matInDate", "matInQnt", "availability", "priceIn", "supplier", "rfm_related", "task_related"],
+        titles: [
+            { invoice: "", title: "AtcorNo" },
+            { task_related: "" , title: "Task_Rel" },
+            { remark: "", title: "Remark" },
+            { matInDate: "", title: "MatInDate" },
+            { supplier: "", title: "Supplier" },
+            { rfm_related: "", title: "RFM_Rel" },
+            { task_related: "" , title: "Task_Rel" },
+            { unit: "", title: "Unit" },
+            { matInQnt: "", title: "MatInQnt" },
+            { availability: "", title: "Availability"},
+            { priceIn: "", title: "PriceIn" },
+        ]
     },
     Tasks: {
         notEditable: ["id", "dateCompleted", "completed"],
         isEditable: ["taskName", "endItem", "sysName", "contract", "PO"],
-        filterNormal: ["dateCompleted"],
+        filterNormal: ["dateCompleted", "endItem"],
         filterNumeric: [],
-        filterAutoComplete: [ "taskName"],
-        filterSingleSelect: ["sysName"],
+        filterAutoComplete: [],
+        filterSingleSelect: ["sysName", "contract", "PO", "taskName", "completed"],
         editorDropDown: [],
         editorAutoComplete: [],
-        isSortable: ["sysName", "taskName", "endItem", "completed", "dateCompleted"]
+        isSortable: ["sysName", "taskName", "endItem", "completed", "dateCompleted", "PO", "contract"],
+        titles: [
+            { sysName: "", title: "SysName" },
+            { taskName: "" , title: "TaskName" },
+            { endItem: "", title: "EndItem" },
+            { completed: "", title: "Completed" },
+            { dateCompleted: "", title: "DateCompleted" },
+            { contract: "", title: "Contract"},
+            { PO: "", title: "PO"}
+        ]
     },
     TaskItems: {
         notEditable: ["atcorNo", "atcorId", "name", "totalStock", "totalMatOut", "totalMatRet", "id"],
@@ -57,7 +100,14 @@ export const columnsActions = {
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],
-        isSortable: ["atcorId", "name", "totalStock", "totalMatOut", "totalMatRet"]
+        isSortable: ["atcorId", "name", "totalStock", "totalMatOut", "totalMatRet"],
+        titles: [
+            { atcorNo: "", title: "AtcorNo" },
+            { name: "" , title: "Description" },
+            { totalStock: "", title: "TotalStock" },
+            { totalMatOut: "", title: "TotalMatOut" },
+            { totalMatRet: "", title: "TotalMatRet" },
+        ]
     },
     TaskItemMovement: {
         notEditable: ["id", "matOut", "matRet", "matActionDate"],
@@ -68,6 +118,11 @@ export const columnsActions = {
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],
-        isSortable: ["matOut", "matRet", "matActionDate"]   
+        isSortable: ["matOut", "matRet", "matActionDate"],
+        titles: [
+            // { matOut: "", title: "SysName" },
+            // { matRet: "" , title: "TaskName" },
+            // { matActionDate: "", title: "EndItem" },
+        ]   
     }
 };

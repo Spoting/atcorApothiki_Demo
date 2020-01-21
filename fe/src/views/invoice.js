@@ -268,7 +268,9 @@ export default class Invoices extends React.Component {
 
     render() {
         return (
+            
             <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
+                <h1>Invoices</h1>
                 <form>
                     <label>Enter Code for Delete: </label>
                     <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)}/>
