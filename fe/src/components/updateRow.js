@@ -12,9 +12,9 @@ export const updateRow = async (mode, data, updated) => {
         if (x[0] === "invoiceDate") {
             value = updated.invoiceDate;
             console.log("Before", value);
-            let year = value.slice(0,4);
-            let month = value.slice(4,6);
-            let day = value.slice(6,8);
+            let year = value.slice(0, 4);
+            let month = value.slice(4, 6);
+            let day = value.slice(6, 8);
             let date = [];
             date.push(year);
             date.push(month);
@@ -25,6 +25,28 @@ export const updateRow = async (mode, data, updated) => {
             updated.invoiceDate = lop;
         }
         response = await ApiInvoice.updateInvoice(data.id, updated);
+    }
+    if (mode === "ItemInvoices") {
+        //CONSTRAINTS
+        console.log("Mesa sto update to ItemInvoices")
+        console.log("Old availability", data.availability);
+        let x = Object.keys(updated);
+        if (x[0] === "availability") {
+            let isnum = /^\d+$/.test(updated.availability);
+            if (!isnum) {
+                alert("Please Insert Numbers");
+                return;
+            }
+            if (data.availability < updated.availability) {
+                alert("New Availability Value cannot be >" + data.availability);
+                return;
+            }
+            if (updated.availability < 0) {
+                alert("New Availability Valye cannot be < 0");
+                return;
+            }
+            response = await ApiInvoice.updateInvoiceItem(data.id, updated);
+        }
     }
 
     if (mode === "TaskItems") {//taskId, itemId,  isOut, value, matActionDate
@@ -81,7 +103,7 @@ export const updateRow = async (mode, data, updated) => {
             console.log("PriceIn Prin", updated.priceIn);
             updated.priceIn = updated.priceIn.replace("\,", "\.");
             console.log("priceIn Meta", updated.priceIn);
-            let isdec =  /^\d+\.\d{0,2}$/.test(updated.priceIn);
+            let isdec = /^\d+\.\d{0,2}$/.test(updated.priceIn);
             if (!isdec) {
                 alert("Please Insert Decimal");
                 return;
@@ -118,7 +140,7 @@ export const updateRow = async (mode, data, updated) => {
                 response.found = false;
             }
         }
-        
+
         if (x[0] === "name") {
             console.log("WRAIA gia TO NAME", updated.name);
             console.log(updated);
@@ -148,16 +170,16 @@ export const updateRow = async (mode, data, updated) => {
             //     response.foundBy = "name"
             //     response.found = false;
             // } else {
-                if (items.items.length > 0 && items.items.length < 2) {
-                    console.log("kati vrike", items);
-                    response.foundItems = items;
-                    response.foundBy = "PN"
-                    response.found = true;
-                }
-                // else {
-                //     response.foundBy = "PN"
-                //     response.found = false;
-                // }
+            if (items.items.length > 0 && items.items.length < 2) {
+                console.log("kati vrike", items);
+                response.foundItems = items;
+                response.foundBy = "PN"
+                response.found = true;
+            }
+            // else {
+            //     response.foundBy = "PN"
+            //     response.found = false;
+            // }
             // }
         }
     }

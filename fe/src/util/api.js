@@ -82,7 +82,7 @@ const ApiItems = {
                 call = url + "item/findByName/" + i + "/" + PN;
             }
         }
-        
+
         try {
             let response = await fetch(call)
             if (response.ok) {
@@ -145,7 +145,7 @@ const ApiItems = {
         if (checkout) {
             call = url + "item/findInvoices/" + id + "/" + checkout;
         }
-        
+
         try {
             let response = await fetch(call);
             if (response.ok) {
@@ -178,7 +178,7 @@ const ApiTasks = {
             let api = url + "task/find"
             if (findCompleted) {
                 api = api + "/" + -1
-            } 
+            }
             let response = await fetch(api);
             if (response.ok) {
                 let jsonResp = await response.json();
@@ -202,9 +202,9 @@ const ApiTasks = {
             console.log(e);
         }
     },
-    getTaskItemMvts: async function (taskId ,taskItemId) {
+    getTaskItemMvts: async function (taskId, taskItemId) {
         try {
-            let response = await fetch(url + "task/findItemMvt/" + taskId +"/" + taskItemId);
+            let response = await fetch(url + "task/findItemMvt/" + taskId + "/" + taskItemId);
             if (response.ok) {
                 let jsonResp = await response.json();
                 // console.log(jsonResp);
@@ -238,7 +238,7 @@ const ApiTasks = {
             console.log(e);
         }
     },
-    createTaskItems: async function (taskId, atcorIds, invoiceId=0, taskName) {
+    createTaskItems: async function (taskId, atcorIds, invoiceId = 0, taskName) {
         try {
             let response = await fetch(url + "task/createTaskItems",
                 {
@@ -324,7 +324,7 @@ const ApiTasks = {
         }
     },
     // /api/task/findItemMvt/:taskName?/:itemId?
-    
+
     // getTaskItemMvnts: async function (taskName, itemId) {
     //     try {
     //         let response = await fetch(url + "task/findItemMvt/" + taskName + "/"+ itemId)
@@ -357,7 +357,7 @@ const ApiInvoices = {
             let response = await fetch(url + "invoice/find/" + invoice)
             if (response.ok) {
                 let jsonResp = await response.json();
-                console.log("Des",jsonResp);
+                console.log("Des", jsonResp);
                 return jsonResp;
             }
         } catch (e) {
@@ -365,7 +365,7 @@ const ApiInvoices = {
         }
     },
     createInvoice: async function (row) {
-        try {                                    
+        try {
             let response = await fetch(url + "invoice/create",
                 {
                     method: 'POST',
@@ -424,6 +424,33 @@ const ApiInvoices = {
             if (response.ok) {
                 let jsonResp = await response.json();
 
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    updateInvoiceItem: async function (invoiceItemId, columnToUpdate) {
+        console.log("API CALL FOR UPDATE INVOICE ITEM", invoiceItemId, columnToUpdate)
+        try {
+            let response = await fetch(url + "invoice/item/update",
+                {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: {
+                            id: invoiceItemId,
+                            updateColumn: columnToUpdate,
+                        }
+                    })
+                });
+            if (response.ok) {
+                let jsonResp = await response.json();
+
+                // console.log(jsonResp);
                 return jsonResp;
             }
         } catch (e) {

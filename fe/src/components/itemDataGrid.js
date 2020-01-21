@@ -48,8 +48,12 @@ const titles = [
 
 const unitOptions = [
     { id: "KG", value: "KG" },
-    { id: "TEM", value: "TEM" },
-    { id: "LT", value: "LT" }
+    { id: "EA", value: "EA" },
+    { id: "LT", value: "LT" },
+    { id: "M", value: "M" },
+    { id: "M2", value: "M2" },
+    { id: "M3", value: "M3" },
+    { id: "SET", value: "SET" }
 ]
 
 
@@ -119,8 +123,6 @@ export default class ItemsDataGrid extends React.Component {
                 titles.find(t => {
                     let keys = Object.keys(t);
                     if (keys[0] === y.key) {
-                        console.log("Kati ginete")
-                        console.log("title", t.title)
                         y.name = t.title;
                     }
                 })

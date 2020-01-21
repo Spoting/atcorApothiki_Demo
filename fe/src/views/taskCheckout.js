@@ -22,7 +22,8 @@ export default class TaskCheckout extends React.Component {
             of: "",
             ofTask: "",
             isLoading: false,
-            taskId: -1
+            taskId: -1,
+            areYouSure: false
         }
     }
     async componentDidMount() {
@@ -80,6 +81,9 @@ export default class TaskCheckout extends React.Component {
             row.atcorId = r.atcorId;
             row.atcorNo = r.atcorNo;
             row.name = r.name;
+            row.PN = r.PN;
+            row.atcorPN = r.atcorPN
+            row.nsn = r.nsn;
             row.totalStock = r.totalStock;
             row.totalMatOut = r.taskItems.totalMatOut;
             row.totalMatRet = r.taskItems.totalMatRet;
@@ -130,16 +134,17 @@ export default class TaskCheckout extends React.Component {
         console.log(this.state.selectedAtcorId)
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
-            let img = {};
-            img.src = 'http://localhost:8000/static/' + i;
-            img.width = 100;
-            img.height = 100;
+            let img = '';
+            img = 'http://localhost:8000/static/' + i;
+            // img.width = 100;
+            // img.height = 100;
 
             return img;
         });
         // console.log("Srcs", sources);
         this.setState({ images: sources })
     }
+
     render() {
         return (
             <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
@@ -163,6 +168,7 @@ export default class TaskCheckout extends React.Component {
                                 setSelectedRow={this.setSelectedItemInvoice}
                                 of={this.state.of}
                                 enableCellSelect={true}
+                            // editAvailability={true}
                             />
                         </div>
                     </div>

@@ -26,12 +26,12 @@ export default class GalleryWrapper extends React.Component {
             console.log("Gallery Updated");
             this.setState({ images: nextProps.images });
         }
-        console.log("8ee mou", this.state.images);
+        // console.log("8ee mou", this.state.images);
     }
 
     openImageViewer =  (index) => {
-        console.log("IMAGES", this.state.images);
-        console.log("Peoutsini", index)
+        // console.log("IMAGES", this.state.images);
+        // console.log("Peoutsini", index)
         this.setState({ currentImage: index, isViewerOpen: true })
     }
 

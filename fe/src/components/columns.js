@@ -48,8 +48,8 @@ export const columnsActions = {
         ]
     },
     ItemInvoices: {
-        notEditable: ["id", "invoice", "remark", "matInDate", "availability", "priceIn"],
-        isEditable: [],
+        notEditable: ["id", "invoice", "remark", "matInDate", "priceIn"],
+        isEditable: ["availability"],
         filterNormal: [ "matInDate", "invoice", "remark", "rfm_related", "task_related"],
         filterNumeric: ["priceIn", "matInQnt", "availability"],
         filterAutoComplete: [],
@@ -92,15 +92,15 @@ export const columnsActions = {
         ]
     },
     TaskItems: {
-        notEditable: ["atcorNo", "atcorId", "name", "totalStock", "totalMatOut", "totalMatRet", "id"],
+        notEditable: ["atcorNo", "atcorId", "nsn", "PN", "atcorPN","name", "totalStock", "totalMatOut", "totalMatRet", "id"],
         isEditable: ["matOut", "matRet"],
-        filterNormal: ["atcorNo"],
+        filterNormal: ["atcorNo", "nsn", "PN", "atcorPN"],
         filterNumeric: ["totalMatOut", "totalMatRet"],
         filterAutoComplete: ["name"],
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],
-        isSortable: ["atcorId", "name", "totalStock", "totalMatOut", "totalMatRet"],
+        isSortable: ["atcorId", "name", "totalStock", "totalMatOut", "totalMatRet", "nsn", "PN", "atcorPN"],
         titles: [
             { atcorNo: "", title: "AtcorNo" },
             { name: "" , title: "Description" },
