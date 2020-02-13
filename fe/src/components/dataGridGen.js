@@ -85,6 +85,11 @@ export default class dataGridGen extends React.Component {
 
 
     isRowEditable = (row) => {
+        if (this.props.mode === "InvoiceItems") {
+            if (row.id > 0) {
+                return false;
+            }
+        }
         if (row) {
             let found = this.state.selectedKeys.find(i => { return i === row.id });
             let isEditable = false;
