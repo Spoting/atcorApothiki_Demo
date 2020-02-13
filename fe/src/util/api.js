@@ -95,6 +95,25 @@ const ApiItems = {
             console.log(e);
         }
     },
+    // findByAtcorNo
+    getItemByAtcorNo: async function (i) {
+        console.log("API atcorNo")
+        let call = url + "item/findByAtcorNo";
+        if (i) {
+            call = url + "item/findByAtcorNo/" + i;
+        }
+
+        try {
+            let response = await fetch(call)
+            if (response.ok) {
+                let jsonResp = await response.json();
+                console.log(jsonResp);
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    },
     getImages: async function (i) {
         try {
             console.log(url + "item/images/" + i);

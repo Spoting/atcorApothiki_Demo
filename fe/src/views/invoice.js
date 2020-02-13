@@ -57,16 +57,16 @@ export default class Invoices extends React.Component {
     }
     activateDelete = (e) => {
         e.preventDefault();
-        if ( this.state.kwdikos === kwdikos ) {
-            this.setState({activateDelete : true, kwdikos: ""});
+        if (this.state.kwdikos === kwdikos) {
+            this.setState({ activateDelete: true, kwdikos: "" });
             alert("Delete Activated");
             return;
         } else {
-            this.setState({activateDelete : false, kwdikos: ""});
+            this.setState({ activateDelete: false, kwdikos: "" });
             alert("Wrong Pass")
             return;
         }
-       
+
     }
     deleteInvoice = async (selected) => {
         console.log("Arxi sto deleteInvoice Data", selected)
@@ -125,7 +125,7 @@ export default class Invoices extends React.Component {
         }
         let items = data;
         console.log("Prin to filter", items)
-        let x = items.filter( i => {
+        let x = items.filter(i => {
             return !(i.name === "" || i.name === " ");
         })
         console.log("Meta to filter", x)
@@ -144,7 +144,7 @@ export default class Invoices extends React.Component {
 
         })
 
-        if (x.length === 0 ) {
+        if (x.length === 0) {
             alert("Please Add Items to Invoice");
             return;
         }
@@ -277,11 +277,24 @@ export default class Invoices extends React.Component {
         if (results.err) {
             return;
         }
-        let names = results.items.map(i => { return { id: i.atcorId, title: i.name } });
+        // let names = results.items.map(i => { return { id: i.atcorId, title: i.name, c1: i.characteristic_1, c2: i.characteristic_2 } });
+        let names = results.items.map(i => {
+            return {
+                id: i.atcorId,
+                title: i.name +
+                    " || c1: " +
+                    i.characteristic_1 +
+                    ", c2: " +
+                    i.characteristic_2 +
+                    " || " +
+                    i.atcorNo
+            }
+        });
         this.setState({
             itemNames: names,
             // columns: columns
         });
+        console.log("Peoutsos", this.state.itemNames)
         return names;
     }
     _getImages = async () => {
@@ -302,12 +315,12 @@ export default class Invoices extends React.Component {
 
     render() {
         return (
-            
+
             <div className="" style={{ height: "500px", paddingLeft: "280px", minWidth: "1300px", paddingTop: "30px" }}>
                 <h1>Invoices</h1>
                 <form>
                     <label>Enter Code for Delete: </label>
-                    <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)}/>
+                    <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />
                     <button onClick={(e) => this.activateDelete(e)}>Check</button>
                 </form>
                 <div className="row">
