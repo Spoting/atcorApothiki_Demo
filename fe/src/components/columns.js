@@ -58,7 +58,7 @@ export const columnsActions = {
         editorAutoComplete: [],
         isSortable: ["invoice", "remark", "matInDate", "matInQnt", "availability", "priceIn", "supplier", "rfm_related", "task_related"],
         titles: [
-            { invoice: "", title: "AtcorNo" },
+            { invoice: "", title: "InvoiceNo" },
             { task_related: "" , title: "Task_Rel" },
             { remark: "", title: "Remark" },
             { matInDate: "", title: "MatInDate" },
