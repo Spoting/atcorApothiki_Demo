@@ -68,7 +68,12 @@ const find = async (req, res) => {
             atcorPN: data.atcorPN
         }
     }
-
+    if (data.atcorNo) {
+        console.log("MESA STO atcorNo")
+        param.where = {
+            atcorNo: data.atcorNo
+        }
+    }
 
     try {
         let items = await Item.findAll(param);
