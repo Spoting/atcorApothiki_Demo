@@ -1,4 +1,5 @@
-const url = "http://localhost:8000/api/"
+// const url = "http://localhost:8000/api/"
+const url = "http://192.168.21.109:8000/api/"
 
 const ApiItems = {
 

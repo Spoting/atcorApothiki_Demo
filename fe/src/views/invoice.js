@@ -188,7 +188,7 @@ export default class Invoices extends React.Component {
             // this._getImages();
         } else {
             this.setState({ selectedInvoiceItem: selectedInvoiceItem, selectedAtcorId: selectedAtcorId },
-                () => console.log("Selected InvoiceItem , atcorid", this.state.selectedInvoiceItem, this.state.selectedAtcorId))
+                () => console.log("Selected InvoiceItem, AtcorId", this.state.selectedInvoiceItem, this.state.selectedAtcorId))
         }
 
     }
@@ -302,7 +302,8 @@ export default class Invoices extends React.Component {
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
             let img = '';
-            img = 'http://localhost:8000/static/' + i;
+            img = 'http://192.168.21.109:8000/static/' + i;
+            // img = 'http://localhost:8000/static/' + i;
             // img.width = 100;
             // img.height = 100;
 
