@@ -93,6 +93,10 @@ export default class Invoices extends React.Component {
     deleteInvoiceItem = async (selected) => {
         console.log("Arxi sto deleteInvoiceItem Data", selected)
         // let invoiceId = this.state.selectedInvoice;
+        if (selected < 0) {
+            alert("Please Save Invoice Before Deleting. \n")
+            return;
+        }
         if (selected.length === 0) {
             alert("Please Select 1 InvoiceItem")
             return;
