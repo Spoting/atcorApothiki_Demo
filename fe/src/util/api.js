@@ -496,6 +496,18 @@ const ApiInvoices = {
         } catch (e) {
             console.log(e);
         }
+    },
+    deleteInvoiceItem: async function (invoiceItemId) {
+        console.log(url + "invoice/item/delete/" + invoiceItemId);
+        try {
+            let response = await fetch(url + "invoice/item/delete/" + invoiceItemId);
+            if (response.ok) {
+                let jsonResp = await response.json();
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 

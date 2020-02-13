@@ -545,6 +545,8 @@ export default class dataGridGen extends React.Component {
                             onAddRow={this.handleAddRow}
                             deleteInvoice={() => this.props.deleteInvoice(this.state.selectedKeys)}
                             createInvoiceItems={() => this.props.createInvoiceItems(this.state.rows)}
+
+                            deleteInvoiceItem={() => this.props.deleteInvoiceItem(this.state.selectedKeys)}
                         />
                     }
                     // onCellSelected={this.onCellSelected}
@@ -597,6 +599,11 @@ class MyToolbar extends Toolbar {
             this.props.deleteInvoice(e);
         }
     }
+    deleteInvoiceItem(e) {
+        if (this.props.deleteInvoiceItem !== null && this.props.deleteInvoiceItem instanceof Function) {
+            this.props.deleteInvoiceItem(e);
+        }
+    }
     renderSelectTask() {
         if (this.props.selectTask) {
             return (
@@ -639,6 +646,16 @@ class MyToolbar extends Toolbar {
             );
         }
     }
+    renderDeleteInvoiceItem() {
+        if (this.props.deleteInvoiceItem) {
+            return (
+                <button
+                className="btn btn-danger"
+                style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: "red", color: "white" }}
+                onClick={this.props.deleteInvoiceItem}> Delete InvoiceItem </button>
+            );
+        }
+    }
     //     <button
     //     className="btn btn-success"
     //     style={{ marginLeft: '15px', marginRight: '15px' }}
@@ -670,6 +687,7 @@ class MyToolbar extends Toolbar {
                         {/* <span style={{ marginRight: '5px' }} >{this.renderToggleFilterButton()} </span> */}
                         {this.renderAddRowButton()}
                         {this.renderCreateInvoiceItems()}
+                        {this.renderDeleteInvoiceItem()}
                     </div>
                 </div>
             );

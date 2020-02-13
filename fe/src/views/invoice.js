@@ -90,6 +90,28 @@ export default class Invoices extends React.Component {
         alert(result.msg);
         await this.setSelectedInvoice(-1, true);
     }
+    deleteInvoiceItem = async (selected) => {
+        console.log("Arxi sto deleteInvoiceItem Data", selected)
+        // let invoiceId = this.state.selectedInvoice;
+        if (selected.length === 0) {
+            alert("Please Select 1 InvoiceItem")
+            return;
+        }
+        if (selected.length > 1) {
+            alert("Please Select only 1 InvoiceItem to Delete");
+            return;
+        }
+        if (!this.state.activateDelete) {
+            alert("Please Enter Delete Code")
+            return;
+        }
+
+        /** KAPOU EDW ERWTISI GIA KWDIKO */
+        let result = await ApiInvoices.deleteInvoiceItem(selected[0]);
+        console.log("mesa sto delete invoiceitem", selected[0]);
+        alert(result.msg);
+        await this.setSelectedInvoiceItem(-1, -1, true);
+    }
     createInvoiceItems = async (data) => {
         let invoiceId = this.state.selectedInvoice;
         console.log("INVOICEITEMS DATA: ", this.state.invoiceItems);
@@ -245,6 +267,7 @@ export default class Invoices extends React.Component {
         });
     }
 
+    //Edw tsimpa kai to c1 + c2
     _getItemNames = async () => {
         let results = await ApiItems.getItems();
         if (results.err) {
@@ -306,6 +329,7 @@ export default class Invoices extends React.Component {
                                 selectedInvoiceId={this.state.selectedInvoice}
                                 createInvoiceItems={this.createInvoiceItems}
 
+                                deleteInvoiceItem={this.deleteInvoiceItem}
                             />
                         </div>
                     </div>
