@@ -135,7 +135,7 @@ export default class TaskCheckout extends React.Component {
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
             let img = '';
-            img = 'http://localhost:8000/static/' + i;
+            img = 'http://192.168.21.109:8000/static/' + i;
             // img.width = 100;
             // img.height = 100;
 
