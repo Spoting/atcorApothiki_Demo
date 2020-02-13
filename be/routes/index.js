@@ -90,5 +90,8 @@ module.exports = (app) => {
         }),
         app.get("/api/invoice/delete/:invoiceId?", (req, res) => {
             invoiceController.deleteInvoice(req, res);
+        }),
+        app.get("/api/invoice/item/delete/:invoiceItemId?", (req, res) => {
+            invoiceController.deleteInvoiceItem(req, res);
         })
 }

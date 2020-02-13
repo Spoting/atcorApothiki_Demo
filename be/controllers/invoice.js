@@ -276,6 +276,40 @@ const updateInvoiceItem = async (req, res) => {
     return res.status(400).send(response);
 }
 
+const deleteInvoiceItem = async (req, res) => {
+    console.log("DELETE InvoiceITEM")
+    let response = {};
+    let data = req.params; //Steile to id
+    if (data.invoiceItemId) {
+        console.log(data.invoiceItemId);
+        try {
+            // let foundItem = await Item.findOne({where: {atcorNo: data.atcorNo}});
+            let foundInvoiceItem = await InvoiceItems.findOne({where: {id: data.invoiceItemId}});
+            console.log("AtcorId", foundInvoiceItem.itemId);
+            console.log("MatInQnt", foundInvoiceItem.matInQnt);
+            let foundItem = await Item.findOne({where : { atcorId: foundInvoiceItem.itemId }});
+            console.log("Name", foundItem.name);
+            console.log("Before totalStock", foundItem.totalStock);
+            foundItem.totalStock = foundItem.totalStock - foundInvoiceItem.matInQnt;
+            await foundItem.save();
+            console.log("After totalStock", foundItem.totalStock);
+
+            await InvoiceItems.destroy(
+                { where: { id: data.invoiceItemId } }
+            )
+            response.msg = "Deleted InvoiceItem. Stock is Updated.\n"
+            return res.status(201).send(response);
+        } catch (e){
+            response.msg = e.original.sqlMessage;
+            response.err = true;
+            console.log(response.msg);
+            return res.status(299).send(response);
+        }
+    }
+    response.msg = "Pws Sto Diaolo Egine Auto";
+    return res.status(400).send(response);
+}
+
 const deleteInvoice = async (req, res) => {
     console.log("DELETE INVOICE")
     let response = {};
@@ -321,6 +355,7 @@ module.exports = {
     find,
     update,
     updateInvoiceItem,
+    deleteInvoiceItem,
     deleteInvoice
 }
 
