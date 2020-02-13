@@ -114,7 +114,7 @@ export default class TaskMvts extends React.Component {
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
             let img = '';
-            img = 'http://192.168.21.109:8000/static/' + i;
+            img = 'http://localhost:8000/static/' + i;
             // img.width = 100;
             // img.height = 100;
 
@@ -131,7 +131,7 @@ export default class TaskMvts extends React.Component {
 
     render() {
         return (
-            <div className=""style={{height:"500px" ,paddingLeft:"280px",minWidth:"1300px",paddingTop:"30px"}}>
+            <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
                 <h1>Task Movements</h1>
                 <div className="row">
                     <div className="col-lg-9" >
