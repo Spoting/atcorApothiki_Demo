@@ -305,50 +305,6 @@ export default class dataGridGen extends React.Component {
                             tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
                             tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
                         }
-                        // if (response.foundBy === "name") {
-                        //     tmpRows[fromRow].atcorId = foundItems.atcorId;
-                        //     tmpRows[fromRow].atcorNo = foundItems.atcorNo;
-                        //     // tmpRows[fromRow].name = response.foundItems.items[0].name;
-                        //     tmpRows[fromRow].nsn = foundItems.nsn;
-                        //     tmpRows[fromRow].unit = foundItems.unit;
-                        //     tmpRows[fromRow].atcorPN = foundItems.atcorPN;
-                        //     tmpRows[fromRow].PN = foundItems.PN;
-                        //     tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
-                        //     tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
-                        // }
-                        // if (response.foundBy === "nsn") {
-                        //     tmpRows[fromRow].atcorId = foundItems.atcorId;
-                        //     tmpRows[fromRow].atcorNo = foundItems.atcorNo;
-                        //     tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
-                        //     tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
-                        //     tmpRows[fromRow].name = foundItems.name;
-                        //     // tmpRows[fromRow].nsn = response.foundItems.items[0].nsn;
-                        //     tmpRows[fromRow].unit = foundItems.unit;
-                        //     tmpRows[fromRow].atcorPN = foundItems.atcorPN;
-                        //     tmpRows[fromRow].PN = foundItems.PN;
-                        // }
-                        // if (response.foundBy === "atcorPN") {
-                        //     tmpRows[fromRow].atcorId = foundItems.atcorId;
-                        //     tmpRows[fromRow].atcorNo = foundItems.atcorNo;
-                        //     tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
-                        //     tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
-                        //     tmpRows[fromRow].name = foundItems.name;
-                        //     tmpRows[fromRow].nsn = foundItems.nsn;
-                        //     tmpRows[fromRow].unit = foundItems.unit;
-                        //     // tmpRows[fromRow].atcorPN = foundItems.atcorPN;
-                        //     tmpRows[fromRow].PN = foundItems.PN;
-                        // }
-                        // if (response.foundBy === "PN") {
-                        //     tmpRows[fromRow].atcorId = foundItems.atcorId;
-                        //     tmpRows[fromRow].atcorNo = foundItems.atcorNo;
-                        //     tmpRows[fromRow].characteristic_1 = foundItems.characteristic_1;
-                        //     tmpRows[fromRow].characteristic_2 = foundItems.characteristic_2;
-                        //     // tmpRows[fromRow].name = foundItems.name;
-                        //     tmpRows[fromRow].nsn = foundItems.nsn;
-                        //     tmpRows[fromRow].unit = foundItems.unit;
-                        //     tmpRows[fromRow].atcorPN = foundItems.atcorPN;
-                        //     // tmpRows[fromRow].PN = foundItems.PN;
-                        // }
                         this.props.setSelectedRow(tmpRows[fromRow].id, tmpRows[fromRow].atcorId)
                         // }
                     }

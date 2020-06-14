@@ -1,9 +1,5 @@
 import React from 'react';
-// import DataGrid from './dataGrid';
-import InvoiceDataGrid from '../components/invoiceDataGrid';
-import Excel from '../components/excelReader';
-import ItemsDataGrid from '../components/itemDataGrid';
-import Loader from 'react-loader';
+import Download from '../components/excelDownload';
 import GalleryWrapper from '../components/galleryWrapper';
 import DataGridGen from '../components/dataGridGen';
 
@@ -25,7 +21,9 @@ export default class TaskMvts extends React.Component {
             of: "",
             ofTask: "",
             isLoading: false,
-            taskId: -1
+            taskId: -1,
+
+            excelData: []
         }
     }
     async componentDidMount() {
@@ -124,10 +122,23 @@ export default class TaskMvts extends React.Component {
         this.setState({ images: sources })
     }
 
-
     leftFillNum = (num, targetLength)  => {
         return num.toString().padStart(6, 0);
     }
+
+    _dataForExcel = async () => {
+        let data = [];
+        await Promise.all(this.state.taskItems.map( async i =>  {
+            console.log("Iterable Item", i);
+            let itemMvts = await ApiTasks.getTaskItemMvts(this.state.taskId, i.atcorId);
+            console.log(itemMvts);
+            let itemObject = { i, itemMvts};
+            data.push(itemObject);
+        }))
+        console.log("Final Data to be given to excel", data);
+        this.setState({ excelData: data}, () => console.log( "to mouni tis manas sou", this.state.excelData));
+        return data;
+     }
 
     render() {
         return (
@@ -160,6 +171,8 @@ export default class TaskMvts extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
+                { this.state.excelData === [] ? <a>Malaka</a> : <Download data={this.state.excelData}></Download>}
+     
             </div>
         );
     }
