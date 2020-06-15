@@ -126,8 +126,10 @@ export default class TaskMvts extends React.Component {
         return num.toString().padStart(6, 0);
     }
 
+    //Function to be passed to Excel Component. Gets Requested Data from DB. Returns array of objects.
     _dataForExcel = async () => {
-        let data = [];
+        let data = []; 
+
         await Promise.all(this.state.taskItems.map( async i =>  {
             console.log("Iterable Item", i);
             let itemMvts = await ApiTasks.getTaskItemMvts(this.state.taskId, i.atcorId);
@@ -171,8 +173,8 @@ export default class TaskMvts extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
-                { this.state.excelData === [] ? <a>Malaka</a> : <Download data={this.state.excelData}></Download>}
-     
+                <Download data={this.state.excelData} dlData={this._dataForExcel}>Peos</Download>
+                
             </div>
         );
     }
