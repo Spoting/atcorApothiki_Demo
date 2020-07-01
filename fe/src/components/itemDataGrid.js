@@ -511,8 +511,8 @@ class ItemToolbar extends Toolbar {
                 <select className="btn" style={{ color: "inherit" }}
                     onChange={(e) => this.props.selectTask(e)}
                 >
-                    <option defaultChecked value={0}>Select Task</option>
-                    {this.props.tasks.map((task) => <option value={task.id}>{task.taskName}</option>)}
+                    <option defaultChecked value={"default"}>Select Task</option>
+                    {this.props.tasks.map((task) => <option value={task.id + ":" + task.taskName} >{task.taskName}</option>)}
                 </select>
             );
         }

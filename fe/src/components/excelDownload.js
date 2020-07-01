@@ -45,7 +45,7 @@ export default class Download extends React.Component {
     }
 
     render() {
-        console.log("Mesa stin malakia", this.props.data);
+        console.log("Mesa stin malakia tou excel", this.props.data);
 
         let excelButton;
 

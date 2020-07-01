@@ -670,6 +670,7 @@ class MyToolbar extends Toolbar {
         }
         if (this.props.mode === "ItemInvoices") {
             return (
+                
                 <div className="react-grid-Toolbar" style={{ backgroundColor: '#37474F' }}>
                     <div className="tools" style={{ marginBottom: '5px', float: "left" }}>
                         <span style={{ marginRight: '5px', color: '#e6e6e6' }}>{this.props.mode}</span>

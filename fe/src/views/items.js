@@ -32,9 +32,12 @@ export default class Items extends React.Component {
         //     console.log("Updating SubTable")
         //     await this._getInvoicesItems();
         // }
+
         if (this.state.selectedAtcorId !== prevState.selectedAtcorId) {
             console.log("Updating Gallery")
+            // Promise.all( this._getImages(), this._getItemInvoices())
             await this._getImages();
+            console.log("Pare mpourdes");
             await this._getItemInvoices();
         }
     }
@@ -86,7 +89,7 @@ export default class Items extends React.Component {
         if (force) {
             this._getItems();
         }
-        this.setState({ selectedAtcorId: selectedAtcorId }, () => console.log("Selected", this.state.selectedAtcorId))
+        this.setState({ selectedAtcorId: selectedAtcorId /** put false on after deleting */ }, () => console.log("Selected atcorid", this.state.selectedAtcorId))
     }
     setSelectedItemInvoice = async (selectedItemInvoice) => {
         this.setState({ selectedItemInvoice: selectedItemInvoice }, () => console.log("Selected", this.state.selectedItemInvoice))
@@ -102,7 +105,7 @@ export default class Items extends React.Component {
 
             return img;
         });
-        // console.log("Srcs", sources);
+        console.log("Srcs", sources);
         this.setState({ images: sources })
     }
 
@@ -117,10 +120,12 @@ export default class Items extends React.Component {
             items: results.items,
             // columns: columns
         });
+
     }
     _getItemInvoices = async () => {
+        console.log("TEEEST")
         let results = await ApiItems.getItemInvoices(this.state.selectedAtcorId, 0);
-        console.log("NANAN", results)
+        console.log("NANANaa", results)
         if (results.err) {
             return;
         }
@@ -180,8 +185,8 @@ export default class Items extends React.Component {
                             <DataGridGen
                                 mode={this.state.modeSubTable}
                                 data={this.state.itemInvoices}
-                                selectedRow={this.state.selectedItemInvoice}
-                                setSelectedRow={this.setSelectedItemInvoice}
+                                //selectedRow={this.state.selectedItemInvoice}
+                                //setSelectedRow={this.setSelectedItemInvoice}
                                 of={this.state.of}
                                 enableCellSelect={false}
                             />

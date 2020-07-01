@@ -82,6 +82,7 @@ export default class TaskMvts extends React.Component {
             row.totalStock = r.totalStock;
             row.totalMatOut = r.taskItems.totalMatOut;
             row.totalMatRet = r.taskItems.totalMatRet;
+            row.matToCheckout = row.totalMatOut - row.totalMatRet;
             row.matOut = 0;
             row.matRet = 0;
             return row;

@@ -82,11 +82,12 @@ export default class TaskCheckout extends React.Component {
             row.atcorNo = r.atcorNo;
             row.name = r.name;
             row.PN = r.PN;
-            row.atcorPN = r.atcorPN
+            row.atcorPN = r.atcorPN;
             row.nsn = r.nsn;
             row.totalStock = r.totalStock;
             row.totalMatOut = r.taskItems.totalMatOut;
             row.totalMatRet = r.taskItems.totalMatRet;
+            row.matToCheckout = row.totalMatOut - row.totalMatRet;
             // row.matOut = 0;
             // row.matRet = 0;
             return row;
@@ -145,6 +146,38 @@ export default class TaskCheckout extends React.Component {
         this.setState({ images: sources })
     }
 
+    //To calculate the cost of the items that were used for a task.
+    // or of a specific Items( maybe better )
+    _calculateCost = async () => {
+        console.log("Start Calculating");
+        let calculateResult = [];
+
+        //Loop through all items
+        await Promise.all(this.state.taskItems.map(async i => {
+            console.log("For Item", i);
+            let qntToCheckout = i.totalMatOut - i.totalMatRet;
+            let results = await ApiItems.getItemInvoices(i.atcorId, 1);
+            if (results.err) {
+                return;
+            }
+            console.log(`Invoices For Item ${i.atcorId}`, results.items[0].invoices)
+            let sortedInvoices = results.items[0].invoices.sort((a, b) =>
+                new Date(...a.matInDate.split('-')) -
+                new Date(...b.matInDate.split('-')));
+            console.log("Sorted by Date", sortedInvoices);
+            for ( i=0; i< sortedInvoices.length; i++ ) {
+                console.log(`ToCheckout ${qntToCheckout} VS Availability ${sortedInvoices[i].invoiceItems.availability}`)
+                let availability = sortedInvoices[i].invoiceItems.availability;
+
+                // APPLY LOGIC HERE
+
+            }
+            // add x to calculateResult so we can log and save the data.
+            let x = { item: "", totalCost: 0, usedInvoices: { invoice: "", qnt: 0 } }
+        }))
+        console.log("End of calculate cost");
+    }
+
     render() {
         return (
             <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
@@ -160,6 +193,7 @@ export default class TaskCheckout extends React.Component {
                             taskId={this.state.taskId}
                             of={this.state.ofTask}
                         />
+                        <button onClick={this._calculateCost}>Checkout {this.state.of}</button>
                         <div style={{ marginTop: '15px' }}>
                             <DataGridGen
                                 mode={this.state.modeSubTable}
@@ -167,7 +201,7 @@ export default class TaskCheckout extends React.Component {
                                 selectedRow={this.state.selectedItemInvoice}
                                 setSelectedRow={this.setSelectedItemInvoice}
                                 of={this.state.of}
-                                enableCellSelect={true}
+                                enableCellSelect={false}
                             // editAvailability={true}
                             />
                         </div>
@@ -176,6 +210,7 @@ export default class TaskCheckout extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
+
             </div>
         );
     }

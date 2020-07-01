@@ -92,7 +92,7 @@ export const columnsActions = {
         ]
     },
     TaskItems: {
-        notEditable: ["atcorNo", "atcorId", "nsn", "PN", "atcorPN","name", "totalStock", "totalMatOut", "totalMatRet", "id"],
+        notEditable: [ "matToCheckout", "atcorNo", "atcorId", "nsn", "PN", "atcorPN","name", "totalStock", "totalMatOut", "totalMatRet", "id"],
         isEditable: ["matOut", "matRet"],
         filterNormal: ["atcorNo", "nsn", "PN", "atcorPN"],
         filterNumeric: ["totalMatOut", "totalMatRet"],
@@ -107,6 +107,7 @@ export const columnsActions = {
             { totalStock: "", title: "TotalStock" },
             { totalMatOut: "", title: "TotalMatOut" },
             { totalMatRet: "", title: "TotalMatRet" },
+            { matToCheckout: "", title: "MatToCheckout"}
         ]
     },
     TaskItemMovement: {
