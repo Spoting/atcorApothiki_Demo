@@ -27,7 +27,8 @@ export default class Invoices extends React.Component {
             selectedAtcorId: -1,
             of: "",
             isLoading: false,
-            itemNames: []
+            itemNames: [],
+            files: null
         }
     }
 
@@ -313,6 +314,39 @@ export default class Invoices extends React.Component {
         this.setState({ images: sources })
     }
 
+//File Uploading
+
+    _onFormSubmit = async (e) => {
+        e.preventDefault()
+        console.log("OnSumbit", this.state.files)
+        if (this.state.files.length > 3 ) {
+            // this.setState({files: null});
+            alert("Choose maximun 3 files")
+            return
+        }
+        await ApiItems.postImages(this.state.selectedAtcorId, this.state.files);
+        console.log("END OF FORMSUMBIT");
+        
+    }
+    _onChange = (e) => {
+        console.log("TargetFiles", e.target.files)
+        this.setState({ files: e.target.files }, () =>
+            console.log("OnChange", this.state.files)
+            
+        )
+    }
+
+    // _fileUpload = (file) => {
+    //     const url = 'http://example.com/file-upload';
+    //     const formData = new FormData();
+    //     formData.append('file', file)
+    //     const config = {
+    //         headers: {
+    //             'content-type': 'multipart/form-data'
+    //         }
+    //     }
+    //     // return post(url, formData, config)
+    // }
 
     render() {
         return (
@@ -355,6 +389,11 @@ export default class Invoices extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
+                <form onSubmit={this._onFormSubmit}>
+                    <h1>File Upload</h1>
+                    <input type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
+                    <button type="submit">Upload</button>
+                </form>
             </div>
         );
     }

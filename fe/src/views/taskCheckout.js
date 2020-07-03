@@ -169,7 +169,7 @@ export default class TaskCheckout extends React.Component {
                 console.log(`ToCheckout ${qntToCheckout} VS Availability ${sortedInvoices[i].invoiceItems.availability}`)
                 let availability = sortedInvoices[i].invoiceItems.availability;
 
-                // APPLY LOGIC HERE
+                // APPLY LOGIC OF AVAILABILTY HERE
 
             }
             // add x to calculateResult so we can log and save the data.

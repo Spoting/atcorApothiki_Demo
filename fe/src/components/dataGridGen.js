@@ -196,6 +196,10 @@ export default class dataGridGen extends React.Component {
         }
     }
 
+    onRowDoubleClick = (row) => {
+        console.log("Double Click")
+    }
+
     onRowClick = (row) => {
         if (row === -1) {
             return;
@@ -500,6 +504,8 @@ export default class dataGridGen extends React.Component {
                     ref={node => this.grid = node}
 
                     isCellValueChanging={this.isCellValueChanging}
+
+                    onRowDoubleClick={this.onRowDoubleClick}
 
                     onRowClick={this.onRowClick}
                     onGridSort={this.handleGridSort}

@@ -128,6 +128,35 @@ const ApiItems = {
             console.log(e);
         }
     },
+    postImages: async function (atcorId, files) {
+        console.log("mesa sto api post", typeof(files))
+        let data = new FormData();
+        files.map(file => {
+            console.log(file.name);
+            data.append('files[]', file, file.name)
+        });
+        // for (let a = 0; a <= files.length; a++) {
+            
+        // }
+        try {
+            let response = await fetch(url + "item/upload", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: data
+            }
+            );
+            if (response.ok) {
+                let jsonResp = await response.json();
+
+                // console.log(jsonResp);
+                return jsonResp;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    },
     updateItem: async function (atcorId, columnToUpdate) {
         try {
             // let atcordIdInt = parseInt(atcorId);
