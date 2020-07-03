@@ -71,7 +71,9 @@ module.exports = (app) => {
         app.get("/api/item/images/:id?", (req, res) => {
             itemController.getItemImages(req, res);
         }),
-
+        app.post("/api/item/upload", (req, res) => {
+            itemController.postItemImages(req, res);
+        }),
         /**
         * Routes for:
         * Invoices

@@ -118,7 +118,7 @@ const findItemInvoices = async (req, res) => {
             }
         }]
     }
-    if (data.checkout){
+    if (data.checkout) {
         console.log("Kalo Pragma");
         param.attributes = ['atcorId', 'atcorNo', 'name'];
         param.where = { atcorId: data.id };
@@ -130,7 +130,7 @@ const findItemInvoices = async (req, res) => {
                 model: InvoiceItems,
                 as: 'invoiceItems',
                 attributes: ['id', 'matInQnt', 'availability', 'priceIn', 'rfm_related', 'task_related'],
-                where: { availability: {[op.gt] : 0 } }
+                where: { availability: { [op.gt]: 0 } }
             }
         }]
     }
@@ -170,12 +170,12 @@ const getItemImages = (req, res) => {
         }
         let counter = 0;
         let productImgs = [];
-        for (let i=0; i<items.length; i++) {
-            if (counter===3) {
+        for (let i = 0; i < items.length; i++) {
+            if (counter === 3) {
                 break;
             }
             let x = items[i].substring(14, 20);
-            if ( x === atcor_apou_no ) {
+            if (x === atcor_apou_no) {
                 console.log("Found Image", i);
                 counter++;
                 // return i;
@@ -215,6 +215,18 @@ const getItemImages = (req, res) => {
     })
 }
 
+const postItemImages = (req, res) => {
+    console.log("BACKEND POSTITEMS", req.body)
+    let result = {};
+    let files = req.body.files;
+    let atcorId = req.body.atcorId;
+    console.log("Post Images", files, atcorId);
+    // let no = leftFillNum(atcorId);
+    // atcor_apou_no = leftFillNum(no);
+    // console.log("After fill", atcor_apou_no)
+    let response = {};
+    return;
+}
 
 const update = async (req, res) => {
     console.log("Update for Product");
@@ -284,6 +296,7 @@ module.exports = {
     create,
     find,
     getItemImages,
+    postItemImages,
     update,
     findItemInvoices,
     deleteItem
