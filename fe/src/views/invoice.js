@@ -317,8 +317,8 @@ export default class Invoices extends React.Component {
 //File Uploading
 
     _onFormSubmit = async (e) => {
-        e.preventDefault()
-        console.log("OnSumbit", this.state.files)
+        e.preventDefault();
+        console.log("OnSumbit", this.state.files);
         if (this.state.files.length > 3 ) {
             // this.setState({files: null});
             alert("Choose maximun 3 files")

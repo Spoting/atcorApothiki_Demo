@@ -129,24 +129,27 @@ const ApiItems = {
         }
     },
     postImages: async function (atcorId, files) {
-        console.log("mesa sto api post", typeof(files))
+        console.log("mesa sto api post", files, atcorId)
+        console.log(files.length);
         let data = new FormData();
-        files.map(file => {
-            console.log(file.name);
-            data.append('files[]', file, file.name)
-        });
-        // for (let a = 0; a <= files.length; a++) {
-            
-        // }
+
+        data.append('atcorId', atcorId)
+        for (const key of Object.keys(files)) {
+            data.append('files', files[key])
+        }
+        // files.map((file, index) => {
+        //     data.append(`file${index}`, file);
+        // });
+
         try {
-            let response = await fetch(url + "item/upload", {
+            let response = await fetch(url + "item/upload",                {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
+                // headers: {
+                //     'Accept': 'application/json',
+                //     'Content-Type': 'multipart/'
+                // },
                 body: data
-            }
-            );
+            });
             if (response.ok) {
                 let jsonResp = await response.json();
 
