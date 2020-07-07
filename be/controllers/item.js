@@ -209,16 +209,16 @@ const getItemImages = (req, res) => {
         // })
         console.log(productImgs);
         response.data = productImgs;
-
+1
         console.log("resp", response)
         return res.status(201).send(response);
     })
 }
 
 const postItemImages = (req, res) => {
-    console.log("BACKEND POSTITEMS", req.body)
+    // console.log("BACKEND POSTITEMS", req)
     let result = {};
-    let files = req.body.files;
+    let files = req.files;
     let atcorId = req.body.atcorId;
     console.log("Post Images", files, atcorId);
     // let no = leftFillNum(atcorId);

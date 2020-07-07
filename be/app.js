@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const http = require('http');
 const cors = require("cors");
 const app = express();
@@ -10,6 +11,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use(fileUpload());
 
 //Images
 app.use('/static', express.static(__dirname + '/imgs'));
