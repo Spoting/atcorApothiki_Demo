@@ -6,6 +6,8 @@ const Item = require("../models").Item;
 const Invoice = require("../models").Invoice;
 const InvoiceItems = require("../models").InvoiceItems;
 
+const fileNmStart = "ATCOR_APOU_NO=";
+
 let leftFillNum = (num, targetLength) => {
     return num.toString().padStart(6, 0);
 }
@@ -215,17 +217,21 @@ const getItemImages = (req, res) => {
     })
 }
 
-const postItemImages = (req, res) => {
+const postItemImages = async (req, res) => {
     // console.log("BACKEND POSTITEMS", req)
-    let result = {};
+    let response = {};
     let files = req.files;
     let atcorId = req.body.atcorId;
-    console.log("Post Images", files, atcorId);
-    // let no = leftFillNum(atcorId);
-    // atcor_apou_no = leftFillNum(no);
-    // console.log("After fill", atcor_apou_no)
-    let response = {};
-    return;
+
+    let uploads = files.files.map((f, i) => {
+        console.log("Before Rename " + f.name);
+        f.mv( './imgs/' + fileNmStart + leftFillNum(atcorId) + "_" + i + ".jpg", 
+        () => {
+            console.log("Done Upload for", f.name);
+        });
+    })
+    response.msg = "Done Uploading Images";
+    return res.status(201).send(response);
 }
 
 const update = async (req, res) => {
