@@ -494,6 +494,10 @@ export default class dataGridGen extends React.Component {
         this.setState({ tasks: tasks });
     }
 
+    germanos = async () => {
+        console.log();
+    }
+
     render() {
         return (
             <div>
@@ -554,6 +558,7 @@ export default class dataGridGen extends React.Component {
                         }
                     }}
                 />
+                <button onClick={() => this.germanos}>GERMANE GAMW TIN CSS</button>
             </div>
         );
     }

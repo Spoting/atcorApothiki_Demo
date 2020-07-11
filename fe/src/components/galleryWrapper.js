@@ -3,6 +3,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import ImageViewer from 'react-simple-image-viewer';
 
+
+
 export default class GalleryWrapper extends React.Component {
     constructor(props) {
         super(props);
@@ -11,6 +13,7 @@ export default class GalleryWrapper extends React.Component {
             currentImage: 0,
             // setCurrentImage: 0,
             isViewerOpen: false,
+            
             // setIsViewerOpen: false,
         };
     }
@@ -30,29 +33,31 @@ export default class GalleryWrapper extends React.Component {
     }
 
     openImageViewer =  (index) => {
-        // console.log("IMAGES", this.state.images);
-        // console.log("Peoutsini", index)
+        let x = document.getElementsByClassName("react-grid-Cell--frozen");
+        
+        //for hiding mpourdes
+        console.log("xaxax",x.item(0));
+        for (let i=0; i<x.length; i++){
+            x.item(i).style.zIndex = "1";
+        }
         this.setState({ currentImage: index, isViewerOpen: true })
     }
 
     closeImageViewer = async () => {
+        let x = document.getElementsByClassName("react-grid-Cell--frozen");
         this.setState({ isViewerOpen: false, currentImage: 0 })
     }
-    // openImageViewer = useCallback((index) => {
-    //     setCurrentImage(index);
-    //     setIsViewerOpen(true);
-    //   }, []);
-
-    // closeImageViewer = () => {
-    //     setCurrentImage(0);
-    //     setIsViewerOpen(false);
-    //   };
 
     render() {
+        // console.log("GAMW TA NIATA MOU", )
+        // let pipes = document.getElementsByClassName("react-grid-Cell--frozen");
+        
+        console.log("xaaxaxaxa", this.state.pipes);
+        // pipes.style.fontSize = '30px'
         return (
             <div className={"imageGallery"} >
                 {this.state.images.map((image, index) => (
-                    <div className={"frame"} style={{ margin: "auto" }}>
+                    <div className={"frame"} style={{ margin: "auto", height: "33%" }}>
                         <img
                             style={{ width: "100%", height: "100%" }}
                             // style={{ width: "100px", height: "100px" }}
@@ -68,7 +73,6 @@ export default class GalleryWrapper extends React.Component {
                         onClose={()=> this.closeImageViewer()}
                     />
                 )}
-               
             </div >
 
         )

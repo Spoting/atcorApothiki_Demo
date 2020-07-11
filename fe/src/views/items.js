@@ -163,7 +163,7 @@ export default class Items extends React.Component {
         return (
 
             <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
-                <h1>Warehouse</h1>
+                <h1 id="pipes">Warehouse</h1>
                 <form>
                     <label>Enter Code for Delete: </label>
                     <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />
