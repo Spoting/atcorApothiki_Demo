@@ -28,7 +28,7 @@ export default class Invoices extends React.Component {
             of: "",
             isLoading: false,
             itemNames: [],
-            files: null
+            files: []
         }
     }
 
@@ -314,17 +314,30 @@ export default class Invoices extends React.Component {
         this.setState({ images: sources })
     }
 
+    leftFillNum = (num, targetLength) => {
+        return num.toString().padStart(6, 0);
+    }
+
 //File Uploading
 
     _onFormSubmit = async (e) => {
         e.preventDefault();
         console.log("OnSumbit", this.state.files);
-        if (this.state.files.length > 3 ) {
+        if (this.state.images.length > 0) {
+            alert("Item already got Images.")
+            return;
+        }
+        if (this.state.selectedAtcorId < 0) {
+            alert("Please select an Item");
+            return;
+        }
+        if (this.state.files.length > 3) {
             // this.setState({files: null});
             alert("Choose maximun 3 files")
             return
         }
-        await ApiItems.postImages(this.state.selectedAtcorId, this.state.files);
+        let response = await ApiItems.postImages(this.state.selectedAtcorId, this.state.files);
+        alert(response.msg);
         console.log("END OF FORMSUMBIT");
         
     }
@@ -349,6 +362,10 @@ export default class Invoices extends React.Component {
     // }
 
     render() {
+        let x = "NoSelectedItem"
+        if (this.state.selectedAtcorId !== -1) {
+            x = this.leftFillNum(this.state.selectedAtcorId);
+        }
         return (
 
             <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
@@ -392,7 +409,7 @@ export default class Invoices extends React.Component {
                 <form onSubmit={this._onFormSubmit}>
                     <h1>File Upload</h1>
                     <input type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
-                    <button type="submit">Upload</button>
+                    <button type="submit">Upload Images for {x}</button>
                 </form>
             </div>
         );

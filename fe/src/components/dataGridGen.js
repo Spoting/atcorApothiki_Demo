@@ -205,7 +205,7 @@ export default class dataGridGen extends React.Component {
             return;
         }
         let rows = this.getRows();
-        if ((this.props.mode === "Invoices") || (this.props.mode === "ItemInvoices") || (this.props.mode === "Tasks")) {
+        if ((this.props.mode === "Invoices") || /** (this.props.mode === "ItemInvoices") || */ (this.props.mode === "Tasks")) {
             if (this.props.selectedRow !== rows[row].id) {
                 this.props.setSelectedRow(rows[row].id);
             }

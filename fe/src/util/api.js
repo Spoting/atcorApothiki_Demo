@@ -144,16 +144,12 @@ const ApiItems = {
         try {
             let response = await fetch(url + "item/upload",                {
                 method: 'POST',
-                // headers: {
-                //     'Accept': 'application/json',
-                //     'Content-Type': 'multipart/'
-                // },
                 body: data
             });
             if (response.ok) {
                 let jsonResp = await response.json();
 
-                // console.log(jsonResp);
+                console.log(jsonResp);
                 return jsonResp;
             }
         } catch (e) {
