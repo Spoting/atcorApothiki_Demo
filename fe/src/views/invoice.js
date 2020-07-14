@@ -320,20 +320,6 @@ export default class Invoices extends React.Component {
         return num.toString().padStart(6, 0);
     }
 
-
-
-    // _fileUpload = (file) => {
-    //     const url = 'http://example.com/file-upload';
-    //     const formData = new FormData();
-    //     formData.append('file', file)
-    //     const config = {
-    //         headers: {
-    //             'content-type': 'multipart/form-data'
-    //         }
-    //     }
-    //     // return post(url, formData, config)
-    // }
-
     render() {
        
         return (
