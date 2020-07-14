@@ -3,6 +3,7 @@ import React from 'react';
 import ItemsDataGrid from '../components/itemDataGrid';
 import DataGridGen from '../components/dataGridGen';
 import GalleryWrapper from '../components/galleryWrapper';
+import ImgUpload from '../components/uploadImgs';
 
 const ApiItems = require("../util/api").default.ApiItems;
 
@@ -82,7 +83,8 @@ export default class Items extends React.Component {
         let result = await ApiItems.deleteItem(selected[0]);
         console.log("mesa sto delete item", selected[0]);
         alert(result.msg);
-        await this.setSelectedItem(-1, true);
+        await this.setSelectedItem( -1, true);
+        this.setState({ activateDelete: false, kwdikos: '' })
     }
 
     setSelectedItem = async (selectedAtcorId, force) => {
@@ -163,7 +165,7 @@ export default class Items extends React.Component {
         return (
 
             <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
-                <h1 id="pipes">Warehouse</h1>
+                <h1>Warehouse</h1>
                 <form>
                     <label>Enter Code for Delete: </label>
                     <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />
@@ -196,6 +198,7 @@ export default class Items extends React.Component {
                     <div className="col-lg-3">
                         <GalleryWrapper images={this.state.images} />
                     </div>
+                    <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId}/>
                 </div>
             </div>
         );

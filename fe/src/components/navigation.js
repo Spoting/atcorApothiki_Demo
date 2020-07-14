@@ -6,7 +6,7 @@ const NavItem = props => {
     const aClassName = props.disabled ? "nav-link disabled" : "nav-link"
     return (
         <li className={liClassName}>
-            <a href={props.path} className={aClassName}>
+            <a href={props.path} className={aClassName} onMouseLeave={e => onLeave(e)}  onMouseEnter={e => onHover(e)}>
                 <FaBeer />
                 {props.name}
                 {(props.path === pageURI) ? (<span className="sr-only">(current)</span>) : ''}
@@ -15,7 +15,13 @@ const NavItem = props => {
     );
 }
 
+const onHover = async (e) => {
+  e.target.style.backgroundColor = "black";
+}
 
+const onLeave = async (e) => {
+  e.target.style.backgroundColor = "inherit";
+}
 
 export class Navigation extends Component{
     render(){

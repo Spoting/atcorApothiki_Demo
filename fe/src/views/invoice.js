@@ -4,6 +4,7 @@ import Excel from '../components/excelReader';
 import Loader from 'react-loader';
 import GalleryWrapper from '../components/galleryWrapper';
 import DataGridGen from '../components/dataGridGen';
+import ImgUpload from '../components/uploadImgs';
 // import { confirmAlert } from 'react-confirm-alert'; // Import
 
 // const Api = require("./api").Api;
@@ -28,7 +29,7 @@ export default class Invoices extends React.Component {
             of: "",
             isLoading: false,
             itemNames: [],
-            files: []
+            // files: []
         }
     }
 
@@ -90,6 +91,7 @@ export default class Invoices extends React.Component {
         console.log("mesa sto delete invoice", selected[0]);
         alert(result.msg);
         await this.setSelectedInvoice(-1, true);
+        this.setState({ activateDelete: false, kwdikos: '' })
     }
     deleteInvoiceItem = async (selected) => {
         console.log("Arxi sto deleteInvoiceItem Data", selected)
@@ -116,6 +118,7 @@ export default class Invoices extends React.Component {
         console.log("mesa sto delete invoiceitem", selected[0]);
         alert(result.msg);
         await this.setSelectedInvoiceItem(-1, -1, true);
+        this.setState({ activateDelete: false, kwdikos: '' })
     }
     createInvoiceItems = async (data) => {
         let invoiceId = this.state.selectedInvoice;
@@ -294,8 +297,7 @@ export default class Invoices extends React.Component {
         this.setState({
             itemNames: names,
             // columns: columns
-        });
-        console.log("Peoutsos", this.state.itemNames)
+        })
         return names;
     }
     _getImages = async () => {
@@ -318,36 +320,7 @@ export default class Invoices extends React.Component {
         return num.toString().padStart(6, 0);
     }
 
-//File Uploading
 
-    _onFormSubmit = async (e) => {
-        e.preventDefault();
-        console.log("OnSumbit", this.state.files);
-        if (this.state.images.length > 0) {
-            alert("Item already got Images.")
-            return;
-        }
-        if (this.state.selectedAtcorId < 0) {
-            alert("Please select an Item");
-            return;
-        }
-        if (this.state.files.length > 3) {
-            // this.setState({files: null});
-            alert("Choose maximun 3 files")
-            return
-        }
-        let response = await ApiItems.postImages(this.state.selectedAtcorId, this.state.files);
-        alert(response.msg);
-        console.log("END OF FORMSUMBIT");
-        
-    }
-    _onChange = (e) => {
-        console.log("TargetFiles", e.target.files)
-        this.setState({ files: e.target.files }, () =>
-            console.log("OnChange", this.state.files)
-            
-        )
-    }
 
     // _fileUpload = (file) => {
     //     const url = 'http://example.com/file-upload';
@@ -362,10 +335,7 @@ export default class Invoices extends React.Component {
     // }
 
     render() {
-        let x = "NoSelectedItem"
-        if (this.state.selectedAtcorId !== -1) {
-            x = this.leftFillNum(this.state.selectedAtcorId);
-        }
+       
         return (
 
             <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
@@ -406,11 +376,8 @@ export default class Invoices extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
-                <form onSubmit={this._onFormSubmit}>
-                    <h1>File Upload</h1>
-                    <input type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
-                    <button type="submit">Upload Images for {x}</button>
-                </form>
+                <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId}/>
+
             </div>
         );
     }

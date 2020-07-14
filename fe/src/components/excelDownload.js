@@ -52,22 +52,20 @@ export default class Download extends React.Component {
         if (this.props.data.length == 0) {  //If Data is empty, prepare data
             excelButton = <button onClick={this.props.dlData} > Prepare Excel </button>;
         } else {                            // Else Create download link
-            excelButton = <button onClick={() => console.log("Psema", this.props.data)} > Download Excel </button>;
+            excelButton =
+                <ExcelFile element={<button color={'yellow'}>Excel</button>} filename={this.props.ofTask}>
+                    {this.props.data.map(im => {
+                        return (<ExcelSheet data={im.itemMvts} name={im.i.atcorNo + "_" + im.i.name}>
+                            <ExcelColumn label="Date" value="matActionDate" />
+                            <ExcelColumn label="MatOut" value="matOut" />
+                            <ExcelColumn label="MatRet" value="matRet" />
+                        </ExcelSheet>)
+                    })}
+                </ExcelFile>;
         }
         return (
             <div>
                 {excelButton}
-
-                {/* Testing Excel */}
-                <ExcelFile element={<button color={'yellow'}>Excel</button>} filename={"Peos"}>
-                    <ExcelSheet data={dataSet1} name="Employees">
-                        <ExcelColumn label="Name" value="name" />
-                        <ExcelColumn label="Wallet Money" value="amount" />
-                        <ExcelColumn label="Gender" value="sex" />
-                        <ExcelColumn label="Marital Status"
-                            value={(col) => col.is_married ? "Married" : "Single"} />
-                    </ExcelSheet>
-                </ExcelFile>
             </div>
         );
 
@@ -75,18 +73,12 @@ export default class Download extends React.Component {
 }
 
 
-
-{/* < ExcelFile >
-            <ExcelSheet data={null} name="Employees">
-                <ExcelColumn label="Name" value="name" />
-                <ExcelColumn label="Wallet Money" value="amount" />
-                <ExcelColumn label="Gender" value="sex" />
-                <ExcelColumn label="Marital Status"
-                    value={(col) => col.is_married ? "Married" : "Single"} />
-            </ExcelSheet>
-            <ExcelSheet data={null} name="Leaves">
-                <ExcelColumn label="Name" value="name" />
-                <ExcelColumn label="Total Leaves" value="total" />
-                <ExcelColumn label="Remaining Leaves" value="remaining" />
-            </ExcelSheet>
-                </ExcelFile > */}
+{/* <ExcelFile element={<button color={'yellow'}>Excel</button>} filename={this.props.ofTask}>
+                    {this.props.data.map(im => {
+                        return (<ExcelSheet data={im.itemMvts} name={im.i.atcorNo + "_" + im.i.name}>
+                            <ExcelColumn label="Date" value="matActionDate" />
+                            <ExcelColumn label="MatOut" value="matOut" />
+                            <ExcelColumn label="MatRet" value="matRet" />
+                        </ExcelSheet>)
+                    })}
+                </ExcelFile> */}

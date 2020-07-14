@@ -174,7 +174,7 @@ export default class TaskMvts extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
-                <Download data={this.state.excelData} dlData={this._dataForExcel}>Peos</Download>
+                <Download data={this.state.excelData} dlData={this._dataForExcel} ofTask={this.state.ofTask}>Peos</Download>
                 
             </div>
         );

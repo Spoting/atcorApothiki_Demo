@@ -196,8 +196,17 @@ export default class dataGridGen extends React.Component {
         }
     }
 
+    // changeStyle = (e) => {
+    //     let r = document.getElementsByClassName("react-grid-Cell");
+    //     console.log(r);
+    //     for (let i=0; i < r.length; i++) {
+    //         r[i].style.backgroundColor = "black"
+    //     }
+    // }
+
     onRowDoubleClick = (row) => {
-        console.log("Double Click")
+        console.log("Double Click");
+        // this.changeStyle()
     }
 
     onRowClick = (row) => {
@@ -558,7 +567,6 @@ export default class dataGridGen extends React.Component {
                         }
                     }}
                 />
-                <button onClick={() => this.germanos}>GERMANE GAMW TIN CSS</button>
             </div>
         );
     }
