@@ -184,34 +184,10 @@ const getItemImages = (req, res) => {
                 productImgs.push(items[i]);
             }
         }
-        // let productImgs = items.filter(i => {
-        //     if (counter===3) {
-        //         return;
-        //     }
-        //     // i = i.slice(0, -6);
-        //     // i = i.slice(0, 13);
-        //     let x = i.substring(14, 20);
-        //     // console.log("Telika to x", x);
-        //     // let found = i.contains((x) => atcor_apou_no == x);
-        //     if ( x === atcor_apou_no ) {
-        //         console.log("Found Image", i);
-        //         counter++;
-        //         return i;
-        //     }
-        // })
-        // return
-        // let productImgs = items.filter(i => {
-        //     i = i.slice(0, -4);
-        //     let splarr = i.split('\_');
-        //     let found = splarr.find((x) => atcor_apou_no == x);
-        //     if (found) {
-        //         console.log("Found Image", found);
-        //         return i;
-        //     }
-        // })
+
         console.log(productImgs);
         response.data = productImgs;
-1
+        1
         console.log("resp", response)
         return res.status(201).send(response);
     })
@@ -220,18 +196,25 @@ const getItemImages = (req, res) => {
 const postItemImages = async (req, res) => {
     // console.log("BACKEND POSTITEMS", req)
     let response = {};
-    let files = req.files;
+    let files = req.files.files;
     let atcorId = req.body.atcorId;
+    try {
+        let uploads = await Promise.all(files.map(async (f, i) => {
+            console.log("Before Rename " + f.name);
+            await f.mv('./imgs/' + fileNmStart + leftFillNum(atcorId) + "_" + i + ".jpg",
+                () => {
+                    console.log("Done Upload for", f.name);
+                });
+        }))
+        response.msg = "Done Uploading Images";
 
-    let uploads = files.files.map((f, i) => {
-        console.log("Before Rename " + f.name);
-        f.mv( './imgs/' + fileNmStart + leftFillNum(atcorId) + "_" + i + ".jpg", 
-        () => {
-            console.log("Done Upload for", f.name);
-        });
-    })
-    response.msg = "Done Uploading Images";
-    return res.status(201).send(response);
+    } catch (e) {
+        console.log(e);
+        response.msg = "Failed to Upload Images";
+        response.err = true;
+    } finally {
+        return res.status(201).send(response);
+    }
 }
 
 const update = async (req, res) => {
