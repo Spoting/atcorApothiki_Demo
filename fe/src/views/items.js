@@ -43,6 +43,11 @@ export default class Items extends React.Component {
         }
     }
 
+    // refreshImgs = (imgs) => {
+    //     this.setState({
+    //         images: imgs
+    //     })
+    // }
 
     handleChange = (e) => {
         // console.log(e.target.value);
@@ -198,7 +203,7 @@ export default class Items extends React.Component {
                     <div className="col-lg-3">
                         <GalleryWrapper images={this.state.images} />
                     </div>
-                    <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId}/>
+                    <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId} refreshImgs={this._getImages}/>
                 </div>
             </div>
         );

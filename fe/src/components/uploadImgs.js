@@ -26,13 +26,16 @@ export default class ImgUpload extends React.Component {
         if (this.state.files.length > 3) {
             // this.setState({files: null});
             alert("Choose maximun 3 files")
-            return
+            return;
+        }
+        if (this.state.files.length === 0) {
+            alert("Choose Images to Upload")
+            return;
         }
         let response = await ApiItems.postImages(this.props.selectedAtcorId, this.state.files);
-        if (response.err) {
-            
-        }
         alert(response.msg);
+        document.getElementById('input-imgs').value = null;
+        this.props.refreshImgs() //
         console.log("END OF FORMSUMBIT");
 
     }
@@ -59,7 +62,7 @@ export default class ImgUpload extends React.Component {
             <div>
                 <span style={{ fontSize: "35px", fontWeight: "500", width: "50%" }}>File Upload</span>
                 <form onSubmit={this._onFormSubmit} style={{ marginTop: "12px", float: "right", marginRight: "22%", width: "50%" }}>
-                    <input type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
+                    <input id="input-imgs" type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
                     <button type="submit">Upload Images for {x}</button>
                 </form>
             </div>

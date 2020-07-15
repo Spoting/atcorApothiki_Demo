@@ -540,7 +540,7 @@ export default class dataGridGen extends React.Component {
                             onAddRow={this.handleAddRow}
                             deleteInvoice={() => this.props.deleteInvoice(this.state.selectedKeys)}
                             createInvoiceItems={() => this.props.createInvoiceItems(this.state.rows)}
-
+                            //deleteItem={() => this.props.deleteItem(this.state.selectedKeys)}
                             deleteInvoiceItem={() => this.props.deleteInvoiceItem(this.state.selectedKeys)}
                         />
                     }
