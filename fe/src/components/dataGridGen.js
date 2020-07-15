@@ -42,7 +42,6 @@ export default class dataGridGen extends React.Component {
             selectedKeys: [],
             tasks: [],
             selectedTask: "-1:default",
-            // cellUpdateCss: "red"
         };
     }
 
@@ -196,17 +195,32 @@ export default class dataGridGen extends React.Component {
         }
     }
 
-    // changeStyle = (e) => {
-    //     let r = document.getElementsByClassName("react-grid-Cell");
-    //     console.log(r);
-    //     for (let i=0; i < r.length; i++) {
-    //         r[i].style.backgroundColor = "black"
-    //     }
-    // }
+    changeStyle = (e) => {
+        let r = document.getElementsByClassName("react-grid-Row");
+        console.log(r);
+        for (let i=0; i < r.length; i++) {
+            r[i].style.backgroundColor = "black"
+        }
+    }
+
+    RowRenderer = ({ renderBaseRow, ...props }) => {
+        let color = 'black';
+        if (this.props.mode === 'InvoiceItems') {
+            if (props.row.atcorId) {
+                color = "green";
+            } else {
+                color = "red";
+            }
+        }
+        return <div style={{color}}>{renderBaseRow(props)}</div>;
+    };
+
 
     onRowDoubleClick = (row) => {
-        console.log("Double Click");
+        let r = this.rowGetter(row);
+        console.log("Double Click", r)
         // this.changeStyle()
+        // console.log("OnDouble", row);
     }
 
     onRowClick = (row) => {
@@ -503,10 +517,6 @@ export default class dataGridGen extends React.Component {
         this.setState({ tasks: tasks });
     }
 
-    germanos = async () => {
-        console.log();
-    }
-
     render() {
         return (
             <div>
@@ -517,7 +527,7 @@ export default class dataGridGen extends React.Component {
                     ref={node => this.grid = node}
 
                     isCellValueChanging={this.isCellValueChanging}
-
+                    rowRenderer={this.RowRenderer}
                     onRowDoubleClick={this.onRowDoubleClick}
 
                     onRowClick={this.onRowClick}
