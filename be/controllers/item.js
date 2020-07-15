@@ -19,7 +19,6 @@ const create = async (req, res) => {
     console.log("data", data)
     try {
         let item = await Item.create(data);
-        // let no = parseInt(item.atcordId);
         let no = leftFillNum(item.atcorId);
         item.atcorNo = leftFillNum(no);
         let i = await item.save();
@@ -193,28 +192,33 @@ const getItemImages = (req, res) => {
     })
 }
 
+
 const postItemImages = async (req, res) => {
     // console.log("BACKEND POSTITEMS", req)
     let response = {};
     let files = req.files.files;
     let atcorId = req.body.atcorId;
-    try {
-        let uploads = await Promise.all(files.map(async (f, i) => {
-            console.log("Before Rename " + f.name);
-            await f.mv('./imgs/' + fileNmStart + leftFillNum(atcorId) + "_" + i + ".jpg",
-                () => {
-                    console.log("Done Upload for", f.name);
-                });
-        }))
-        response.msg = "Done Uploading Images";
 
-    } catch (e) {
-        console.log(e);
-        response.msg = "Failed to Upload Images";
-        response.err = true;
-    } finally {
-        return res.status(201).send(response);
-    }
+    files.map((f, i) => {
+        console.log("Before Rename " + f.name);
+        f.mv('./imgs/' + fileNmStart + leftFillNum(atcorId) + "_" + i + ".jpg",
+            (err) => {
+                if (err) {
+                    console.log("Error for: ", f.name, err);
+                    response.msg = "Error While Uploading";
+                    res.status(299).send(response);
+                    return;
+                }
+                console.log(i, files.length);
+                console.log("Done Upload for", f.name);
+                if (i === files.length-1 ) {
+                    console.log("DONE ALL");
+                    response.msg = "Done Uploading Imgs";
+                    res.status(201).send(response);
+                }
+                
+            });
+    })
 }
 
 const update = async (req, res) => {
