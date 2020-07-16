@@ -31,7 +31,7 @@ export default class TaskMvts extends React.Component {
         let x = parseInt(this.props.match.params.id);
         this.setState({ taskId: x }, async () => {
             await this._getTaskItems();
-           
+
         })
     }
     async componentDidUpdate(prevProps, prevState) {
@@ -43,7 +43,7 @@ export default class TaskMvts extends React.Component {
             // await this._getInvoicesItems();
             // this.setState({})
             await this._getTaskItemMovements();
-            
+
         }
         if (this.state.selectedAtcorId !== prevState.selectedAtcorId) {
             console.log("Updating Gallery");
@@ -74,7 +74,7 @@ export default class TaskMvts extends React.Component {
             let row = {};
             row.id = r.taskItems.id;
             row.atcorId = r.atcorId;
-            row.atcorNo = r.atcorNo;    
+            row.atcorNo = r.atcorNo;
             row.name = r.name;
             row.PN = r.PN;
             row.atcorPN = r.atcorPN
@@ -123,25 +123,35 @@ export default class TaskMvts extends React.Component {
         this.setState({ images: sources })
     }
 
-    leftFillNum = (num, targetLength)  => {
+    leftFillNum = (num, targetLength) => {
         return num.toString().padStart(6, 0);
     }
 
     //Function to be passed to Excel Component. Gets Requested Data from DB. Returns array of objects.
     _dataForExcel = async () => {
-        let data = []; 
-
-        await Promise.all(this.state.taskItems.map( async i =>  {
+        let data = [];
+        await Promise.all(this.state.taskItems.map(async i => {
             console.log("Iterable Item", i);
             let itemMvts = await ApiTasks.getTaskItemMvts(this.state.taskId, i.atcorId);
             console.log(itemMvts);
-            let itemObject = { i, itemMvts};
-            data.push(itemObject);
+            let iDetails =  i.name + " || " + i.atcorNo;
+            itemMvts.map((mv, i) => {
+                if (i===0) {
+                    mv.itemDetails = iDetails
+                } else {
+                    mv.itemDetails = ">>"
+                }
+            })
+            console.log(itemMvts);
+            data.push(...itemMvts)
+            // data.concat(...itemMvts);
+            // let itemObject = { i, itemMvts };
+            // data.push(itemObject);
         }))
-        console.log("Final Data to be given to excel", data);
-        this.setState({ excelData: data}, () => console.log( "to mouni tis manas sou", this.state.excelData));
+        // console.log("Final Data to be given to excel", data);
+        this.setState({ excelData: data }, () => console.log("to mouni tis manas sou", this.state.excelData));
         return data;
-     }
+    }
 
     render() {
         return (
@@ -175,7 +185,7 @@ export default class TaskMvts extends React.Component {
                     </div>
                 </div>
                 <Download data={this.state.excelData} dlData={this._dataForExcel} ofTask={this.state.ofTask}>Peos</Download>
-                
+
             </div>
         );
     }

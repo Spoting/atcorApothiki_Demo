@@ -5,6 +5,7 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
+
 export default class Download extends React.Component {
 
     async componentDidUpdate(prevProps, prevState) {
@@ -14,20 +15,20 @@ export default class Download extends React.Component {
         }
     }
 
+
     render() {
         let excelButton;
         if (this.props.data.length == 0) {  //If Data is empty, prepare data
             excelButton = <button onClick={this.props.dlData} > Prepare Excel </button>;
         } else {                            // Else Create download link
             excelButton =
-                <ExcelFile element={<button color={'yellow'}>Excel</button>} filename={this.props.ofTask}>
-                    {this.props.data.map(im => {
-                        return (<ExcelSheet data={im.itemMvts} name={im.i.atcorNo + "_" + im.i.name}>
-                            <ExcelColumn label="Date" value="matActionDate" />
-                            <ExcelColumn label="MatOut" value="matOut" />
-                            <ExcelColumn label="MatRet" value="matRet" />
-                        </ExcelSheet>)
-                    })}
+                <ExcelFile element={<button>Excel Download</button>} filename={this.props.ofTask}>
+                    <ExcelSheet data={this.props.data} name={this.props.ofTask}>
+                        <ExcelColumn label="Name" value="itemDetails" />
+                        <ExcelColumn label="Date" value="matActionDate" />
+                        <ExcelColumn label="MatOut" value="matOut" />
+                        <ExcelColumn label="MatRet" value="matRet" />
+                    </ExcelSheet>
                 </ExcelFile>;
         }
         return (
@@ -35,6 +36,13 @@ export default class Download extends React.Component {
                 {excelButton}
             </div>
         );
-
     }
 }
+
+// {this.props.data.map(im => {
+//     return (<ExcelSheet data={im.itemMvts} name={im.i.atcorNo + "_" + im.i.name}>
+//         <ExcelColumn label="Date" value="matActionDate" />
+//         <ExcelColumn label="MatOut" value="matOut" />
+//         <ExcelColumn label="MatRet" value="matRet" />
+//     </ExcelSheet>)
+// })}

@@ -21,11 +21,8 @@ export default class Popie extends React.Component {
   };
   render() {
     const { open } = this.state;
-    console.log("dataInPopup", this.props.data);
     let x = Object.keys(this.props.data);
     let y = Object.values(this.props.data);
-    console.log("GiaNadoumex", x)
-    console.log("GiaNadoumey", y)
     let z = []
 
     for (let i = 0; i < x.length; i++) {
