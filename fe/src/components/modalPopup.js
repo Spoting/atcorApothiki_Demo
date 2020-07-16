@@ -27,13 +27,18 @@ export default class Popie extends React.Component {
     console.log("GiaNadoumex", x)
     console.log("GiaNadoumey", y)
     let z = []
+
     for (let i = 0; i < x.length; i++) {
-      z.push(
-        <div>
-          <span>{x[i] + ':  ' + y[i] + " "}</span>
-          <span></span>
-        </div>
-      )
+      if (x[i].includes("id")) {
+        i++
+      } else {
+        z.push(
+          <div>
+            <span>{x[i] + ':  ' + y[i] + " "}</span>
+            <span></span>
+          </div>
+        )
+      }
     }
     return (
       <div>
