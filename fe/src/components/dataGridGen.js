@@ -5,6 +5,7 @@ import { Toolbar, Data, Filters, Editors } from "react-data-grid-addons";
 import { addRow } from './addRow';
 import { updateRow } from './updateRow';
 import { columnsActions } from './columns';
+import Popie from '../components/modalPopup';
 
 const ApiTasks = require("../util/api").default.ApiTasks;
 
@@ -42,6 +43,9 @@ export default class dataGridGen extends React.Component {
             selectedKeys: [],
             tasks: [],
             selectedTask: "-1:default",
+            //for modal
+            showModal: false,
+            rowData: {}
         };
     }
 
@@ -195,13 +199,13 @@ export default class dataGridGen extends React.Component {
         }
     }
 
-    changeStyle = (e) => {
-        let r = document.getElementsByClassName("react-grid-Row");
-        console.log(r);
-        for (let i=0; i < r.length; i++) {
-            r[i].style.backgroundColor = "black"
-        }
-    }
+    // changeStyle = (e) => {
+    //     let r = document.getElementsByClassName("react-grid-Row");
+    //     console.log(r);
+    //     for (let i=0; i < r.length; i++) {
+    //         r[i].style.backgroundColor = "black"
+    //     }
+    // }
 
     RowRenderer = ({ renderBaseRow, ...props }) => {
         let color = 'black';
@@ -219,6 +223,7 @@ export default class dataGridGen extends React.Component {
     onRowDoubleClick = (row) => {
         let r = this.rowGetter(row);
         console.log("Double Click", r)
+        this.callModal(r);
         // this.changeStyle()
         // console.log("OnDouble", row);
     }
@@ -517,6 +522,14 @@ export default class dataGridGen extends React.Component {
         this.setState({ tasks: tasks });
     }
 
+    callModal = (rowData) => {
+        this.setState({showModal: true, rowData: rowData})
+    }
+
+    closeModal = () => {
+        this.setState({showModal: false})
+    }
+
     render() {
         return (
             <div>
@@ -577,6 +590,7 @@ export default class dataGridGen extends React.Component {
                         }
                     }}
                 />
+                <Popie data={this.state.rowData} call={this.state.showModal} close={this.closeModal}></Popie>
             </div>
         );
     }

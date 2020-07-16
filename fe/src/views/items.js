@@ -4,8 +4,6 @@ import ItemsDataGrid from '../components/itemDataGrid';
 import DataGridGen from '../components/dataGridGen';
 import GalleryWrapper from '../components/galleryWrapper';
 import ImgUpload from '../components/uploadImgs';
-import Popie from '../components/modalPopup';
-
 
 const ApiItems = require("../util/api").default.ApiItems;
 
@@ -160,13 +158,7 @@ export default class Items extends React.Component {
 
     }
 
-    // callModal = () => {
-    //     this.setState({showModal: true})
-    // }
-
-    // closeModal = () => {
-    //     this.setState({showModal: false})
-    // }
+    
 
     render() {
         return (
