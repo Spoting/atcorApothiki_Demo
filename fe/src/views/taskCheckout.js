@@ -170,7 +170,7 @@ export default class TaskCheckout extends React.Component {
                 let availability = sortedInvoices[i].invoiceItems.availability;
 
                 // APPLY LOGIC OF AVAILABILTY HERE
-
+                
             }
             // add x to calculateResult so we can log and save the data.
             let x = { item: "", totalCost: 0, usedInvoices: { invoice: "", qnt: 0 } }

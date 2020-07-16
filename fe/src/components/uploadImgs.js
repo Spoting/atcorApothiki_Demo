@@ -35,7 +35,9 @@ export default class ImgUpload extends React.Component {
         let response = await ApiItems.postImages(this.props.selectedAtcorId, this.state.files);
         alert(response.msg);
         document.getElementById('input-imgs').value = null;
-        this.props.refreshImgs() //
+        if (this.props.refreshImgs instanceof Function) {
+            this.props.refreshImgs() //
+        }
         console.log("END OF FORMSUMBIT");
 
     }

@@ -4,6 +4,8 @@ import ItemsDataGrid from '../components/itemDataGrid';
 import DataGridGen from '../components/dataGridGen';
 import GalleryWrapper from '../components/galleryWrapper';
 import ImgUpload from '../components/uploadImgs';
+import Popie from '../components/modalPopup';
+
 
 const ApiItems = require("../util/api").default.ApiItems;
 
@@ -20,19 +22,14 @@ export default class Items extends React.Component {
             images: [],
             selectedAtcorId: -1,
             selectedItemInvoice: -1,
-            of: ""
+            of: "",
+            showModal: false,
         }
     }
     async componentDidMount() {
         await this._getItems();
     }
     async componentDidUpdate(prevProps, prevState) {
-        // console.log("Prev", prevState.selectedAtcorId);
-        // console.log("Curr", this.state.selectedAtcorId);
-        // if (this.state.selectedInvoice !== prevState.selectedInvoice) {
-        //     console.log("Updating SubTable")
-        //     await this._getInvoicesItems();
-        // }
 
         if (this.state.selectedAtcorId !== prevState.selectedAtcorId) {
             console.log("Updating Gallery")
@@ -84,7 +81,6 @@ export default class Items extends React.Component {
             return;
         }
 
-        /** KAPOU EDW ERWTISI GIA KWDIKO */
         let result = await ApiItems.deleteItem(selected[0]);
         console.log("mesa sto delete item", selected[0]);
         alert(result.msg);
@@ -107,8 +103,6 @@ export default class Items extends React.Component {
         let sources = res.data.map((i) => {
             let img = '';
             img = 'http://localhost:8000/static/' + i;
-            // img.width = 100;
-            // img.height = 100;
 
             return img;
         });
@@ -166,6 +160,14 @@ export default class Items extends React.Component {
 
     }
 
+    // callModal = () => {
+    //     this.setState({showModal: true})
+    // }
+
+    // closeModal = () => {
+    //     this.setState({showModal: false})
+    // }
+
     render() {
         return (
 
@@ -205,6 +207,10 @@ export default class Items extends React.Component {
                     </div>
                     <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId} refreshImgs={this._getImages}/>
                 </div>
+                
+                {/* <Popie call={this.state.showModal} close={this.closeModal}></Popie>
+                <button onClick={() => this.callModal()}>TEST</button> */}
+                
             </div>
         );
     }

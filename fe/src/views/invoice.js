@@ -362,65 +362,9 @@ export default class Invoices extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
-                <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId}/>
+                <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId} refreshImgs={this._getImages}/>
 
             </div>
         );
     }
 }
-
-
-// createInvoiceItems = async (data) => {
-//     let invoiceId = this.state.selectedInvoice;
-//     console.log("INVOICEITEMS DATA: ", this.state.invoiceItems);
-//     if (invoiceId === -1) {
-//         alert("Please Select an Invoice to Add Items for")
-//         return;
-//     }
-//     let items = data;
-//     let foundEmptyName = items.find(i => {
-//         return (i.name === "" || i.name === " ")
-//     })
-//     if (foundEmptyName) {
-//         alert("You got a row with empty Name")
-//         return;
-//     }
-//     items.map(i => {
-//         delete i.id;
-//         if (i.nsn === "" || i.nsn === " ") {
-//             delete i.nsn;
-//         }
-//         if (i.atcorPN === "" || i.atcorPN === " ") {
-//             delete i.atcorPN;
-//         }
-//         if (typeof (i.matInQnt) === "string") {
-//             i.matInQnt = parseInt(i.matInQnt);
-//         }
-
-//     })
-
-//     console.log("XRISTEMOU", invoiceId, items)
-//     let result = await ApiInvoices.createInvoiceItems(invoiceId, items);
-//     console.log("META TON STRAVO MOU", result);
-//     let output2 = result.msg2 + '\n';
-//     if (result.err2) {
-//         result.newItems.map(ni => { output2 = output2 + '\n' + ni.item.name + " " + ni.item.atcorNo })
-//     }
-//     output2 = output2 + "\n\n";
-//     alert(output2);
-
-//     let output1 = result.msg1 + '\n';
-//     if (result.err1) {
-//         result.notAssigned.map(ni => { output1 = output1 + '\n' + ni.item.name + " " + ni.item.atcorNo })
-//     }
-//     output1 = output1 + "\n\n";
-//     alert(output1);
-//     // let output = result.msg + '\n';
-//     // if (result.err) {
-//     //     result.data.map(e => { output = output + '\n' + e.item.name })
-//     // }
-//     // output = output + "\n\n"
-//     // alert(output);
-//     await this.setSelectedInvoiceItem(-1, -1, true);
-//     // this.setState({ isLoading: false })
-// }

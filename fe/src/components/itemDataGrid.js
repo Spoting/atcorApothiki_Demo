@@ -386,7 +386,10 @@ export default class ItemsDataGrid extends React.Component {
     }
 
     assignItemsToTask = () => {
-        if (this.state.selectedTask === 0) {
+        let splitted = this.state.selectedTask.split(":");
+        let taskId = parseInt(splitted[0]);
+        let taskName = splitted[1];
+        if (taskId === -1) {
             alert("Please Select a Task first");
             return
         }
@@ -394,8 +397,9 @@ export default class ItemsDataGrid extends React.Component {
             alert("Please Select Item(s) first");
             return
         }
+        console.log(this.state.selectedTask, this.state.selectedKeys, )
         // console.log("Selected Keys", this.state.selectedKeys);
-        ApiTasks.createTaskItems(this.state.selectedTask, this.state.selectedKeys)
+        ApiTasks.createTaskItems(taskId, this.state.selectedKeys)
             .then((result) => {
                 console.log(result);
                 let output = result.msg + '\n';

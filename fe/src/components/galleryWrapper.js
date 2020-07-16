@@ -34,9 +34,9 @@ export default class GalleryWrapper extends React.Component {
 
     openImageViewer =  (index) => {
         let x = document.getElementsByClassName("react-grid-Cell--frozen");
-        
+        let y = document.getElementsByClassName("navbar")
         //for hiding mpourdes
-        console.log("xaxax",x.item(0));
+        y.item(0).style.zIndex = "1"
         for (let i=0; i<x.length; i++){
             x.item(i).style.zIndex = "1";
         }

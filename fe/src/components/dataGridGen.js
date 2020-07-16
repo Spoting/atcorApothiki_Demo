@@ -206,7 +206,7 @@ export default class dataGridGen extends React.Component {
     RowRenderer = ({ renderBaseRow, ...props }) => {
         let color = 'black';
         if (this.props.mode === 'InvoiceItems') {
-            if (props.row.atcorId) {
+            if (props.row.id > 0 ) {
                 color = "green";
             } else {
                 color = "red";
