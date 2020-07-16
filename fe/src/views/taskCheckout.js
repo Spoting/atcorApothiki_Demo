@@ -160,17 +160,35 @@ export default class TaskCheckout extends React.Component {
             if (results.err) {
                 return;
             }
-            console.log(`Invoices For Item ${i.atcorId}`, results.items[0].invoices)
+            console.log(`Invoices For Item ${i.name}`, results.items[0].invoices)
             let sortedInvoices = results.items[0].invoices.sort((a, b) =>
                 new Date(...a.matInDate.split('-')) -
                 new Date(...b.matInDate.split('-')));
             console.log("Sorted by Date", sortedInvoices);
-            for ( i=0; i< sortedInvoices.length; i++ ) {
-                console.log(`ToCheckout ${qntToCheckout} VS Availability ${sortedInvoices[i].invoiceItems.availability}`)
-                let availability = sortedInvoices[i].invoiceItems.availability;
+            for ( let j=0; j < sortedInvoices.length; j++ ) {
+                console.log(`ToCheckout ${qntToCheckout} VS Availability ${sortedInvoices[j].invoiceItems.availability}`)
+                let availability = sortedInvoices[j].invoiceItems.availability;
 
                 // APPLY LOGIC OF AVAILABILTY HERE
-                
+                if ( qntToCheckout > availability ) {
+                    qntToCheckout = qntToCheckout - availability;
+                    availability = 0;
+                    console.log(`C>A LOOP ${j}: qntToCheckoutNew = ${qntToCheckout}  
+                    (newAvailability ${availability} from invoice ${sortedInvoices[j].invoice})`)
+                    //about here check if there is still need to checkout
+                } else {
+                    availability = availability - qntToCheckout;
+                    qntToCheckout = 0;
+                    console.log(`A>C loop ${j}: qntToCheckoutNew = ${qntToCheckout}  
+                    (newAvailability ${availability} from invoice ${sortedInvoices[j].invoice})`)
+                }
+                console.log("Check", qntToCheckout, j, sortedInvoices.length)
+                if ( qntToCheckout > 0 && j===sortedInvoices.length-1 ) {
+                    alert(`There is not enough available invoices for ${i.name + "||" + i.atcorNo}. 
+                    Exei paixtei poustia stin apo8iki`);
+                    return;
+                }
+                //ApiInvoices api to updated db, or do it outside of loop
             }
             // add x to calculateResult so we can log and save the data.
             let x = { item: "", totalCost: 0, usedInvoices: { invoice: "", qnt: 0 } }
