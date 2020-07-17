@@ -210,22 +210,23 @@ export default class dataGridGen extends React.Component {
     RowRenderer = ({ renderBaseRow, ...props }) => {
         let color = 'black';
         if (this.props.mode === 'InvoiceItems') {
-            if (props.row.id > 0 ) {
+            if (props.row.id > 0) {
                 color = "green";
             } else {
                 color = "red";
             }
         }
-        return <div style={{color}}>{renderBaseRow(props)}</div>;
+        return <div style={{ color }}>{renderBaseRow(props)}</div>;
     };
-
 
     onRowDoubleClick = (row) => {
         let r = this.rowGetter(row);
         console.log("Double Click", r)
-        this.callModal(r);
-        // this.changeStyle()
-        // console.log("OnDouble", row);
+        if (this.state.selectedKeys.includes(r.id)) {
+            return;
+        } else {
+            this.callModal(r);
+        }
     }
 
     onRowClick = (row) => {
@@ -384,7 +385,7 @@ export default class dataGridGen extends React.Component {
         let tempId = this.state.rows.length + 2;
         if ((this.props.mode === "InvoiceItems") && (this.state.rows.length > 0)) {
             tempId = -tempId;
-        } 
+        }
         data.tempId = tempId;
         console.log("HandleAddRowInvoiceItemId", data.tempId)
         console.log("LEEENGHT", this.state.rows.length)
@@ -523,11 +524,11 @@ export default class dataGridGen extends React.Component {
     }
 
     callModal = (rowData) => {
-        this.setState({showModal: true, rowData: rowData})
+        this.setState({ showModal: true, rowData: rowData })
     }
 
     closeModal = () => {
-        this.setState({showModal: false})
+        this.setState({ showModal: false })
     }
 
     render() {
@@ -669,9 +670,9 @@ class MyToolbar extends Toolbar {
         if (this.props.deleteInvoiceItem) {
             return (
                 <button
-                className="btn btn-danger"
-                style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: "red", color: "white" }}
-                onClick={this.props.deleteInvoiceItem}> Delete InvoiceItem </button>
+                    className="btn btn-danger"
+                    style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: "red", color: "white" }}
+                    onClick={this.props.deleteInvoiceItem}> Delete InvoiceItem </button>
             );
         }
     }
@@ -713,7 +714,7 @@ class MyToolbar extends Toolbar {
         }
         if (this.props.mode === "ItemInvoices") {
             return (
-                
+
                 <div className="react-grid-Toolbar" style={{ backgroundColor: '#37474F' }}>
                     <div className="tools" style={{ marginBottom: '5px', float: "left" }}>
                         <span style={{ marginRight: '5px', color: '#e6e6e6' }}>{this.props.mode}</span>
