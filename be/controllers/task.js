@@ -176,7 +176,7 @@ const createTaskItemMovement = async (req, res) => {
             await foundTaskItem.save();
             await item.save();
         }
-        result.msg = "Inserted Successfully"
+        result.msg = "Inserted Successfully";
         // console.log(results);
     } catch (e) {
         console.log(e);
@@ -203,7 +203,6 @@ const findTaskItemMovement = async (req, res) => {
         // let task = await Task.findOne(param);
         // let taskItem = await TaskItems.findOne({ where: { taskId: task.id, itemId: data.itemId } });
         let taskItemMvts = await ItemMvt.findAll(param);
-        
         return res.status(201).send(taskItemMvts);
     } catch (e) {
         result.err = e;
