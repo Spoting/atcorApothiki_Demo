@@ -2,6 +2,7 @@ import React from 'react';
 
 import GalleryWrapper from '../components/galleryWrapper';
 import DataGridGen from '../components/dataGridGen';
+import api from '../config/api.conf.json';
 
 const ApiTasks = require("../util/api").default.ApiTasks;
 const ApiItems = require("../util/api").default.ApiItems;
@@ -136,7 +137,7 @@ export default class TaskCheckout extends React.Component {
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
             let img = '';
-            img = 'http://localhost:8000/static/' + i;
+            img = api.connection.imgs + i;
             // img.width = 100;
             // img.height = 100;
 
