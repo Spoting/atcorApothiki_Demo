@@ -50,7 +50,6 @@ export default class dataGridGen extends React.Component {
     }
 
     async componentDidMount() {
-
         if ((this.props.mode === "Items")) {
             await this._getTasks(false);
         }
@@ -64,13 +63,9 @@ export default class dataGridGen extends React.Component {
     async componentDidUpdate(nextProps) {
         if (this.props.data !== nextProps.data) {
             this._setColumns();
-            // console.log("AAA", this.props.data)
             this.setState({ rows: this.props.data, selectedKeys: [] }); //Keeping before selected off
         }
-        //Get tasks when mode ===items
-        // if ((this.props.mode === "Items")) {
-        //     // await this._getTasks(false);
-        // }
+
         if ((this.props.mode === "InvoiceItems")) {
             if (this.props.itemNamesFilter !== nextProps.itemNamesFilter) {
                 // await this._getTasks(false);
@@ -79,11 +74,7 @@ export default class dataGridGen extends React.Component {
                 this._setColumns();
             }
         }
-        // if (this.props.mode === "TaskItems") {
-        //     if (this.props.selectedRow !== nextProps.selectedRow) {
-        //         console.log("PEOOOS");
-        //     }
-        // }
+
     }
 
 
@@ -142,6 +133,9 @@ export default class dataGridGen extends React.Component {
                         y.name = t.title;
                     }
                 })
+                if (ca.isFormattable.find((i) => { return i === x })) {
+                    y.formatter = MatActionsFormatter;
+                }
                 if (y.key === 'name') {
                     y.width = 150;
                 }
@@ -182,9 +176,7 @@ export default class dataGridGen extends React.Component {
                     }
                     // y.editor = EditorDropDown;  
                 }
-                // if (ca.isFormattable.find((i) => { return i === x })) {
-                //     y.formatter = NameFormatter;
-                // }
+
                 if (ca.isSortable.find((i) => { return i === x })) {
                     y.sortable = true;
                 }
@@ -198,14 +190,6 @@ export default class dataGridGen extends React.Component {
             console.log("COLUMNS", cols);
         }
     }
-
-    // changeStyle = (e) => {
-    //     let r = document.getElementsByClassName("react-grid-Row");
-    //     console.log(r);
-    //     for (let i=0; i < r.length; i++) {
-    //         r[i].style.backgroundColor = "black"
-    //     }
-    // }
 
     RowRenderer = ({ renderBaseRow, ...props }) => {
         let color = 'black';
@@ -465,11 +449,11 @@ export default class dataGridGen extends React.Component {
             alert("Please Save InvoiceItems Before Assigning To Task\n\n\n")
             return;
         }
-        let taskRelatedArray = this.state.rows.map(r => r.task_related);
-        if (!taskRelatedArray.includes("")) {
-            alert("All Items Are Already Assigned")
-            return;
-        }
+        // let taskRelatedArray = this.state.rows.map(r => r.task_related);
+        // if (!taskRelatedArray.includes("")) {
+        //     alert("All Items Are Already Assigned")
+        //     return;
+        // }
 
         // ApiTasks.createTaskItems(taskId, x)//this.state.selectedKeys
         //     .then((result) => {
@@ -772,7 +756,6 @@ class MyToolbar extends Toolbar {
     }
 }
 
-
 class NameFormatter extends React.Component {
 
     //Here for styling logic. 
@@ -807,3 +790,17 @@ class NameFormatter extends React.Component {
     }
 }
 
+class MatActionsFormatter extends React.Component {
+
+    render() {
+        if (this.props.row.matOut || this.props.row.matRet ) {
+            return (
+                <div style={ {backgroundColor: "red"} }> {this.props.value} </div>
+            );
+        } else {
+            return (
+                <div> {this.props.value} </div>
+            );
+        }
+    }
+}

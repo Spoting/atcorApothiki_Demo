@@ -64,7 +64,6 @@ export default class TaskMvts extends React.Component {
 
     _getTaskItems = async () => {
         let results = await ApiTasks.getTaskItems(this.state.taskId);
-        console.log("Mexxxxxxxx", results);
         if (results.err) {
             return;
         }

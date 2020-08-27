@@ -11,6 +11,7 @@ export const columnsActions = {
         // isFormattable: ["nsn"],
         editorDropDown: ["unit"],
         editorAutoComplete: ["name"],
+        isFormattable: [],
         isSortable: ["atcorNo", "nsn", "atcorPN", "PN", "matInQnt", "atcorId", "name", "availability", "priceIn", "characteristic_1", "characteristic_2", "rfm_related", "task_related", "unit"], 
         titles: [
             { atcorNo: "", title: "AtcorNo" },
@@ -38,6 +39,7 @@ export const columnsActions = {
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],
+        isFormattable: [],
         isSortable: ["remark","matInDate","invoice","supplier", "invoiceDate"],
         titles: [
             { invoice: "", title: "InvoiceNo" },
@@ -56,6 +58,7 @@ export const columnsActions = {
         filterSingleSelect: ["supplier"],
         editorDropDown: [],
         editorAutoComplete: [],
+        isFormattable: [],
         isSortable: ["invoice", "remark", "matInDate", "matInQnt", "availability", "priceIn", "supplier", "rfm_related", "task_related"],
         titles: [
             { invoice: "", title: "InvoiceNo" },
@@ -81,6 +84,7 @@ export const columnsActions = {
         editorDropDown: [],
         editorAutoComplete: [],
         isSortable: ["sysName", "taskName", "endItem", "completed", "dateCompleted", "PO", "contract"],
+        isFormattable: [],
         titles: [
             { sysName: "", title: "SysName" },
             { taskName: "" , title: "TaskName" },
@@ -100,6 +104,7 @@ export const columnsActions = {
         filterSingleSelect: [],
         editorDropDown: [],
         editorAutoComplete: [],
+        isFormattable: ["matOut", "matRet"],
         isSortable: ["atcorId", "name", "totalStock", "totalMatOut", "totalMatRet", "nsn", "PN", "atcorPN"],
         titles: [
             { atcorNo: "", title: "AtcorNo" },
@@ -120,6 +125,8 @@ export const columnsActions = {
         editorDropDown: [],
         editorAutoComplete: [],
         isSortable: ["matOut", "matRet", "matActionDate"],
+        isFormattable: [],
+        // isFormattable: ["matOut", "matRet"],
         titles: [
             // { matOut: "", title: "SysName" },
             // { matRet: "" , title: "TaskName" },

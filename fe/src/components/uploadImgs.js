@@ -36,7 +36,7 @@ export default class ImgUpload extends React.Component {
         alert(response.msg);
         document.getElementById('input-imgs').value = null;
         if (this.props.refreshImgs instanceof Function) {
-            this.props.refreshImgs() //
+            this.props.refreshImgs()
         }
         console.log("END OF FORMSUMBIT");
 
@@ -62,10 +62,23 @@ export default class ImgUpload extends React.Component {
         }
         return (
             <div>
-                <span style={{ fontSize: "35px", fontWeight: "500", width: "50%" }}>File Upload</span>
-                <form onSubmit={this._onFormSubmit} style={{ marginTop: "12px", float: "right", marginRight: "22%", width: "50%" }}>
-                    <input id="input-imgs" type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
-                    <button type="submit">Upload Images for {x}</button>
+                
+                <form onSubmit={this._onFormSubmit} style={{ marginTop: "0px", float: "right", marginRight: "50%", width: "50%" }}>
+                    <table>
+                        <tr>
+                            <td style={{width: "100%"}}>
+                            <div style={{ fontSize: "20px", fontWeight: "bold", width: "150px" }}>File Upload</div>
+                            </td>
+                            <td>
+                                <input id="input-imgs" type="file" multiple accept=".jpg,.jpeg,.png" onChange={this._onChange} />
+                            </td>
+                            <td>
+                                <button type="submit" style={{minWidth: "300px"}}>Upload Images for {x}</button>
+                            </td>
+                        </tr>
+                    </table>
+
+
                 </form>
             </div>
         )

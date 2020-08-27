@@ -1,0 +1,8 @@
+{
+    "connection"            : {
+        "url"               : "http://localhost:8000/api/",
+        "imgs"              : "http://localhost:8000/static/"
+    },
+    "target"                : {
+    }
+}

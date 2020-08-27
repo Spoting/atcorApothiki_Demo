@@ -30,16 +30,6 @@ export default class Tasks extends React.Component {
         }
     }
 
-    // //Move it to addRow?
-    // createTask = async (data) => {
-    //     let invoiceId = this.state.selectedInvoice;
-    //     let items = data;
-    //     this.setState({ isLoading: true })
-    //     let results = await ApiTasks.createTask();
-    //     console.log("results", results);
-    //     this.setState({ isLoading: false })
-    // }
-
     setSelectedTask = async (selectedTask, force) => {
         if (force) {
             await this._getTasks();
@@ -57,10 +47,6 @@ export default class Tasks extends React.Component {
         }
 
     }
-
-    // selectTask = (e) => {
-    //     this.setState({ selectedTask: e.target.value });
-    // }
 
     _getTasks = async () => {
         let results = await ApiTasks.getTasks(true);

@@ -1,4 +1,6 @@
-const url = "http://localhost:8000/api/"
+import api from '../config/api.conf.json'
+
+const url = api.connection.url;
 
 const ApiItems = {
 

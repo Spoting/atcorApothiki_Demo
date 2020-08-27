@@ -12,9 +12,6 @@ export default class Popie extends React.Component {
       this.setState({ open: this.props.call })
     }
   }
-  // onOpenModal = () => {
-  //   this.setState({ open: true });
-  // };
   onCloseModal = () => {
     this.setState({ open: false });
     this.props.close(); //cb function to change state of parent
@@ -25,26 +22,32 @@ export default class Popie extends React.Component {
     let y = Object.values(this.props.data);
     let z = []
 
-    for (let i = 0; i < x.length; i++) {
-      if (x[i].includes("id")) {
-        i++
+    x.map((l, i)=> {
+      if(x[i].match("id")) {
+        return;
       } else {
         z.push(
-          <div>
-            <span>{x[i] + ':  ' + y[i] + " "}</span>
-            <span></span>
-          </div>
+          <tr>
+            <td style={{borderRightWidth: "3px", borderRightStyle: "solid", borderRightColor: "black"}}>{x[i]}</td>
+            <td style={{fontSize: "22px"}}>{y[i]}</td>
+          </tr>
+      
         )
       }
-    }
+    })
+
     return (
       <div>
         {/* <button onClick={this.onOpenModal}>Open modal</button> */}
-        <Modal open={open} onClose={this.onCloseModal} center>
+        <Modal open={open}  onClose={this.onCloseModal} center>
           <h2>Details</h2>
-          {z.map(o => {
-            return o
-          })}
+          <div class="table-responsive" style={{ width: "100%"}}>
+            <table class="table">
+              {z.map(o => {
+                return o
+              })}
+            </table>
+          </div>
         </Modal>
       </div>
     );

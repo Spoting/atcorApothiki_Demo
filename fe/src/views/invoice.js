@@ -5,13 +5,14 @@ import Loader from 'react-loader';
 import GalleryWrapper from '../components/galleryWrapper';
 import DataGridGen from '../components/dataGridGen';
 import ImgUpload from '../components/uploadImgs';
-// import { confirmAlert } from 'react-confirm-alert'; // Import
+import pass from '../config/code.conf.json';
+import api from '../config/api.conf.json';
 
-// const Api = require("./api").Api;
+const kwdikos = pass.code;
+
 const ApiInvoices = require("../util/api").default.ApiInvoices;
 const ApiItems = require("../util/api").default.ApiItems;
 
-const kwdikos = "atcor%123";
 export default class Invoices extends React.Component {
     constructor(props) {
         super(props);
@@ -86,7 +87,6 @@ export default class Invoices extends React.Component {
             return;
         }
 
-        /** KAPOU EDW ERWTISI GIA KWDIKO */
         let result = await ApiInvoices.deleteInvoice(selected[0]);
         console.log("mesa sto delete invoice", selected[0]);
         alert(result.msg);
@@ -145,7 +145,6 @@ export default class Invoices extends React.Component {
             if (typeof (i.matInQnt) === "string") {
                 i.matInQnt = parseInt(i.matInQnt);
             }
-
         })
 
         if (x.length === 0) {
@@ -305,11 +304,7 @@ export default class Invoices extends React.Component {
         let res = await ApiItems.getImages(this.state.selectedAtcorId);
         let sources = res.data.map((i) => {
             let img = '';
-            img = 'http://localhost:8000/static/' + i;
-            // img = 'http://localhost:8000/static/' + i;
-            // img.width = 100;
-            // img.height = 100;
-
+            img = api.connection.imgs + i;
             return img;
         });
         // console.log("Srcs", sources);
@@ -321,16 +316,32 @@ export default class Invoices extends React.Component {
     }
 
     render() {
-       
+
         return (
 
             <div className="" style={{ height: "500px", paddingLeft: "50px", minWidth: "1300px", paddingTop: "60px" }}>
                 <h1>Invoices</h1>
-                <form>
-                    <label>Enter Code for Delete: </label>
-                    <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />
-                    <button onClick={(e) => this.activateDelete(e)}>Check</button>
-                </form>
+                <div>
+                    <table>
+                        <tr>
+                            <td style={{borderRightColor: "black", borderRightWidth: "5px", borderRightStyle: "solid", paddingRight: "15px"}}>
+                                <form>
+                                    <label>Enter Code for Delete: </label>
+                                    <input type="password" value={this.state.kwdikos} onChange={e => this.handleChange(e)} />
+                                    <button onClick={(e) => this.activateDelete(e)}>Check</button>
+                                </form>
+                            </td>
+                            <td style={{paddingLeft:"50px"}}>
+                                <ImgUpload images={this.state.images}
+                                    selectedAtcorId={this.state.selectedAtcorId} refreshImgs={this._getImages} />
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                </div>
+
                 <div className="row">
                     <div className="col-lg-9" >
                         <DataGridGen
@@ -362,7 +373,6 @@ export default class Invoices extends React.Component {
                         <GalleryWrapper images={this.state.images} />
                     </div>
                 </div>
-                <ImgUpload images={this.state.images} selectedAtcorId={this.state.selectedAtcorId} refreshImgs={this._getImages}/>
 
             </div>
         );
