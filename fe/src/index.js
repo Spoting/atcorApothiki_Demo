@@ -26,6 +26,7 @@ const routing = (
             <Route path='/invoices' component={Invoices} />
             <Route path='/taskMvt/:id' component={TaskMvts} />
             <Route path='/taskCheckout/:id' component={TaskCheckout} />
+            <Route path='/' component={App} />
         </div>
     </Router>
 )
