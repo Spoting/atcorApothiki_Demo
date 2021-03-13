@@ -19,12 +19,14 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation></Navigation>
-      
-        {/* <footer class="footer">
-          <div class="container">
-            <span class="text-muted">Place sticky footer content here.</span>
+        <h1 className="ARXHGOS" >ARXHGOS BES</h1>
+        <h2 className="ARXHGOS2" >ARXHGOS VGES</h2>
+
+         <footer className="footer">
+          <div className="container">
+            <span className="text-muted">Place sticky footer content here.</span>
           </div>
-        </footer> */}
+        </footer> 
       </div>
     );
   }
